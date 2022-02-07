@@ -311,7 +311,7 @@ colBtn3.addEventListener("click", function () {
     var content4 = colBtn4.nextElementSibling;
     if (content1.style.maxHeight) {
         content1.style.maxHeight = null;
-        icon4.classList.remove('rotation');
+        icon3.classList.remove('rotation');
     } else {
         content1.style.maxHeight = content1.scrollHeight + "px";
         content2.style.maxHeight = null;
