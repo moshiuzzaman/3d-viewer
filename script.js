@@ -6,6 +6,8 @@ import {
     setMaxAngleForOrbit,
     setMinAngleForOrbit,
     setAdd,
+    renderer,
+    camera,
     
 } from "./three.js";
 
@@ -41,7 +43,8 @@ RotationBottomLimite.oninput = function () {
 //rotation section end
 
 //zomm section start
-let inX = 10, outX=70;
+let inX = 10,
+    outX = 70;
 
 var ZoomLimiteIn = document.getElementById("ZoomLimiteIn");
 ZoomLimiteIn.oninput = function () {
@@ -57,7 +60,6 @@ ZoomLimiteOut.oninput = function () {
     outX = this.value;
 };
 
-
 var checkBoxZoom = document.getElementById("ZoomBtn");
 
 checkBoxZoom.addEventListener("click", () => {
@@ -69,8 +71,6 @@ checkBoxZoom.addEventListener("click", () => {
         setZoomMax(outX);
     }
 });
-
-
 
 //zoom section end
 
@@ -89,37 +89,47 @@ bgRightBtn.addEventListener("click", () => {
 
 let skybox = null;
 
-
 document.getElementsByName("bg").forEach((radio) => {
     radio.addEventListener("click", () => {
         if (radio.value === "skyblue") {
-            if(skybox !== null) scene.remove(skybox);
+            if (skybox !== null) scene.remove(skybox);
             scene.background = new THREE.Color("skyblue");
         } else if (radio.value === "red") {
-            if(skybox !== null) scene.remove(skybox);
+            if (skybox !== null) scene.remove(skybox);
             scene.background = new THREE.Color("#D14250");
         } else if (radio.value === "gray") {
-            if(skybox !== null) scene.remove(skybox);
+            if (skybox !== null) scene.remove(skybox);
             scene.background = new THREE.Color("#8B9298");
         } else if (radio.value === "blue") {
-            if(skybox !== null) scene.remove(skybox);
+            if (skybox !== null) scene.remove(skybox);
             scene.background = new THREE.Color("#3888FD");
         } else if (radio.value === "green") {
-            if(skybox !== null) scene.remove(skybox);
+            if (skybox !== null) scene.remove(skybox);
             scene.background = new THREE.Color("#198754");
         } else if (radio.value === "yellow") {
-            if(skybox !== null) scene.remove(skybox);
+            if (skybox !== null) scene.remove(skybox);
             scene.background = new THREE.Color("#FFC107");
-        } 
-        
-        else if (radio.value === "texture1") {
+        } else if (radio.value === "texture1") {
+            if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_ft.jpg");
-            let texture_bk = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_bk.jpg");
-            let texture_up = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_up.jpg");
-            let texture_dn = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_dn.jpg");
-            let texture_rt = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_rt.jpg");
-            let texture_lf = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_lf.jpg");
+            let texture_ft = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_ft.jpg"
+            );
+            let texture_bk = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_bk.jpg"
+            );
+            let texture_up = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_up.jpg"
+            );
+            let texture_dn = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_dn.jpg"
+            );
+            let texture_rt = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_rt.jpg"
+            );
+            let texture_lf = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_lf.jpg"
+            );
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -146,15 +156,27 @@ document.getElementsByName("bg").forEach((radio) => {
             skybox = new THREE.Mesh(skyboxGeo, materialArray);
             // scene.background = null;
             scene.add(skybox);
-
         } else if (radio.value === "texture2") {
+            if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_ft.jpg");
-            let texture_bk = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_bk.jpg");
-            let texture_up = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_up.jpg");
-            let texture_dn = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_dn.jpg");
-            let texture_rt = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_rt.jpg");
-            let texture_lf = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_lf.jpg");
+            let texture_ft = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_ft.jpg"
+            );
+            let texture_bk = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_bk.jpg"
+            );
+            let texture_up = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_up.jpg"
+            );
+            let texture_dn = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_dn.jpg"
+            );
+            let texture_rt = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_rt.jpg"
+            );
+            let texture_lf = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_lf.jpg"
+            );
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -181,15 +203,27 @@ document.getElementsByName("bg").forEach((radio) => {
             skybox = new THREE.Mesh(skyboxGeo, materialArray);
             // scene.background = null;
             scene.add(skybox);
-
         } else if (radio.value === "texture3") {
+            if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_ft.jpg");
-            let texture_bk = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_bk.jpg");
-            let texture_up = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_up.jpg");
-            let texture_dn = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_dn.jpg");
-            let texture_rt = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_rt.jpg");
-            let texture_lf = new THREE.TextureLoader().load("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_lf.jpg");
+            let texture_ft = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_ft.jpg"
+            );
+            let texture_bk = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_bk.jpg"
+            );
+            let texture_up = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_up.jpg"
+            );
+            let texture_dn = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_dn.jpg"
+            );
+            let texture_rt = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_rt.jpg"
+            );
+            let texture_lf = new THREE.TextureLoader().load(
+                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_lf.jpg"
+            );
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -239,114 +273,98 @@ upRightBtn.addEventListener("click", () => {
 
 //for collapsable design
 
-var colBtn1 = document.getElementById('col1');
-var colBtn2 = document.getElementById('col2');
-var colBtn3 = document.getElementById('col3');
-var colBtn4 = document.getElementById('col4');
+var colBtn1 = document.getElementById("col1");
+var colBtn2 = document.getElementById("col2");
+var colBtn3 = document.getElementById("col3");
+var colBtn4 = document.getElementById("col4");
 //rotation
 
-let icon1 = document.getElementById('icon1');
-let icon2 = document.getElementById('icon2');
-let icon3 = document.getElementById('icon3');
-let icon4 = document.getElementById('icon4');
-
+let icon1 = document.getElementById("icon1");
+let icon2 = document.getElementById("icon2");
+let icon3 = document.getElementById("icon3");
+let icon4 = document.getElementById("icon4");
 
 colBtn1.addEventListener("click", function () {
-    
-    
     var content1 = this.nextElementSibling;
     var content2 = colBtn2.nextElementSibling;
     var content3 = colBtn3.nextElementSibling;
     var content4 = colBtn4.nextElementSibling;
     if (content1.style.maxHeight) {
         content1.style.maxHeight = null;
-        icon1.classList.remove('rotation');
-        
-
+        icon1.classList.remove("rotation");
     } else {
-        
         content1.style.maxHeight = content1.scrollHeight + "px";
         content2.style.maxHeight = null;
         content3.style.maxHeight = null;
         content4.style.maxHeight = null;
 
-        icon1.classList.add('rotation');
-        icon2.classList.remove('rotation');
-        icon3.classList.remove('rotation');
-        icon4.classList.remove('rotation');
-
+        icon1.classList.add("rotation");
+        icon2.classList.remove("rotation");
+        icon3.classList.remove("rotation");
+        icon4.classList.remove("rotation");
     }
 });
 
-
 colBtn2.addEventListener("click", function () {
-    
     var content1 = this.nextElementSibling;
     var content2 = colBtn1.nextElementSibling;
     var content3 = colBtn3.nextElementSibling;
     var content4 = colBtn4.nextElementSibling;
     if (content1.style.maxHeight) {
         content1.style.maxHeight = null;
-        icon2.classList.remove('rotation');
+        icon2.classList.remove("rotation");
     } else {
         content1.style.maxHeight = content1.scrollHeight + "px";
         content2.style.maxHeight = null;
         content3.style.maxHeight = null;
         content4.style.maxHeight = null;
 
-        icon1.classList.remove('rotation');
-        icon2.classList.add('rotation');
-        icon3.classList.remove('rotation');
-        icon4.classList.remove('rotation');
+        icon1.classList.remove("rotation");
+        icon2.classList.add("rotation");
+        icon3.classList.remove("rotation");
+        icon4.classList.remove("rotation");
     }
 });
 
-
 colBtn3.addEventListener("click", function () {
-    
-    
     var content1 = this.nextElementSibling;
     var content2 = colBtn2.nextElementSibling;
     var content3 = colBtn1.nextElementSibling;
     var content4 = colBtn4.nextElementSibling;
     if (content1.style.maxHeight) {
         content1.style.maxHeight = null;
-        icon3.classList.remove('rotation');
+        icon3.classList.remove("rotation");
     } else {
         content1.style.maxHeight = content1.scrollHeight + "px";
         content2.style.maxHeight = null;
         content3.style.maxHeight = null;
         content4.style.maxHeight = null;
 
-        icon1.classList.remove('rotation');
-        icon2.classList.remove('rotation');
-        icon3.classList.add('rotation');
-        icon4.classList.remove('rotation');
+        icon1.classList.remove("rotation");
+        icon2.classList.remove("rotation");
+        icon3.classList.add("rotation");
+        icon4.classList.remove("rotation");
     }
 });
 
-
 colBtn4.addEventListener("click", function () {
-    
-    
-    
     var content1 = this.nextElementSibling;
     var content2 = colBtn2.nextElementSibling;
     var content3 = colBtn3.nextElementSibling;
     var content4 = colBtn1.nextElementSibling;
     if (content1.style.maxHeight) {
         content1.style.maxHeight = null;
-        icon4.classList.remove('rotation');
+        icon4.classList.remove("rotation");
     } else {
         content1.style.maxHeight = content1.scrollHeight + "px";
         content2.style.maxHeight = null;
         content3.style.maxHeight = null;
         content4.style.maxHeight = null;
 
-        icon1.classList.remove('rotation');
-        icon2.classList.remove('rotation');
-        icon3.classList.remove('rotation');
-        icon4.classList.add('rotation');
+        icon1.classList.remove("rotation");
+        icon2.classList.remove("rotation");
+        icon3.classList.remove("rotation");
+        icon4.classList.add("rotation");
     }
 });
 
@@ -361,20 +379,33 @@ fullScreen.addEventListener("click", () => {
         document.querySelector("#functions").classList.add("hide");
         document.querySelector(".heading").classList.add("hide");
 
-        document.getElementById("wrapperId").classList.remove("wrapper");
-        document.querySelector(".canvasWrapper").style.height = "100%";
-        // document.querySelector("#myCanvasElement").style.height = "auto";
         document.querySelector(".container").style.width = "100%";
+        document.getElementById("myCanvasElement").style.height = "100vh";
+        
+        
 
+        renderer.setSize(window.innerWidth, window.innerHeight, false);
+        camera.aspect = window.innerWidth / window.innerHeight;
+        camera.updateProjectionMatrix();
+        // renderer.setSize(window.innerWidth, window.innerHeight, false);
+        // render();
         check = false;
     } else {
         document.querySelector("#functions").classList.remove("hide");
         document.querySelector(".heading").classList.remove("hide");
 
-        document.getElementById("wrapperId").classList.add("wrapper");
-        document.querySelector(".canvasWrapper").style.height = "80%";
-        // document.querySelector("#myCanvasElement").style.height = "330px";
-        document.querySelector(".container").style.width = "80%";
+        document.querySelector(".container").style.width = "90%";
+        document.getElementById("myCanvasElement").style.height = "80vh";
+
+        const canvas = renderer.domElement;
+        // look up the size the canvas is being displayed
+        const width = canvas.clientWidth;
+        const height = canvas.clientHeight;
+
+        renderer.setSize(width, height, false);
+
+        camera.aspect = width / height;
+        camera.updateProjectionMatrix();
 
         check = true;
     }

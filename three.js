@@ -21,6 +21,10 @@ let add = 10,
 init();
 render();
 
+function resizeCanvasToDisplaySize() {
+    
+  }
+
 function init() {
     //getting canvas
     var canvReference = document.getElementById("myCanvasElement");
@@ -36,17 +40,34 @@ function init() {
         preserveDrawingBuffer: true 
     });
     renderer.setPixelRatio(window.devicePixelRatio);
-    renderer.setSize(window.innerWidth, window.innerHeight, false);
-
-    //setup camera
+    const canvas = renderer.domElement;
+    // look up the size the canvas is being displayed
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    
+      //setup camera
     camera = new THREE.PerspectiveCamera(
         45,
         window.innerWidth / window.innerHeight,
         1,
-        window.innerHeight
+        1000
 
     );
+
+    camera.lookAt( scene.position );
     camera.position.set(0, 0, 25);
+
+   
+  
+    // adjust displayBuffer size to match
+    if (canvas.width !== width || canvas.height !== height) {
+      // you must pass false here or three.js sadly fights the browser
+      renderer.setSize(width, height, false);
+      camera.aspect = width / height;
+      camera.updateProjectionMatrix();
+  
+      // update any render target sizes here
+    }
 
     //setup light
     let light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 0.8 );
@@ -126,7 +147,7 @@ function init() {
             scene.remove(obj);
             OBJloader.load(x, function (objNew) {
                 obj = objNew;
-                obj.scale.set(4, 4, 4);
+                obj.scale.set( 4, 4, 4 );
                 scene.add(obj);
             });
         }
@@ -198,10 +219,18 @@ function init() {
 }
 
 function onWindowResize() {
-    camera.aspect = window.innerWidth / window.innerHeight;
+    
+    const canvas = renderer.domElement;
+    
+    // look up the size the canvas is being displayed
+    const width = canvas.clientWidth;
+    const height = canvas.clientHeight;
+    camera.aspect = width / height;
     camera.updateProjectionMatrix();
 
-    renderer.setSize(window.innerWidth, window.innerHeight, false);
+   renderer.setSize(width, height, false);
+
+    // renderer.setSize(window.innerWidth, window.innerHeight, false);
     render();
 }
 
@@ -245,7 +274,8 @@ export {
     setZoomMin,
     setMaxAngleForOrbit,
     setMinAngleForOrbit,
-    
+    renderer,
+    camera,
     setAdd,
    
 };
