@@ -1,0 +1,377 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    height: 100vh;
+}
+
+.container {
+    width: 80%;
+    margin: auto;
+    height: auto;
+}
+
+.wrapper {
+    display: flex;
+    height: 80%;
+}
+
+.wrapperClone {
+    display: grid;
+    grid-template-columns: auto;
+    height: 80%;
+}
+
+.canvasWrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    position: relative;
+}
+
+canvas {
+    /* height: 430px; */
+    width: 100%;
+}
+
+.actionButton{
+    position: absolute;
+    right: 10px;
+    top: 10px;
+}
+
+.actionButton button{
+    padding: 13px 15px;
+    margin: 2px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.heading h1 {
+    text-align: center;
+    font-size: 50px;
+    margin-bottom: 1rem !important;
+}
+
+#functions {
+    padding: 0 20px;
+}
+.sectionWrapper {
+    width: 95%;
+    margin: auto;
+}
+
+.hide {
+    display: none;
+}
+
+.reversedRange {
+    direction: rtl
+}
+
+.config{
+    padding: 20px 0;
+    background: #F1F1F1;
+}
+
+.configText{
+    text-align: center;
+    /* font-weight: bold; */
+    font-size: 1rem;
+}
+
+
+/* collapsable */
+
+.collapsible {
+    background-color: white;
+    color: #009FDB;
+    font-weight: bold;
+    border: 1px solid rgba(0,0,0,.125);
+    border-radius: 2px;
+    cursor: pointer;
+    padding: 10px;
+    width: 100%;
+    text-align: left;
+    outline: none;
+    font-size: 15px;
+  }
+  
+  .active, .collapsible:hover {
+    background-color: #E7F1FF;
+  }
+  
+  .collapsible:after {
+    content: '\002B';
+    font-weight: bold;
+    font-size: 25px;
+    float: right;
+    margin-left: 5px;
+  }
+  
+  .active:after {
+    content: '\002D'
+  }
+  
+  .content {
+    padding: 0 18px;
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.2s ease-out;
+    background-color: #f1f1f1;
+  }
+
+  
+/* rotation section  */
+
+.autoRotation {
+    margin: 20px;
+}
+
+.flexSpaceBetween {
+    display: flex;
+    justify-content: space-between;
+}
+
+/* checkbox design/ */
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 24px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #ccc;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 15px;
+    width: 15px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    -webkit-transition: 0.4s;
+    transition: 0.4s;
+}
+
+input:checked + .slider {
+    background-color: #2196f3;
+}
+
+input:focus + .slider {
+    box-shadow: 0 0 1px #2196f3;
+}
+
+input:checked + .slider:before {
+    -webkit-transform: translateX(26px);
+    -ms-transform: translateX(26px);
+    transform: translateX(26px);
+}
+
+/* Rounded sliders */
+.slider.round {
+    border-radius: 34px;
+}
+
+.slider.round:before {
+    border-radius: 50%;
+}
+
+/* range input design  */
+
+.sliderRange {
+    margin: 10px;
+    -webkit-appearance: none;
+    width: 100%;
+    height: 10px;
+    border-radius: 5px;
+    background: #d3d3d3;
+    outline: none;
+    opacity: 1;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+}
+
+.sliderRange::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 15px;
+    height: 15px;
+    border-radius: 50%;
+    background: blue;
+    cursor: pointer;
+}
+
+.sliderRange::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    border-radius: 50%;
+    background: #04aa6d;
+    cursor: pointer;
+}
+
+/* background section */
+
+.bgInputWrapper {
+    display: flex;
+}
+
+.radioInputDiv {
+    margin: 5px;
+}
+
+.radioLabel {
+    padding: 15px 23px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.Skyblue {
+    background: skyblue;
+}
+
+.red {
+    background: #d14250;
+}
+
+.gray {
+    background: #8b9298;
+}
+
+.blue {
+    background: #3888fd;
+}
+
+.green {
+    background: #198754;
+}
+
+.yellow {
+    background: #ffc107;
+}
+
+/* texture background start */
+.texture1 {
+    background: url("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_rt.jpg");
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+}
+.texture2 {
+    background: url("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_rt.jpg");
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+}
+.texture3 {
+    background: url("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_lf.jpg");
+    background-repeat: no-repeat;
+    background-size: 50px 50px;
+}
+
+/* texture background end */
+.btnGroup {
+    display: flex;
+    margin: 15px;
+    /*  */
+}
+.bgBtn {
+    background: none;
+    flex: 1 1 auto;
+    padding: 13px 0;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+.bgLeftBtn, .upLeftBtn {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    background: #37c1dc;
+    transition: background-color 0.5s ease;
+}
+.bgRightBtn, .upRightBtn {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    background: #246ad0;
+    color: white;
+    transition: background-color 0.5s ease;
+}
+.bgLeftBtn:hover, .upLeftBtn:hover {
+    background: #34b1c9;
+}
+.bgRightBtn:hover, .upRightBtn:hover {
+    background: #215eb8;
+}
+
+#plainBackground{
+    width: 100%;
+}
+#TextureBackground{
+    width: 100%;
+}
+
+input{
+    width: 100%;
+}
+
+
+/* file upload */
+
+#fileInput, #urlInput{
+    padding: 8px;
+    border: 1px solid #ccc;
+}
+
+.btn{
+    width: 100%;
+    padding: 10px;
+    border: none;
+    margin: 10px 0;
+    background: #157347;
+    color: white;
+    border-radius: 5px;
+    transition: background-color 0.5s ease;
+}
+.btn:hover{
+    background: rgb(9, 77, 45);
+}
+
+
+/* container */
+
+@media only screen and (max-width: 1000px) {
+    .container{
+        width: 97%;
+    }
+  }
+@media only screen and (max-width: 750px) {
+    .wrapper{
+        display: block;
+    }
+    #functions {
+        padding: 20px 0;
+    }
+    .container{
+        width: 80%;
+    }
+   
+  }
