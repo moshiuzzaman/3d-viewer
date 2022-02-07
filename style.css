@@ -1,6 +1,11 @@
+@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;300&display=swap');
+
 * {
     margin: 0;
     padding: 0;
+}
+*:focus {
+    outline: none;
 }
 
 body {
@@ -36,13 +41,13 @@ canvas {
     width: 100%;
 }
 
-.actionButton{
+.actionButton {
     position: absolute;
     right: 10px;
     top: 10px;
 }
 
-.actionButton button{
+.actionButton button {
     padding: 13px 15px;
     margin: 2px;
     border: none;
@@ -54,10 +59,12 @@ canvas {
     text-align: center;
     font-size: 50px;
     margin-bottom: 1rem !important;
+    font-family: IBM Plex Sans Thai Looped;
 }
 
 #functions {
     padding: 0 20px;
+    width: 67%;
 }
 .sectionWrapper {
     width: 95%;
@@ -69,66 +76,60 @@ canvas {
 }
 
 .reversedRange {
-    direction: rtl
+    direction: rtl;
 }
 
-.config{
-    padding: 20px 0;
-    background: #F1F1F1;
+.config {
+    padding: 15px 0;
+    background: #f1f1f1;
 }
 
-.configText{
+.configText {
     text-align: center;
+    font-family: IBM Plex Sans Thai Looped;
     /* font-weight: bold; */
     font-size: 1rem;
 }
-
 
 /* collapsable */
 
 .collapsible {
     background-color: white;
-    color: #009FDB;
+    color: #009fdb;
     font-weight: bold;
-    border: 1px solid rgba(0,0,0,.125);
+    border: 1px solid rgba(0, 0, 0, 0.125);
     border-radius: 2px;
     cursor: pointer;
-    padding: 10px;
+    padding: 17px;
+    display: flex;
+    justify-content: space-between;
     width: 100%;
     text-align: left;
     outline: none;
     font-size: 15px;
-  }
-  
-  .active, .collapsible:hover {
-    background-color: #E7F1FF;
-  }
-  
-  .collapsible:after {
-    content: '\002B';
-    font-weight: bold;
-    font-size: 25px;
-    float: right;
-    margin-left: 5px;
-  }
-  
-  .active:after {
-    content: '\002D'
-  }
-  
-  .content {
+}
+
+.rotation {
+    transform: rotate(-180deg);
+}
+
+i{
+    transition: 00.5s ease;
+    color: black;
+}
+
+.content {
     padding: 0 18px;
     max-height: 0;
     overflow: hidden;
     transition: max-height 0.2s ease-out;
     background-color: #f1f1f1;
-  }
+}
 
-  
 /* rotation section  */
 
 .autoRotation {
-    margin: 20px;
+    margin: 10px ;
 }
 
 .flexSpaceBetween {
@@ -302,46 +303,50 @@ input:checked + .slider:before {
     border: none;
     cursor: pointer;
 }
-.bgLeftBtn, .upLeftBtn {
+.bgLeftBtn,
+.upLeftBtn {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     background: #37c1dc;
     transition: background-color 0.5s ease;
 }
-.bgRightBtn, .upRightBtn {
+.bgRightBtn,
+.upRightBtn {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     background: #246ad0;
     color: white;
     transition: background-color 0.5s ease;
 }
-.bgLeftBtn:hover, .upLeftBtn:hover {
+.bgLeftBtn:hover,
+.upLeftBtn:hover {
     background: #34b1c9;
 }
-.bgRightBtn:hover, .upRightBtn:hover {
+.bgRightBtn:hover,
+.upRightBtn:hover {
     background: #215eb8;
 }
 
-#plainBackground{
+#plainBackground {
     width: 100%;
 }
-#TextureBackground{
-    width: 100%;
-}
-
-input{
+#TextureBackground {
     width: 100%;
 }
 
+input {
+    width: 100%;
+}
 
 /* file upload */
 
-#fileInput, #urlInput{
+#fileInput,
+#urlInput {
     padding: 8px;
     border: 1px solid #ccc;
 }
 
-.btn{
+.btn {
     width: 100%;
     padding: 10px;
     border: none;
@@ -351,27 +356,25 @@ input{
     border-radius: 5px;
     transition: background-color 0.5s ease;
 }
-.btn:hover{
+.btn:hover {
     background: rgb(9, 77, 45);
 }
-
 
 /* container */
 
 @media only screen and (max-width: 1000px) {
-    .container{
+    .container {
         width: 97%;
     }
-  }
+}
 @media only screen and (max-width: 750px) {
-    .wrapper{
+    .wrapper {
         display: block;
     }
     #functions {
         padding: 20px 0;
     }
-    .container{
+    .container {
         width: 80%;
     }
-   
-  }
+}

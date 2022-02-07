@@ -6,6 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 </head>
 
 <body>
@@ -32,7 +33,7 @@
                 </div>
 
                 <!-- rotation section -->
-                <button class="collapsible">Rotation</button>
+                <button id="col1" class="collapsible"><span>Rotation</span> <i id="icon1" class="fas fa-chevron-down "></i></button>
                 <div class="content">
                     <div class="sectionWrapper">
                         <div class="autoRotation flexSpaceBetween">
@@ -67,7 +68,7 @@
 
                 <!-- zoom section  -->
 
-                <button class="collapsible">Zoom</button>
+                <button id="col2" class="collapsible"><span>Zoom</span> <i id="icon2" class="fas fa-chevron-down "></i></button>
                 <div class="content">
                     <div class="sectionWrapper">
 
@@ -81,13 +82,13 @@
 
                         <div class="autoRotation">
                             <p>Zoom In limit</p>
-                            <input type="range" min="10" max="25" step="3" value="10" class="sliderRange reversedRange"
+                            <input type="range" min="10" max="25" step="3" value="10" class="sliderRange "
                                 id="ZoomLimiteIn">
 
                         </div>
                         <div class="autoRotation">
                             <p>Zoom Out limit</p>
-                            <input type="range" min="25" max="70" step="3" value="70" class="sliderRange"
+                            <input type="range" min="25" max="70" step="3" value="70" class="sliderRange reversedRange"
                                 id="ZoomLimiteOut">
 
                         </div>
@@ -97,7 +98,7 @@
 
 
                 <!-- background section -->
-                <button class="collapsible">background</button>
+                <button id="col3" class="collapsible"><span>background</span> <i id="icon3" class="fas fa-chevron-down "></i></button>
                 <div class="content">
                     <div class="btnGroup">
                         <button class="bgBtn bgLeftBtn">Plain Background</button>
@@ -166,7 +167,7 @@
                 </div>
 
                 <!-- upload section -->
-                <button class="collapsible">Upload a model</button>
+                <button id="col4" class="collapsible"><span>Upload a model</span> <i id="icon4" class="fas fa-chevron-down "></i></button>
                 <div class="content">
                     <div class="btnGroup">
                         <button class="bgBtn upLeftBtn">File Upload</button>
@@ -203,7 +204,7 @@
     <script type="importmap">
 			{
 				"imports": {
-					"three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.module.js"
+					"three": "./files/three.module.js"
 				}
 			}
 	</script>

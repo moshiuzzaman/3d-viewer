@@ -43,16 +43,34 @@ function init() {
         45,
         window.innerWidth / window.innerHeight,
         1,
-        2000
+        window.innerHeight
+
     );
     camera.position.set(0, 0, 25);
 
     //setup light
-    let light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 1.5 );
+    let light = new THREE.HemisphereLight( 0xffffbb, 0x080820, 0.8 );
+    
     scene.add(light);
-    let DirectionalLight = new THREE.DirectionalLight(0xffffff, 0.5);
-    DirectionalLight.position.set( 5, 5, 1.5);
-    scene.add(DirectionalLight);
+
+    let DirectionalLightbt = new THREE.DirectionalLight(0xffffff, 0.7);
+    DirectionalLightbt.position.set( 3, -8, 1.5);
+
+    scene.add(DirectionalLightbt);
+
+    let DirectionalLightside = new THREE.DirectionalLight(0xffffff, 0.5);
+    DirectionalLightside.position.set( 7, 8, 0);
+
+    scene.add(DirectionalLightside);
+
+    let DirectionalLightside2 = new THREE.DirectionalLight(0xffffff, 0.5);
+    DirectionalLightside2.position.set( -7, 8, 0);
+
+    scene.add(DirectionalLightside2);
+
+
+    // const helper = new THREE.DirectionalLightHelper( DirectionalLightbt, 5 );
+    // scene.add( helper );
 
 
 
@@ -69,6 +87,7 @@ function init() {
         obj.scale.set(4, 4, 4);
         scene.add(obj);
     });
+
 
     //events for file uploader start
     const inputElement = document.getElementById("fileInput");
@@ -88,6 +107,7 @@ function init() {
 
         if (fileExt === "fbx") {
             scene.remove(obj);
+            // console.log(x);
             FBXloader.load(x, function (fbx) {
                 obj = fbx;
                 // obj.position.set(0, -5, 0);

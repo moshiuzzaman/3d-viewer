@@ -238,20 +238,117 @@ upRightBtn.addEventListener("click", () => {
 }); //
 
 //for collapsable design
-var coll = document.getElementsByClassName("collapsible");
-var i;
 
-for (i = 0; i < coll.length; i++) {
-    coll[i].addEventListener("click", function () {
-        this.classList.toggle("active");
-        var content = this.nextElementSibling;
-        if (content.style.maxHeight) {
-            content.style.maxHeight = null;
-        } else {
-            content.style.maxHeight = content.scrollHeight + "px";
-        }
-    });
-}
+var colBtn1 = document.getElementById('col1');
+var colBtn2 = document.getElementById('col2');
+var colBtn3 = document.getElementById('col3');
+var colBtn4 = document.getElementById('col4');
+//rotation
+
+let icon1 = document.getElementById('icon1');
+let icon2 = document.getElementById('icon2');
+let icon3 = document.getElementById('icon3');
+let icon4 = document.getElementById('icon4');
+
+
+colBtn1.addEventListener("click", function () {
+    
+    
+    var content1 = this.nextElementSibling;
+    var content2 = colBtn2.nextElementSibling;
+    var content3 = colBtn3.nextElementSibling;
+    var content4 = colBtn4.nextElementSibling;
+    if (content1.style.maxHeight) {
+        content1.style.maxHeight = null;
+        icon1.classList.remove('rotation');
+        
+
+    } else {
+        
+        content1.style.maxHeight = content1.scrollHeight + "px";
+        content2.style.maxHeight = null;
+        content3.style.maxHeight = null;
+        content4.style.maxHeight = null;
+
+        icon1.classList.add('rotation');
+        icon2.classList.remove('rotation');
+        icon3.classList.remove('rotation');
+        icon4.classList.remove('rotation');
+
+    }
+});
+
+
+colBtn2.addEventListener("click", function () {
+    
+    var content1 = this.nextElementSibling;
+    var content2 = colBtn1.nextElementSibling;
+    var content3 = colBtn3.nextElementSibling;
+    var content4 = colBtn4.nextElementSibling;
+    if (content1.style.maxHeight) {
+        content1.style.maxHeight = null;
+        icon2.classList.remove('rotation');
+    } else {
+        content1.style.maxHeight = content1.scrollHeight + "px";
+        content2.style.maxHeight = null;
+        content3.style.maxHeight = null;
+        content4.style.maxHeight = null;
+
+        icon1.classList.remove('rotation');
+        icon2.classList.add('rotation');
+        icon3.classList.remove('rotation');
+        icon4.classList.remove('rotation');
+    }
+});
+
+
+colBtn3.addEventListener("click", function () {
+    
+    
+    var content1 = this.nextElementSibling;
+    var content2 = colBtn2.nextElementSibling;
+    var content3 = colBtn1.nextElementSibling;
+    var content4 = colBtn4.nextElementSibling;
+    if (content1.style.maxHeight) {
+        content1.style.maxHeight = null;
+        icon4.classList.remove('rotation');
+    } else {
+        content1.style.maxHeight = content1.scrollHeight + "px";
+        content2.style.maxHeight = null;
+        content3.style.maxHeight = null;
+        content4.style.maxHeight = null;
+
+        icon1.classList.remove('rotation');
+        icon2.classList.remove('rotation');
+        icon3.classList.add('rotation');
+        icon4.classList.remove('rotation');
+    }
+});
+
+
+colBtn4.addEventListener("click", function () {
+    
+    
+    
+    var content1 = this.nextElementSibling;
+    var content2 = colBtn2.nextElementSibling;
+    var content3 = colBtn3.nextElementSibling;
+    var content4 = colBtn1.nextElementSibling;
+    if (content1.style.maxHeight) {
+        content1.style.maxHeight = null;
+        icon4.classList.remove('rotation');
+    } else {
+        content1.style.maxHeight = content1.scrollHeight + "px";
+        content2.style.maxHeight = null;
+        content3.style.maxHeight = null;
+        content4.style.maxHeight = null;
+
+        icon1.classList.remove('rotation');
+        icon2.classList.remove('rotation');
+        icon3.classList.remove('rotation');
+        icon4.classList.add('rotation');
+    }
+});
 
 //snapshot and full screen
 
