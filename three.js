@@ -149,7 +149,7 @@ function init() {
                     }
                     else obj.position.y -= y;
                 }
-                console.log(obj);
+                // console.log(obj);
 
                 if (obj.animations.length) {
                     mixer = new THREE.AnimationMixer(obj);
@@ -184,9 +184,8 @@ function init() {
                         element.position.set(offset.x, offset.y, offset.z);
                 });
 
-                console.log(gltf);
-                if (gltf.scene.animations.length) {
-                    // console.log(gltf.animations.length);
+                // console.log(gltf.animations.length);
+                if (gltf.animations.length) {
                     mixer = new THREE.AnimationMixer(gltf.scene);
                     mixer.clipAction( gltf.animations[ 0 ] ).play();
                 }
@@ -299,9 +298,8 @@ function init() {
                 });
 
                 if (gltf.animations.length) {
-                    mixer = new THREE.AnimationMixer(gltf);
-                    const action = mixer.clipAction(gltf.animations[0]);
-                    action.play();
+                    mixer = new THREE.AnimationMixer(gltf.scene);
+                    mixer.clipAction( gltf.animations[ 0 ] ).play();
                 }
                 // console.log(obj);
                 scene.add(gltf);
