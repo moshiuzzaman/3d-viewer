@@ -1,4 +1,8 @@
-@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;300&display=swap');
+// document.getElementById("bs__root").innerHTML = ``;
+
+// Add style ***********
+
+let styles = `@import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Thai+Looped:wght@100;300&display=swap');
 
 * {
     margin: 0;
@@ -122,6 +126,10 @@ canvas {
 i{
     transition: 00.5s ease;
     color: black;
+}
+button img{
+    transition: 00.5s ease;
+    width: 16px;
 }
 
 .content {
@@ -255,42 +263,42 @@ input:checked + .slider:before {
 }
 
 .Skyblue {
-    background: skyblue;
+    background: ${bgColor[0]};
 }
 
 .red {
-    background: #d14250;
+    background: ${bgColor[1]};
 }
 
 .gray {
-    background: #8b9298;
+    background: ${bgColor[2]};
 }
 
 .blue {
-    background: #3888fd;
+    background: ${bgColor[3]};
 }
 
 .green {
-    background: #198754;
+    background: ${bgColor[4]};
 }
 
 .yellow {
-    background: #ffc107;
+    background: ${bgColor[5]};
 }
 
 /* texture background start */
 .texture1 {
-    background: url("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_rt.jpg");
+    background: url( ${bgTexrute[0].texture_rt});
     background-repeat: no-repeat;
     background-size: 50px 50px;
 }
 .texture2 {
-    background: url("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_rt.jpg");
+  background: url( ${bgTexrute[1].texture_rt});
     background-repeat: no-repeat;
     background-size: 50px 50px;
 }
 .texture3 {
-    background: url("https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_lf.jpg");
+  background: url( ${bgTexrute[2].texture_lf});
     background-repeat: no-repeat;
     background-size: 50px 50px;
 }
@@ -385,3 +393,9 @@ input {
         width: 80%;
     }
 }
+`;
+let styleSheet = document.createElement("style");
+styleSheet.type = "text/css";
+styleSheet.innerText = styles;
+console.log(styleSheet);
+document.head.appendChild(styleSheet);
