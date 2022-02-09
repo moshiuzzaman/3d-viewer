@@ -25,7 +25,7 @@ function init() {
 
     //create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color("skyblue");
+    scene.background = new THREE.Color(bgColor[0]);
 
     //set resderer
     renderer = new THREE.WebGLRenderer({
