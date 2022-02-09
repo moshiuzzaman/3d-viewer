@@ -59,7 +59,7 @@ canvas {
 .heading h1 {
     text-align: center;
     font-size: 50px;
-    margin-bottom: 1rem !important;
+    margin-bottom: 1rem;
     font-family: IBM Plex Sans Thai Looped;
 }
 
@@ -90,6 +90,11 @@ canvas {
     font-family: IBM Plex Sans Thai Looped;
     /* font-weight: bold; */
     font-size: 1rem;
+}
+
+.font_style{
+    font-family: IBM Plex Sans Thai Looped;
+    font-weight: bold;
 }
 
 /* collapsable */
@@ -374,6 +379,7 @@ input {
     }
     #functions {
         padding: 20px 0;
+        width: auto;
     }
     .container {
         width: 80%;

@@ -1,10 +1,8 @@
 //importing necessary things
 import * as THREE from "three";
-import { OrbitControls } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/OrbitControls.js";
+import { OrbitControls } from "OrbitControls";
 
-import { GLTFLoader } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/Loader.js";
-import { FBXLoader } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/Loader.js";
-import { OBJLoader } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/Loader.js";
+import { GLTFLoader, OBJLoader, FBXLoader } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/Loader.js";
 
 //console.log(ARButton);
 let camera,
@@ -106,6 +104,8 @@ function init() {
         scene.add(obj);
     });
 
+    
+
     //events for file uploader start
     const inputElement = document.getElementById("fileInput");
     inputElement.addEventListener("change", handleFiles, false);
@@ -131,23 +131,32 @@ function init() {
 
                 var maxAxis = Math.max(size.x, size.y, size.z);
 
+                let y = 0.5;
                 if (!isNaN(maxAxis)) {
                     obj.scale.multiplyScalar(10 / maxAxis);
+                    // y = 10 / maxAxis + 1;
                 } else {
                     obj.scale.set(0.02, 0.02, 0.02);
+                    y = 0.1;
                 }
 
                 const offset = new THREE.Vector3();
                 bbox.getCenter(offset).negate();
-                obj.children.forEach((element) => {
-                    if (element.children.length === obj.children.length)
+                for(let element of obj.children){
+                    if (element.children.length === obj.children.length){
                         element.position.set(offset.x, offset.y, offset.z);
-                });
+                        break;
+                    }
+                    else obj.position.y -= y;
+                }
+                console.log(obj);
 
                 if (obj.animations.length) {
                     mixer = new THREE.AnimationMixer(obj);
-                    const action = mixer.clipAction(obj.animations[0]);
-                    action.play();
+                    for(let i = 0 ; i < obj.animations.length ; i++){
+                        mixer.clipAction(obj.animations[0]).play();
+                    }
+                    
                     obj.castShadow = true;
                 }
 
@@ -175,10 +184,11 @@ function init() {
                         element.position.set(offset.x, offset.y, offset.z);
                 });
 
-                if (gltf.animations.length) {
-                    mixer = new THREE.AnimationMixer(gltf);
-                    const action = mixer.clipAction(gltf.animations[0]);
-                    action.play();
+                console.log(gltf);
+                if (gltf.scene.animations.length) {
+                    // console.log(gltf.animations.length);
+                    mixer = new THREE.AnimationMixer(gltf.scene);
+                    mixer.clipAction( gltf.animations[ 0 ] ).play();
                 }
 
                 scene.add(obj);
@@ -294,7 +304,7 @@ function init() {
                     action.play();
                 }
                 // console.log(obj);
-                scene.add(obj);
+                scene.add(gltf);
             });
         } else if (fileExt === "obj") {
             scene.remove(obj);
@@ -377,8 +387,8 @@ function render() {
     if (controls.maxPolarAngle !== maxAngleForOrbit)
         controls.maxPolarAngle = maxAngleForOrbit;
 
-    const delta = clock.getDelta();
-    if (mixer) mixer.update(delta);
+    
+    if ( mixer ) mixer.update( clock.getDelta() );
 
     controls.update();
     renderer.render(scene, camera);
@@ -471,43 +481,31 @@ document.getElementsByName("bg").forEach((radio) => {
     radio.addEventListener("click", () => {
         if (radio.value === "skyblue") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color("skyblue");
+            scene.background = new THREE.Color(bgColor[0]);
         } else if (radio.value === "red") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color("#D14250");
+            scene.background = new THREE.Color(bgColor[1]);
         } else if (radio.value === "gray") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color("#8B9298");
+            scene.background = new THREE.Color(bgColor[2]);
         } else if (radio.value === "blue") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color("#3888FD");
+            scene.background = new THREE.Color(bgColor[3]);
         } else if (radio.value === "green") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color("#198754");
+            scene.background = new THREE.Color(bgColor[4]);
         } else if (radio.value === "yellow") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color("#FFC107");
+            scene.background = new THREE.Color(bgColor[5]);
         } else if (radio.value === "texture1") {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_ft.jpg"
-            );
-            let texture_bk = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_bk.jpg"
-            );
-            let texture_up = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_up.jpg"
-            );
-            let texture_dn = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_dn.jpg"
-            );
-            let texture_rt = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_rt.jpg"
-            );
-            let texture_lf = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_lf.jpg"
-            );
+            let texture_ft = new THREE.TextureLoader().load(bgTexrute[0].texture_ft);
+            let texture_bk = new THREE.TextureLoader().load(bgTexrute[0].texture_bk);
+            let texture_up = new THREE.TextureLoader().load(bgTexrute[0].texture_up);
+            let texture_dn = new THREE.TextureLoader().load(bgTexrute[0].texture_dn);
+            let texture_rt = new THREE.TextureLoader().load(bgTexrute[0].texture_rt);
+            let texture_lf = new THREE.TextureLoader().load(bgTexrute[0].texture_lf);
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -537,24 +535,12 @@ document.getElementsByName("bg").forEach((radio) => {
         } else if (radio.value === "texture2") {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_ft.jpg"
-            );
-            let texture_bk = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_bk.jpg"
-            );
-            let texture_up = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_up.jpg"
-            );
-            let texture_dn = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_dn.jpg"
-            );
-            let texture_rt = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_rt.jpg"
-            );
-            let texture_lf = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_lf.jpg"
-            );
+            let texture_ft = new THREE.TextureLoader().load(bgTexrute[1].texture_ft);
+            let texture_bk = new THREE.TextureLoader().load(bgTexrute[1].texture_bk);
+            let texture_up = new THREE.TextureLoader().load(bgTexrute[1].texture_up);
+            let texture_dn = new THREE.TextureLoader().load(bgTexrute[1].texture_dn);
+            let texture_rt = new THREE.TextureLoader().load(bgTexrute[1].texture_rt);
+            let texture_lf = new THREE.TextureLoader().load(bgTexrute[1].texture_lf);
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -584,24 +570,12 @@ document.getElementsByName("bg").forEach((radio) => {
         } else if (radio.value === "texture3") {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_ft.jpg"
-            );
-            let texture_bk = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_bk.jpg"
-            );
-            let texture_up = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_up.jpg"
-            );
-            let texture_dn = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_dn.jpg"
-            );
-            let texture_rt = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_rt.jpg"
-            );
-            let texture_lf = new THREE.TextureLoader().load(
-                "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_lf.jpg"
-            );
+            let texture_ft = new THREE.TextureLoader().load(bgTexrute[2].texture_ft);
+            let texture_bk = new THREE.TextureLoader().load(bgTexrute[2].texture_bk);
+            let texture_up = new THREE.TextureLoader().load(bgTexrute[2].texture_up);
+            let texture_dn = new THREE.TextureLoader().load(bgTexrute[2].texture_dn);
+            let texture_rt = new THREE.TextureLoader().load(bgTexrute[2].texture_rt);
+            let texture_lf = new THREE.TextureLoader().load(bgTexrute[2].texture_lf);
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -770,8 +744,8 @@ fullScreen.addEventListener("click", () => {
         document.querySelector("#functions").classList.remove("hide");
         document.querySelector(".heading").classList.remove("hide");
 
-        document.querySelector(".container").style.width = "90%";
-        document.getElementById("myCanvasElement").style.height = "80vh";
+        document.querySelector(".container").style.width = "80%";
+        document.getElementById("myCanvasElement").style.height = "70vh";
 
         const canvas = renderer.domElement;
         // look up the size the canvas is being displayed
