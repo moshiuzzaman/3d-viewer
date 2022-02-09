@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>task 1</title>
+    <title>3D Viewer</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
     <link rel="stylesheet" href="style.css">
@@ -82,13 +82,13 @@
 
                         <div class="autoRotation">
                             <p>Zoom In limit</p>
-                            <input type="range" min="10" max="25" step="3" value="10" class="sliderRange "
+                            <input type="range" min="-10" max="10" step="2" value="10" class="sliderRange reversedRange"
                                 id="ZoomLimiteIn">
 
                         </div>
                         <div class="autoRotation">
                             <p>Zoom Out limit</p>
-                            <input type="range" min="25" max="70" step="3" value="70" class="sliderRange reversedRange"
+                            <input type="range" min="50" max="90" step="2" value="50" class="sliderRange "
                                 id="ZoomLimiteOut">
 
                         </div>
@@ -204,17 +204,23 @@
     <script type="importmap">
 			{
 				"imports": {
-					"three": "./files/three.module.js"
+					"three": "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/three.module.js"
 				}
 			}
 	</script>
 
 
+    <script>
+        let add = 10;
+        maxAngleForOrbit = 3.4,
+        minAngleForOrbit = 0,
+        zoomMax = 50,
+        zoomMin = 10;
+    </script>
+
+
 
     <script type="module" src="./three.js"></script>
-    <script type="module" src="./script.js"></script>
-
-
 </body>
 
 </html>
