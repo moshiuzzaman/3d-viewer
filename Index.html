@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>3D Viewer</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+</head>
+
+<body>
+    <div class="container">
+        <div class="heading">
+            <h1>3D Viewer</h1>
+            
+              
+        </div>
+        <div class="wrapper" id="wrapperId">
+            <div class="canvasWrapper">
+                <div class="actionButton">
+                    <button id="fullscreen"><img height="15px" src="https://img.icons8.com/ios-glyphs/30/000000/full-screen--v1.png"/></button>
+                    <button id="snapshot"><img height="15px" src="https://img.icons8.com/ios-glyphs/30/000000/screenshot.png"/></button>
+                </div>
+                <canvas id="myCanvasElement"></canvas>
+            </div>
+
+            <div id="functions" class="">
+
+
+                <div class="config">
+                    <h6 class="configText">Configuration</h6>
+                </div>
+
+                <!-- rotation section -->
+                <button id="col1" class="collapsible"><span>Rotation</span> <i id="icon1" class="fas fa-chevron-down "></i></button>
+                <div class="content">
+                    <div class="sectionWrapper">
+                        <div class="autoRotation flexSpaceBetween">
+                            <p>Autorotation</p>
+                            <label class="switch">
+                                <input type="checkbox" id="autoRotationBtn" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="autoRotation">
+                            <p>Autorotation speed</p>
+                            <input type="range" min="-50" max="50" step="5" value="10" class="sliderRange" id="myRange">
+
+                        </div>
+
+                        <div class="autoRotation">
+                            <p>Rotation Top Limit</p>
+                            <input type="range" min="1.6" max="3.2" step="0.2" value="3.1" class="sliderRange"
+                                id="myRangeTopLimite">
+
+                        </div>
+                        <div class="autoRotation">
+                            <p>Rotation Bottom Limit</p>
+                            <input type="range" min="0" max="1.6" step="0.2" value="0" class="sliderRange reversedRange"
+                                id="myRangeBottomLimite">
+
+                        </div>
+                    </div>
+                </div>
+
+
+                <!-- zoom section  -->
+
+                <button id="col2" class="collapsible"><span>Zoom</span> <i id="icon2" class="fas fa-chevron-down "></i></button>
+                <div class="content">
+                    <div class="sectionWrapper">
+
+                        <div class="autoRotation flexSpaceBetween">
+                            <p>Zoom Enable</p>
+                            <label class="switch">
+                                <input type="checkbox" id="ZoomBtn" checked>
+                                <span class="slider round"></span>
+                            </label>
+                        </div>
+
+                        <div class="autoRotation">
+                            <p>Zoom In limit</p>
+                            <input type="range" min="-10" max="10" step="2" value="10" class="sliderRange reversedRange"
+                                id="ZoomLimiteIn">
+
+                        </div>
+                        <div class="autoRotation">
+                            <p>Zoom Out limit</p>
+                            <input type="range" min="50" max="90" step="2" value="50" class="sliderRange "
+                                id="ZoomLimiteOut">
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- background section -->
+                <button id="col3" class="collapsible"><span>background</span> <i id="icon3" class="fas fa-chevron-down "></i></button>
+                <div class="content">
+                    <div class="btnGroup">
+                        <button class="bgBtn bgLeftBtn">Plain Background</button>
+                        <button class="bgBtn bgRightBtn">Texture Background</button>
+                    </div>
+                    <div class="sectionWrapper">
+                        <div id="plainBackground">
+                            <p>Choose Plain Background Color</p>
+                            <br>
+                            <div class="bgInputWrapper">
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="skyblue" name="bg" value="skyblue">
+                                    <label class="radioLabel Skyblue" for="skyblue"></label>
+                                </div>
+
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="red" name="bg" value="red">
+                                    <label class="radioLabel red" for="red"></label>
+                                </div>
+
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="gray" name="bg" value="gray">
+                                    <label class="radioLabel gray" for="gray"></label>
+                                </div>
+
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="blue" name="bg" value="blue">
+                                    <label class="radioLabel blue" for="blue"></label>
+                                </div>
+
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="green" name="bg" value="green">
+                                    <label class="radioLabel green" for="green"></label>
+                                </div>
+
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="yellow" name="bg" value="yellow">
+                                    <label class="radioLabel yellow" for="yellow"></label>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div id="TextureBackground" class="hide">
+                            <p>Choose Texture Background</p>
+                            <br>
+                            <div class="bgInputWrapper">
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="texture1" name="bg" value="texture1">
+                                    <label class="radioLabel texture1" for="texture1"></label>
+                                </div>
+
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="texture2" name="bg" value="texture2">
+                                    <label class="radioLabel texture2" for="texture2"></label>
+                                </div>
+
+                                <div class="radioInputDiv">
+                                    <input class="hide" type="radio" id="texture3" name="bg" value="texture3">
+                                    <label class="radioLabel texture3" for="texture3"></label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <br><br>
+                </div>
+
+                <!-- upload section -->
+                <button id="col4" class="collapsible"><span>Upload a model</span> <i id="icon4" class="fas fa-chevron-down "></i></button>
+                <div class="content">
+                    <div class="btnGroup">
+                        <button class="bgBtn upLeftBtn">File Upload</button>
+                        <button class="bgBtn upRightBtn">URL Upload</button>
+                    </div>
+                    
+                    <div class="sectionWrapper">
+                        <div id="uploadFile">
+                            <p>Upload a gltf/obj/fbx file</p>
+                            <br>
+                            <input type="file" id="fileInput">
+                            <button id="fileUploadBtn" class="btn">File Upload</button>
+                        </div>
+                        <div id="urlFile" class="hide">
+                            <p>gltf/fbx/obj model url</p>
+                            <br>
+                            <input type="text" id="urlInput" placeholder="Enter URL Here" autocomplete="off">
+                            <button id="urlUploadBtn" class="btn">URL Upload</button>
+                        </div>
+                        
+
+                        <br><br>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Import maps polyfill -->
+    <!-- Remove this when import maps will be widely supported -->
+    <script async src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"></script>
+
+    <script type="importmap">
+			{
+				"imports": {
+					"three": "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/three.module.js"
+				}
+			}
+	</script>
+
+
+    <script>
+        let add = 10;
+        maxAngleForOrbit = 3.4,
+        minAngleForOrbit = 0,
+        zoomMax = 50,
+        zoomMin = 10;
+    </script>
+
+
+
+    <script type="module" src="./three.js"></script>
+</body>
+
+</html>
