@@ -396,7 +396,7 @@ body {
 }
 
 .container {
-    width: 90%;
+    width: 80%;
     margin: auto;
     height: auto;
 }
