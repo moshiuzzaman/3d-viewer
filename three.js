@@ -1,773 +1,462 @@
-//importing necessary things
-import * as THREE from "three";
-import { OrbitControls } from "OrbitControls";
+import * as THREE from "./libs/three.module.js";
+import { OrbitControls } from "./libs/OrbitControls.js";
+import { GLTFLoader } from "./libs/GLTFLoader.js";
+import { FBXLoader } from "./libs/FBXLoader.js";
+import { OBJLoader } from "./libs/OBJLoader.js";
 
-import { GLTFLoader, OBJLoader, FBXLoader } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/Loader.js";
-
-//console.log(ARButton);
-let camera,
-    scene,
-    renderer,
-    obj = "",
-    mixer,
-    controls;
-
-
-const clock = new THREE.Clock();
+let controls, camera, scene, renderer;
+let textureCube;
+let object = "";
+let mixer ;
+let clock = new THREE.Clock();
 
 init();
-render();
-
 
 function init() {
-    //getting canvas
-    var canvReference = document.getElementById("myCanvasElement");
-
-    //create scene
-    scene = new THREE.Scene();
-    scene.background = new THREE.Color(bgColor[0]);
-
-    //set resderer
-    renderer = new THREE.WebGLRenderer({
-        antialias: true,
-        canvas: canvReference,
-        preserveDrawingBuffer: true,
-    });
-    renderer.setPixelRatio(window.devicePixelRatio);
-    const canvas = renderer.domElement;
-    // look up the size the canvas is being displayed
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-
-    //setup camera
-    camera = new THREE.PerspectiveCamera(
-        45,
-        window.innerWidth / window.innerHeight,
-        1,
-        1000
-    );
-
-    camera.lookAt(scene.position);
-    camera.position.set(0, 0, 25);
-
-    // adjust displayBuffer size to match
-    if (canvas.width !== width || canvas.height !== height) {
-        // you must pass false here or three.js sadly fights the browser
-        renderer.setSize(width, height, false);
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-
-        // update any render target sizes here
-    }
-
-    //setup light
-    let light = new THREE.HemisphereLight(0xffffbb, 0x080820, 0.8);
-
-    scene.add(light);
-
-    let DirectionalLightbt = new THREE.DirectionalLight(0xffffff, 0.7);
-    DirectionalLightbt.position.set(3, -8, 1.5);
-
-    scene.add(DirectionalLightbt);
-
-    let DirectionalLightside = new THREE.DirectionalLight(0xffffff, 0.5);
-    DirectionalLightside.position.set(7, 8, 0);
-
-    scene.add(DirectionalLightside);
-
-    let DirectionalLightside2 = new THREE.DirectionalLight(0xffffff, 0.5);
-    DirectionalLightside2.position.set(-7, 8, 0);
-
-    scene.add(DirectionalLightside2);
-
-    // const helper = new THREE.DirectionalLightHelper( DirectionalLightbt, 5 );
-    // scene.add( helper );
-
-    // file handle start
-    let file = null,
-        x;
-
-    const FBXloader = new FBXLoader();
-    const GLTFloader = new GLTFLoader();
-    const OBJloader = new OBJLoader();
-
-    FBXloader.load("asset/fire.fbx", function (fbx) {
-        obj = fbx;
-        var bbox = new THREE.Box3().setFromObject(obj);
-        var size = bbox.getSize(new THREE.Vector3());
-
-        var maxAxis = Math.max(size.x, size.y, size.z);
-        // console.log(maxAxis);
-        // obj.position.set(0, -5, 0);
-        obj.scale.multiplyScalar(6 / maxAxis);
-
-        scene.add(obj);
-    });
-
-    
-
-    //events for file uploader start
-    const inputElement = document.getElementById("fileInput");
-    inputElement.addEventListener("change", handleFiles, false);
-
-    function handleFiles() {
-        const fileList = this.files;
-        file = fileList[0];
-    }
-
-    document.getElementById("fileUploadBtn").addEventListener("click", () => {
-        x = URL.createObjectURL(file);
-        // console.log(x);
-
-        let fileName = file.name.split(".");
-        let fileExt = fileName[fileName.length - 1];
-
-        if (fileExt === "fbx") {
-            scene.remove(obj);
-            FBXloader.load(x, function (fbx) {
-                obj = fbx;
-                var bbox = new THREE.Box3().setFromObject(obj);
-                var size = bbox.getSize(new THREE.Vector3());
-
-                var maxAxis = Math.max(size.x, size.y, size.z);
-
-                let y = 0.5;
-                if (!isNaN(maxAxis)) {
-                    obj.scale.multiplyScalar(10 / maxAxis);
-                    // y = 10 / maxAxis + 1;
-                } else {
-                    obj.scale.set(0.02, 0.02, 0.02);
-                    y = 0.1;
-                }
-
-                const offset = new THREE.Vector3();
-                bbox.getCenter(offset).negate();
-                for(let element of obj.children){
-                    if (element.children.length === obj.children.length){
-                        element.position.set(offset.x, offset.y, offset.z);
-                        break;
-                    }
-                    else obj.position.y -= y;
-                }
-                // console.log(obj);
-
-                if (obj.animations.length) {
-                    mixer = new THREE.AnimationMixer(obj);
-                    for(let i = 0 ; i < obj.animations.length ; i++){
-                        mixer.clipAction(obj.animations[0]).play();
-                    }
-                    
-                    obj.castShadow = true;
-                }
-
-                scene.add(obj);
-            });
-        } else if (fileExt === "glb" || fileExt === "gltf") {
-            scene.remove(obj);
-            GLTFloader.load(x, function (gltf) {
-                obj = gltf.scene;
-                var bbox = new THREE.Box3().setFromObject(obj);
-                // var cent = bbox.getCenter(new THREE.Vector3());
-                var size = bbox.getSize(new THREE.Vector3());
-
-                var maxAxis = Math.max(size.x, size.y, size.z);
-                if (!isNaN(maxAxis)) {
-                    obj.scale.multiplyScalar(10 / maxAxis);
-                } else {
-                    obj.scale.set(0.02, 0.02, 0.02);
-                }
-
-                const offset = new THREE.Vector3();
-                bbox.getCenter(offset).negate();
-                obj.children.forEach((element) => {
-                    if (element.children.length === obj.children.length)
-                        element.position.set(offset.x, offset.y, offset.z);
-                });
-
-                // console.log(gltf.animations.length);
-                if (gltf.animations.length) {
-                    mixer = new THREE.AnimationMixer(gltf.scene);
-                    mixer.clipAction( gltf.animations[ 0 ] ).play();
-                }
-
-                scene.add(obj);
-            });
-        } else if (fileExt === "obj") {
-            scene.remove(obj);
-            OBJloader.load(x, function (objNew) {
-                obj = objNew;
-                var bbox = new THREE.Box3().setFromObject(obj);
-                var size = bbox.getSize(new THREE.Vector3());
-
-                var maxAxis = Math.max(size.x, size.y, size.z);
-
-                if (!isNaN(maxAxis)) {
-                    obj.scale.multiplyScalar(10 / maxAxis);
-                } else {
-                    obj.scale.set(0.02, 0.02, 0.02);
-                }
-
-                const offset = new THREE.Vector3();
-                bbox.getCenter(offset).negate();
-                obj.children.forEach((element) => {
-                    if (element.children.length === obj.children.length)
-                        element.position.set(offset.x, offset.y, offset.z);
-                });
-
-                if (obj.animations.length) {
-                    mixer = new THREE.AnimationMixer(obj);
-                    const action = mixer.clipAction(obj.animations[0]);
-                    action.play();
-                    obj.castShadow = true;
-                }
-                // console.log(objNew);
-
-                scene.add(obj);
-            });
-        }
-    });
-
-    //events for file uploader end
-
-    //events for url uploader start
-
-    let link;
-    const urlinputElement = document.getElementById("urlInput");
-    urlinputElement.addEventListener("change", urlhandleFiles, false);
-
-    function urlhandleFiles() {
-        link = this.value;
-    }
-
-    document.getElementById("urlUploadBtn").addEventListener("click", () => {
-        x = link;
-
-        let fileName = link.split(".");
-        let fileExt = fileName[fileName.length - 1];
-
-        if (fileExt === "fbx") {
-            scene.remove(obj);
-            FBXloader.load(x, function (fbx) {
-                obj = fbx;
-                var bbox = new THREE.Box3().setFromObject(obj);
-                var size = bbox.getSize(new THREE.Vector3());
-
-                var maxAxis = Math.max(size.x, size.y, size.z);
-
-                if (!isNaN(maxAxis)) {
-                    obj.scale.multiplyScalar(10 / maxAxis);
-                } else {
-                    obj.scale.set(0.02, 0.02, 0.02);
-                }
-
-                const offset = new THREE.Vector3();
-                bbox.getCenter(offset).negate();
-                obj.children.forEach((element) => {
-                    if (element.children.length === obj.children.length)
-                        element.position.set(offset.x, offset.y, offset.z);
-                });
-
-                if (obj.animations.length) {
-                    mixer = new THREE.AnimationMixer(obj);
-                    const action = mixer.clipAction(obj.animations[0]);
-                    action.play();
-                    obj.castShadow = true;
-                }
-                scene.add(obj);
-            });
-        } else if (fileExt === "glb" || fileExt === "gltf") {
-            scene.remove(obj);
-            GLTFloader.load(x, function (gltf) {
-                obj = gltf.scene;
-                var bbox = new THREE.Box3().setFromObject(obj);
-                var size = bbox.getSize(new THREE.Vector3());
-
-                var maxAxis = Math.max(size.x, size.y, size.z);
-
-                if (!isNaN(maxAxis)) {
-                    obj.scale.multiplyScalar(10 / maxAxis);
-                } else {
-                    obj.scale.set(0.02, 0.02, 0.02);
-                }
-
-                const offset = new THREE.Vector3();
-                bbox.getCenter(offset).negate();
-                obj.children.forEach((element) => {
-                    if (element.children.length === obj.children.length)
-                        element.position.set(offset.x, offset.y, offset.z);
-                });
-
-                if (gltf.animations.length) {
-                    mixer = new THREE.AnimationMixer(gltf.scene);
-                    mixer.clipAction( gltf.animations[ 0 ] ).play();
-                }
-                // console.log(obj);
-                scene.add(gltf);
-            });
-        } else if (fileExt === "obj") {
-            scene.remove(obj);
-            OBJloader.load(x, function (objNew) {
-                obj = objNew;
-                // console.log(obj);
-                var bbox = new THREE.Box3().setFromObject(obj);
-                var size = bbox.getSize(new THREE.Vector3());
-
-                var maxAxis = Math.max(size.x, size.y, size.z);
-
-                if (!isNaN(maxAxis)) {
-                    obj.scale.multiplyScalar(10 / maxAxis);
-                } else {
-                    obj.scale.set(0.02, 0.02, 0.02);
-                }
-
-                const offset = new THREE.Vector3();
-                bbox.getCenter(offset).negate();
-                obj.children.forEach((element) => {
-                    if (element.children.length === obj.children.length)
-                        element.position.set(offset.x, offset.y, offset.z);
-                });
-
-                if (obj.animations.length) {
-                    mixer = new THREE.AnimationMixer(obj);
-                    const action = mixer.clipAction(obj.animations[0]);
-                    action.play();
-                    obj.castShadow = true;
-                }
-                scene.add(obj);
-            });
-        }
-    });
-
-    //events for url uploader end
-
-    // file handle end
-
-    //setup orbit controller
-    controls = new OrbitControls(camera, renderer.domElement);
-    controls.target.set(0, 0, 0);
-
-    controls.autoRotate = true;
-
-    controls.screenSpacePanning = false;
-    controls.update();
-
-    renderer.setAnimationLoop(render);
-
-    //for responsiveness
-    window.addEventListener("resize", onWindowResize);
+  //target canvas
+  const Canvas = document.getElementById("modelCanvas");
+  camera = new THREE.PerspectiveCamera(
+    70,
+    window.innerWidth / window.innerHeight,
+    0.1,
+    100
+  );
+  //set camera position
+  camera.position.set(0, 0, 100);
+  //create scene
+  scene = new THREE.Scene();
+  //set scene background
+  scene.background = new THREE.Color("rgb(13, 202, 240)");
+  //create light
+  const ambient = new THREE.AmbientLight(0xffffff);
+  //adding light to the scene
+  scene.add(ambient);
+  //cube texture loader
+  const loader = new THREE.CubeTextureLoader();
+  loader.setPath("textures/scene_1/"); //set resource relative path
+  //load pictures for texture background
+  textureCube = loader.load([
+    "posx.jpg",
+    "negx.jpg",
+    "posy.jpg",
+    "negy.jpg",
+    "posz.jpg",
+    "negz.jpg",
+  ]);
+  textureCube.encoding = THREE.sRGBEncoding;
+  scene.background = textureCube; //set scene background
+  //load model
+  loadFile("model/file.gltf", "gltf");
+  //create rendereer
+  renderer = new THREE.WebGLRenderer({
+    antialias: true,
+    alpha: true,
+    canvas: Canvas,
+    preserveDrawingBuffer: true,
+  });
+  //set renderer pixel ratio
+  renderer.setPixelRatio(window.devicePixelRatio);
+  //set renderer size
+  renderer.setSize(Canvas.offsetWidth, Canvas.offsetHeight);
+  renderer.outputEncoding = THREE.sRGBEncoding;
+  //create control
+  controls = new OrbitControls(camera, renderer.domElement);
+  controls.target.set(1, 1, 1);
+  //controls.minDistance = 10;
+
+  //controls.maxDistance = 500;
+
+  controls.update();
+
+  //add window resize event
+  window.addEventListener("resize", onWindowResize);
+  //animate
+  renderer.setAnimationLoop(animate);
 }
-
+//window resize event function
 function onWindowResize() {
-    const canvas = renderer.domElement;
+  //camera aspect
+  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.updateProjectionMatrix(); //update camera projection matrix
+  controls.update();
+  //set renderer size
+  renderer.setSize(window.innerWidth, window.innerHeight);
+}
+//animate the scene
+function animate() {
+  let isAutoRotatinActive = document.getElementById(
+    "autoRotationControl"
+  ).checked;
+  if (isAutoRotatinActive) {
+    let scale = document.getElementById("autoRotationSpeed").value / 100;
+    //console.log(scale);
+    if (scale < 0) {
+      if (object) object.rotation.y += scale;
+    } else if (scale > 0) {
+      if (object) object.rotation.y += scale;
+    }
+  }
+  //rotation control
+  const upperRotationAngle =
+    Math.PI / 2 - -document.getElementById("rotation_top_limit").value;
+  const lowerRotationAngle =
+    Math.PI / 2 - document.getElementById("rotation_bottom_limit").value;
+  controls.maxPolarAngle = upperRotationAngle;
+  controls.minPolarAngle = lowerRotationAngle;
 
-    // look up the size the canvas is being displayed
-    const width = canvas.clientWidth;
-    const height = canvas.clientHeight;
-    camera.aspect = width / height;
-    camera.updateProjectionMatrix();
-
-    renderer.setSize(width, height, false);
-
-    // renderer.setSize(window.innerWidth, window.innerHeight, false);
-    render();
+  //zoom control
+  const isZoomChecked = document.getElementById("ZoomControl");
+  if (isZoomChecked.checked == true) {
+    controls.minDistance = 70 - document.getElementById("zoom_in_limit").value;
+    controls.minDistance += 45;
+    controls.maxDistance = document.getElementById("zoom_out_limit").value;
+    //console.log(controls.target.distanceTo( controls.object.position ))
+  } else {
+    controls.maxDistance = controls.minDistance = 70;
+  }
+  camera.lookAt(0, 0, 0);
+  controls.update();
+  if(mixer) mixer.update(clock.getDelta());
+  renderer.render(scene, camera);
 }
 
-function render() {
-    if (controls.autoRotateSpeed !== add) controls.autoRotateSpeed = add;
+//set texture background method
+function setTextureBackground(texture) {
+  // texture loader
+  const loader = new THREE.CubeTextureLoader();
+  //loader.setPath(texturePath); //set resources relative path
+  //load pictures for texture background
+  if(texture == "id_1"){
+    textureCube = loader.load([
+      textureBg.bg_1.posx,
+      textureBg.bg_1.negx,
+      textureBg.bg_1.posy,
+      textureBg.bg_1.negy,
+      textureBg.bg_1.posz,
+      textureBg.bg_1.negz
+    ]);
 
-    if (controls.minDistance !== zoomMin) controls.minDistance = zoomMin;
+  }else if(texture == "id_2"){
+    textureCube = loader.load([
+      textureBg.bg_2.posx,
+      textureBg.bg_2.negx,
+      textureBg.bg_2.posy,
+      textureBg.bg_2.negy,
+      textureBg.bg_2.posz,
+      textureBg.bg_2.negz
+    ]);
 
-    if (controls.maxDistance !== zoomMax) controls.maxDistance = zoomMax;
+  }else if(texture == "id_3"){
+    textureCube = loader.load([
+      textureBg.bg_3.posx,
+      textureBg.bg_3.negx,
+      textureBg.bg_3.posy,
+      textureBg.bg_3.negy,
+      textureBg.bg_3.posz,
+      textureBg.bg_3.negz
+    ]);
 
-    if (controls.minPolarAngle !== minAngleForOrbit)
-        controls.minPolarAngle = minAngleForOrbit;
-
-    if (controls.maxPolarAngle !== maxAngleForOrbit)
-        controls.maxPolarAngle = maxAngleForOrbit;
-
-    
-    if ( mixer ) mixer.update( clock.getDelta() );
-
-    controls.update();
-    renderer.render(scene, camera);
+  }
+  
+  textureCube.encoding = THREE.sRGBEncoding;
+  scene.background = textureCube; //set scene background
 }
+//set backgound color
+function setColorBackground(colorValue) {
+  scene.background = new THREE.Color(colorValue);
+}
+//load model
+function loadFile(file, fileExtension) {
+  scene.remove(object);
+  if (fileExtension === "gltf" || fileExtension === "glb") {
+    //GLTF LOADER
+    // Instantiate a loader
+    const loader = new GLTFLoader();
 
+    // Load a glTF resource
+    loader.load(
+      // resource URL
+      file,
+      // called when the resource is loaded
+      function (gltf) {
+        object = gltf.scene;
+        //object.scale.set(1,1,1);
+        object.position.set(0, 0, 0);
+        scene.add(object);
 
-//////////////////////////adding script file //////////////////
-//////////////////////...............////////////////////////////
-/////////////////////////...........//////////////////////////////////
+        gltf.animations; // Array<THREE.AnimationClip>
+        gltf.scene; // THREE.Group
+        gltf.scenes; // Array<THREE.Group>
+        gltf.cameras; // Array<THREE.Camera>
+        gltf.asset; // Object
+      },
+      // called while loading is progressing
+      function (xhr) {
+        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      },
+      // called when loading has errors
+      function (error) {
+        console.log("An error happened");
+      }
+    );
+  } else if (fileExtension === "fbx") {
+    const fbxLoader = new FBXLoader();
+    fbxLoader.load(
+      file,
+      (fbx) => {
+        // object.traverse(function (child) {
+        //     if ((child as THREE.Mesh).isMesh) {
+        //         // (child as THREE.Mesh).material = material
+        //         if ((child as THREE.Mesh).material) {
+        //             ((child as THREE.Mesh).material as THREE.MeshBasicMaterial).transparent = false
+        //         }
+        //     }
+        // })
+        // object.scale.set(.01, .01, .01)
+        object = fbx;
+        object.scale.setScalar(0.1);
+        object.traverse (c => {
+          c.castShadow = true;
+        });
+        //console.log(object)
+        if(object.animations[0] != null){
+          //console.log(object.animations[0]);
+          mixer = new THREE.AnimationMixer(object);
+          const idle = mixer.clipAction(object.animations[0]);
+          idle.play();
 
-//rotation section
-var checkBox = document.getElementById("autoRotationBtn");
-
-checkBox.addEventListener("click", () => {
-    if (checkBox.checked === true) {
-        //add = 0.005;
-        add = document.getElementById("myRange").value;
-        // console.log(document.getElementById("myRange").value/300 );
-    } else {
-        add = 0;
-    }
-});
-
-var RotationSpeed = document.getElementById("myRange");
-RotationSpeed.oninput = function () {
-    checkBox.checked = true;
-    add = this.value;
-};
-
-var RotationTopLimite = document.getElementById("myRangeTopLimite");
-RotationTopLimite.oninput = function () {
-    maxAngleForOrbit = this.value;
-};
-
-var RotationBottomLimite = document.getElementById("myRangeBottomLimite");
-RotationBottomLimite.oninput = function () {
-    minAngleForOrbit = this.value;
-};
-
-//rotation section end
-
-//zomm section start
-let inX = document.getElementById("ZoomLimiteIn").value,
-    outX = document.getElementById("ZoomLimiteOut").value;
-
-var ZoomLimiteIn = document.getElementById("ZoomLimiteIn");
-ZoomLimiteIn.oninput = function () {
-    checkBoxZoom.checked = true;
-    zoomMin = this.value;
-    inX = this.value;
-};
-
-var ZoomLimiteOut = document.getElementById("ZoomLimiteOut");
-ZoomLimiteOut.oninput = function () {
-    checkBoxZoom.checked = true;
-    zoomMax = this.value;
-    outX = this.value;
-};
-
-var checkBoxZoom = document.getElementById("ZoomBtn");
-
-checkBoxZoom.addEventListener("click", () => {
-    if (checkBoxZoom.checked !== true) {
-        zoomMin = 25;
-        zoomMax = 25;
-    } else {
-        zoomMin = inX;
-        zoomMax = outX;
-    }
-});
-
-//zoom section end
-
-///scene background color change part start
-let bgLeftBtn = document.querySelector(".bgLeftBtn");
-let bgRightBtn = document.querySelector(".bgRightBtn");
-
-bgLeftBtn.addEventListener("click", () => {
-    document.getElementById("plainBackground").classList.remove("hide");
-    document.getElementById("TextureBackground").classList.add("hide");
-}); //
-bgRightBtn.addEventListener("click", () => {
-    document.getElementById("plainBackground").classList.add("hide");
-    document.getElementById("TextureBackground").classList.remove("hide");
-}); //
-
-let skybox = null;
-
-document.getElementsByName("bg").forEach((radio) => {
-    radio.addEventListener("click", () => {
-        if (radio.value === "skyblue") {
-            if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[0]);
-        } else if (radio.value === "red") {
-            if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[1]);
-        } else if (radio.value === "gray") {
-            if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[2]);
-        } else if (radio.value === "blue") {
-            if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[3]);
-        } else if (radio.value === "green") {
-            if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[4]);
-        } else if (radio.value === "yellow") {
-            if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[5]);
-        } else if (radio.value === "texture1") {
-            if (skybox !== null) scene.remove(skybox);
-            let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(bgTexrute[0].texture_ft);
-            let texture_bk = new THREE.TextureLoader().load(bgTexrute[0].texture_bk);
-            let texture_up = new THREE.TextureLoader().load(bgTexrute[0].texture_up);
-            let texture_dn = new THREE.TextureLoader().load(bgTexrute[0].texture_dn);
-            let texture_rt = new THREE.TextureLoader().load(bgTexrute[0].texture_rt);
-            let texture_lf = new THREE.TextureLoader().load(bgTexrute[0].texture_lf);
-
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_ft })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_bk })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_up })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_dn })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_rt })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_lf })
-            );
-
-            for (let i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
-
-            let skyboxGeo = new THREE.BoxGeometry(100, 100, 100);
-            skybox = new THREE.Mesh(skyboxGeo, materialArray);
-            // scene.background = null;
-            scene.add(skybox);
-        } else if (radio.value === "texture2") {
-            if (skybox !== null) scene.remove(skybox);
-            let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(bgTexrute[1].texture_ft);
-            let texture_bk = new THREE.TextureLoader().load(bgTexrute[1].texture_bk);
-            let texture_up = new THREE.TextureLoader().load(bgTexrute[1].texture_up);
-            let texture_dn = new THREE.TextureLoader().load(bgTexrute[1].texture_dn);
-            let texture_rt = new THREE.TextureLoader().load(bgTexrute[1].texture_rt);
-            let texture_lf = new THREE.TextureLoader().load(bgTexrute[1].texture_lf);
-
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_ft })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_bk })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_up })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_dn })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_rt })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_lf })
-            );
-
-            for (let i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
-
-            let skyboxGeo = new THREE.BoxGeometry(100, 100, 100);
-            skybox = new THREE.Mesh(skyboxGeo, materialArray);
-            // scene.background = null;
-            scene.add(skybox);
-        } else if (radio.value === "texture3") {
-            if (skybox !== null) scene.remove(skybox);
-            let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(bgTexrute[2].texture_ft);
-            let texture_bk = new THREE.TextureLoader().load(bgTexrute[2].texture_bk);
-            let texture_up = new THREE.TextureLoader().load(bgTexrute[2].texture_up);
-            let texture_dn = new THREE.TextureLoader().load(bgTexrute[2].texture_dn);
-            let texture_rt = new THREE.TextureLoader().load(bgTexrute[2].texture_rt);
-            let texture_lf = new THREE.TextureLoader().load(bgTexrute[2].texture_lf);
-
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_ft })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_bk })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_up })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_dn })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_rt })
-            );
-            materialArray.push(
-                new THREE.MeshBasicMaterial({ map: texture_lf })
-            );
-
-            for (let i = 0; i < 6; i++) materialArray[i].side = THREE.BackSide;
-
-            let skyboxGeo = new THREE.BoxGeometry(100, 100, 100);
-            skybox = new THREE.Mesh(skyboxGeo, materialArray);
-            // scene.background = null;
-            scene.add(skybox);
         }
-    });
+        
+        scene.add(object);
+
+      },
+      (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  } else if (fileExtension === "obj") {
+    const objLoader = new OBJLoader();
+    objLoader.load(
+      file,
+      (obj) => {
+        // (object.children[0] as THREE.Mesh).material = material
+        // object.traverse(function (child) {
+        //     if ((child as THREE.Mesh).isMesh) {
+        //         (child as THREE.Mesh).material = material
+        //     }
+        // })
+        object = obj;
+        obj.scale.set(5, 5, 5);
+        scene.add(object);
+      },
+      (xhr) => {
+        console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
+  }
+}
+//set render size
+function setSize(rendererWidth, rendererHeight) {
+  renderer.setSize(rendererWidth, rendererHeight);
+}
+//get object
+function getObject() {
+  return object;
+}
+
+
+//START ACTION SCRIPT HERE
+//LOAD MODEL FROM URL
+document.getElementById("urlFileUpload").addEventListener("click", function () {
+  const url = document.getElementById("urlformFile").value;
+  const fileName = url.split(".");
+  const fileExtension = fileName[fileName.length - 1];
+  if(fileExtension === "gltf" || fileExtension === "glb") {
+    loadFile(url, fileExtension);
+  } else if( fileExtension === "fbx") {
+    loadFile(url, fileExtension);
+  } else if (fileExtension === "obj") {
+    loadFile(url, fileExtension);
+  }
+})
+
+// ACCORDION ACTION 
+let accordionClassDiv = document.getElementsByClassName("accordion");
+let panelClassDiv = document.getElementsByClassName('panel');
+
+for (let i = 0; i < accordionClassDiv.length; i++) {
+  accordionClassDiv[i].onclick = function() {
+      var setClasses = !this.classList.contains('active');
+      setClass(accordionClassDiv, 'active', 'remove');
+      setClass(panelClassDiv, 'show', 'remove');
+
+      if (setClasses) {
+          this.classList.toggle("active");
+          this.nextElementSibling.classList.toggle("show");
+      }
+  }
+}
+
+function setClass(els, className, fnName) {
+  for (let i = 0; i < els.length; i++) {
+      els[i].classList[fnName](className);
+  }
+}
+
+// MAXIMISE AND MINIMIZE RENDERING CANVAS 
+
+document.getElementById("button").addEventListener("click", function () {
+this.classList.toggle("active");
+let canvasWidth, canvasHeight;
+let canvas = document.getElementById("homeComponent");
+if (canvas.className === "homeComponent") {
+  canvas.className = "homeComponentFullScreen";
+  document.getElementById("canvasComponent").className =
+    " canvasComponent col-md-12";
+  document.getElementById("conficComponent").className =
+    "col-md-5 display-none";
+  document.getElementById("renderCanvas").className = "canvas-style-change";
+  canvasWidth = document.getElementById("homeComponent").clientWidth;
+  canvasHeight = document.getElementsByClassName("homeComponentFullScreen").clientHeight;
+  setSize(canvasWidth, window.innerHeight);
+} else {
+  canvas.className = "homeComponent";
+  document.getElementById("canvasComponent").className =
+    "canvasComponent col-md-7";
+  document.getElementById("conficComponent").className = "col-md-5";
+  document.getElementById("renderCanvas").className = "canvas-style";
+
+  canvasWidth = document.getElementById("renderCanvas").offsetWidth;
+  canvasHeight = document.getElementById("renderCanvas").offsetHeight;
+  setSize(canvasWidth, canvasHeight);
+}
 });
 
-//change background color event end
+// SCREENSHOT ACTION
+document.getElementById("snapButton").addEventListener("click", () => {
+var canv = document.getElementById("modelCanvas");
+console.log("clicked");
+var url = canv.toDataURL('image/jpeg');
+var link = document.createElement("a");
+link.setAttribute("href", url);
+link.setAttribute("target", "_blank");
+link.setAttribute("download", "screenshot.jpeg");
+link.click();
+});
 
-//uploader section
+// HANDLE BACKGROUND COLOR BUTTON EVENT
 
-///scene background color change part start
-let upLeftBtn = document.querySelector(".upLeftBtn");
-let upRightBtn = document.querySelector(".upRightBtn");
+document.getElementById("plainText").addEventListener("click", function () {
+document.getElementById("plain_background_colors").className =
+  "plain_background_colors";
+document.getElementById("texture_background_colors").className =
+  "display-none";
+});
 
-upLeftBtn.addEventListener("click", () => {
-    document.getElementById("uploadFile").classList.remove("hide");
-    document.getElementById("urlFile").classList.add("hide");
-}); //
-upRightBtn.addEventListener("click", () => {
-    document.getElementById("uploadFile").classList.add("hide");
-    document.getElementById("urlFile").classList.remove("hide");
-}); //
+//  HANDLE TEXTURE BUTTON EVENT
 
-//for collapsable design
+document.getElementById("textureUpload").addEventListener("click", function () {
+document.getElementById("texture_background_colors").className =
+  "texture_background_colors";
+document.getElementById("plain_background_colors").className = "display-none";
+});
 
-var colBtn1 = document.getElementById("col1");
-var colBtn2 = document.getElementById("col2");
-var colBtn3 = document.getElementById("col3");
-var colBtn4 = document.getElementById("col4");
-//rotation
+// TEXTURE BUTTON 1 ACTION
 
-let icon1 = document.getElementById("icon1");
-let icon2 = document.getElementById("icon2");
-let icon3 = document.getElementById("icon3");
-let icon4 = document.getElementById("icon4");
+document.getElementById("texture_1").addEventListener("click", function () {
+setTextureBackground("id_1");
+});
 
-colBtn1.addEventListener("click", function () {
-    var content1 = this.nextElementSibling;
-    var content2 = colBtn2.nextElementSibling;
-    var content3 = colBtn3.nextElementSibling;
-    var content4 = colBtn4.nextElementSibling;
-    if (content1.style.maxHeight) {
-        content1.style.maxHeight = null;
-        icon1.classList.remove("rotation");
-    } else {
-        content1.style.maxHeight = content1.scrollHeight + "px";
-        content2.style.maxHeight = null;
-        content3.style.maxHeight = null;
-        content4.style.maxHeight = null;
+// TEXTURE BUTTON 2 ACTION
 
-        icon1.classList.add("rotation");
-        icon2.classList.remove("rotation");
-        icon3.classList.remove("rotation");
-        icon4.classList.remove("rotation");
+document.getElementById("texture_2").addEventListener("click", function () {
+setTextureBackground("id_2");
+});
+
+// TEXTURE BUTTON 3 ACTION
+
+document.getElementById("texture_3").addEventListener("click", function () {
+setTextureBackground("id_3");
+});
+
+// PLAIN COLOR BUTTON 1 EVENT
+
+document.getElementById("pb_1").addEventListener("click", function () {
+setColorBackground(bg.color_1);
+});
+
+// PLAIN COLOR BUTTON 2 EVENT
+
+document.getElementById("pb_2").addEventListener("click", function () {
+setColorBackground( bg.color_2);
+});
+
+// PLAIN COLOR BUTTON 3 EVENT
+
+document.getElementById("pb_3").addEventListener("click", function () {
+setColorBackground(bg.color_3);
+});
+
+// PLAIN COLOR BUTTON 4 EVENT
+
+document.getElementById("pb_4").addEventListener("click", function () {
+setColorBackground( bg.color_4);
+});
+
+// PLAIN COLOR BUTTON 5 EVENT
+
+document.getElementById("pb_5").addEventListener("click", function () {
+setColorBackground(bg.color_5);
+});
+
+// PLAIN COLOR BUTTON 6 EVENT
+
+document.getElementById("pb_6").addEventListener("click", function () {
+setColorBackground(bg.color_6);
+});
+
+// FILE UPLOAD FROM COMPUTER EVENT
+
+document
+.getElementById("fileUploadButton")
+.addEventListener("click", function () {
+  document.getElementById("fileUpload").className = "mb-3";
+  document.getElementById("urlUpload").className = "display-none";
+});
+
+// URL UPLOAD BUTTON EVENT
+
+document
+.getElementById("urlUploadButton")
+.addEventListener("click", function () {
+  document.getElementById("urlUpload").className = "mb-3";
+  document.getElementById("fileUpload").className = "display-none";
+});
+
+// UPLOAD FILE FORM COMPUTER
+
+document.getElementById("uploadFile").addEventListener("click", function () {
+var x = document.getElementById("formFile");
+if ("files" in x) {
+  if (x.files.length != 0) {
+    var fileName = x.files[0].name;
+    var splitFileName = fileName.split(".")
+    var fileExtension = splitFileName[splitFileName.length - 1];
+    console.log(fileExtension);
+    var objectURL = URL.createObjectURL(x.files[0]);
+    if(fileExtension === "gltf" || fileExtension === "glb") {
+      loadFile(objectURL, fileExtension);
+    } else if( fileExtension === "fbx") {
+      loadFile(objectURL, fileExtension);
+    } else if (fileExtension === "obj") {
+      loadFile(objectURL, fileExtension);
     }
-});
-
-colBtn2.addEventListener("click", function () {
-    var content1 = this.nextElementSibling;
-    var content2 = colBtn1.nextElementSibling;
-    var content3 = colBtn3.nextElementSibling;
-    var content4 = colBtn4.nextElementSibling;
-    if (content1.style.maxHeight) {
-        content1.style.maxHeight = null;
-        icon2.classList.remove("rotation");
-    } else {
-        content1.style.maxHeight = content1.scrollHeight + "px";
-        content2.style.maxHeight = null;
-        content3.style.maxHeight = null;
-        content4.style.maxHeight = null;
-
-        icon1.classList.remove("rotation");
-        icon2.classList.add("rotation");
-        icon3.classList.remove("rotation");
-        icon4.classList.remove("rotation");
-    }
-});
-
-colBtn3.addEventListener("click", function () {
-    var content1 = this.nextElementSibling;
-    var content2 = colBtn2.nextElementSibling;
-    var content3 = colBtn1.nextElementSibling;
-    var content4 = colBtn4.nextElementSibling;
-    if (content1.style.maxHeight) {
-        content1.style.maxHeight = null;
-        icon3.classList.remove("rotation");
-    } else {
-        content1.style.maxHeight = content1.scrollHeight + "px";
-        content2.style.maxHeight = null;
-        content3.style.maxHeight = null;
-        content4.style.maxHeight = null;
-
-        icon1.classList.remove("rotation");
-        icon2.classList.remove("rotation");
-        icon3.classList.add("rotation");
-        icon4.classList.remove("rotation");
-    }
-});
-
-colBtn4.addEventListener("click", function () {
-    var content1 = this.nextElementSibling;
-    var content2 = colBtn2.nextElementSibling;
-    var content3 = colBtn3.nextElementSibling;
-    var content4 = colBtn1.nextElementSibling;
-    if (content1.style.maxHeight) {
-        content1.style.maxHeight = null;
-        icon4.classList.remove("rotation");
-    } else {
-        content1.style.maxHeight = content1.scrollHeight + "px";
-        content2.style.maxHeight = null;
-        content3.style.maxHeight = null;
-        content4.style.maxHeight = null;
-
-        icon1.classList.remove("rotation");
-        icon2.classList.remove("rotation");
-        icon3.classList.remove("rotation");
-        icon4.classList.add("rotation");
-    }
-});
-
-//snapshot and full screen
-
-let fullScreen = document.getElementById("fullscreen");
-let snapShot = document.getElementById("snapshot");
-
-let check = true;
-fullScreen.addEventListener("click", () => {
-    if (check) {
-        document.querySelector("#functions").classList.add("hide");
-        document.querySelector(".heading").classList.add("hide");
-
-        document.querySelector(".container").style.width = "100%";
-        document.getElementById("myCanvasElement").style.height = "100vh";
-
-        renderer.setSize(window.innerWidth, window.innerHeight, false);
-        camera.aspect = window.innerWidth / window.innerHeight;
-        camera.updateProjectionMatrix();
-        // renderer.setSize(window.innerWidth, window.innerHeight, false);
-        // render();
-        check = false;
-    } else {
-        document.querySelector("#functions").classList.remove("hide");
-        document.querySelector(".heading").classList.remove("hide");
-
-        document.querySelector(".container").style.width = "80%";
-        document.getElementById("myCanvasElement").style.height = "70vh";
-
-        const canvas = renderer.domElement;
-        // look up the size the canvas is being displayed
-        const width = canvas.clientWidth;
-        const height = canvas.clientHeight;
-
-        renderer.setSize(width, height, false);
-
-        camera.aspect = width / height;
-        camera.updateProjectionMatrix();
-
-        check = true;
-    }
-});
-snapShot.addEventListener("click", () => {
-    var canvas = document.getElementById("myCanvasElement");
-
-    var url = canvas.toDataURL();
-
-    var link = document.createElement("a");
-
-    link.setAttribute("href", url);
-    link.setAttribute("target", "_blank");
-    link.setAttribute("download", "canvas.png");
-
-    link.click();
+  }
+}
 });
