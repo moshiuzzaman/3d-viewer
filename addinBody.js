@@ -1,3 +1,92 @@
+let controllerValue;
+
+if (typeof mainControllerValue == "object") {
+    controllerValue = mainControllerValue;
+} else {
+    controllerValue = {
+        assetLink: 'https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf',
+        controllerNonVisibility: false,
+        rotation: 10,
+        maxAngleForOrbit: 3.4,
+        minAngleForOrbit: 0,
+        zoomMax: 50,
+        zoomMin: 10,
+        defaultbg: "green",
+        bgColor: [
+            "skyblue",
+            "#D14250",
+            "#8B9298",
+            "#3888FD",
+            "#198754",
+            "#FFC107",
+        ],
+        bgTexrute: [
+            {
+                texture_ft:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_ft.jpg",
+                texture_bk:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_bk.jpg",
+                texture_up:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_up.jpg",
+                texture_dn:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_dn.jpg",
+                texture_rt:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_rt.jpg",
+                texture_lf:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_lf.jpg",
+            },
+            {
+                texture_ft:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_ft.jpg",
+                texture_bk:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_bk.jpg",
+                texture_up:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_up.jpg",
+                texture_dn:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_dn.jpg",
+                texture_rt:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_rt.jpg",
+                texture_lf:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/arid2_lf.jpg",
+            },
+            {
+                texture_ft:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_ft.jpg",
+                texture_bk:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_bk.jpg",
+                texture_up:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_up.jpg",
+                texture_dn:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_dn.jpg",
+                texture_rt:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_rt.jpg",
+                texture_lf:
+                    "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_lf.jpg",
+            },
+        ],
+        htmlRotationSpeedMin: -50,
+        htmlRotationSpeedMax: 50,
+        htmlRotationSpeedStep: 5,
+        htmlRotationSpeedDefaultValue: 10,
+
+        htmlRotationtopLimiteMin: 1.6,
+        htmlRotationtopLimiteMax: 3.2,
+        htmlRotationBottonLimiteMin: 0,
+        htmlRotationBottonLimiteMax: 1.6,
+        htmlRotationLimiteStep: 0.2,
+        htmlRotationtopLimiteDefaultValue: 3.1,
+        htmlRotationBottonLimiteDefaultValue: 0,
+
+        htmlZoomInMin: -10,
+        htmlZoomInMax: 10,
+        htmlZoomOutMin: 50,
+        htmlZoomOutMax: 90,
+        zoomStape: 2,
+        htmlZoomInDefaultValue: 10,
+        htmlZoomOutDefaultValue: 50,
+    };
+}
+
 document.getElementById("bs__root").innerHTML = `
 <div class="container">
         <div class="heading">
@@ -36,19 +125,78 @@ document.getElementById("bs__root").innerHTML = `
 
                         <div class="autoRotation">
                             <p>Autorotation speed</p>
-                            <input type="range" min=${htmlRotationSpeedMin} max=${htmlRotationSpeedMax} step=${htmlRotationSpeedStep} value=${htmlRotationSpeedDefaultValue} class="sliderRange" id="myRange">
+                            <input type="range" min=${
+                                controllerValue.htmlRotationSpeedMin
+                                    ? controllerValue.htmlRotationSpeedMin
+                                    : -50
+                            } max=${
+    controllerValue.htmlRotationSpeedMax
+        ? controllerValue.htmlRotationSpeedMax
+        : 50
+} 
+                            step=${
+                                controllerValue.htmlRotationSpeedStep
+                                    ? controllerValue.htmlRotationSpeedStep
+                                    : 5
+                            } 
+                            value=${
+                                controllerValue.htmlRotationSpeedStep
+                                    ? controllerValue.htmlRotationSpeedStep
+                                    : 10
+                            } class="sliderRange" id="myRange">
 
                         </div>
 
                         <div class="autoRotation">
                             <p>Rotation Top Limit</p>
-                            <input type="range" min=${htmlRotationtopLimiteMin} max=${htmlRotationtopLimiteMax} step=${htmlRotationLimiteStep} value=${htmlRotationtopLimiteDefaultValue} class="sliderRange"
+                            <input type="range" 
+                            min=${
+                                controllerValue.htmlRotationtopLimiteMin
+                                    ? controllerValue.htmlRotationtopLimiteMin
+                                    : 1.6
+                            } 
+                            max=${
+                                controllerValue.htmlRotationtopLimiteMax
+                                    ? controllerValue.htmlRotationtopLimiteMax
+                                    : 3.2
+                            } 
+                            step=${
+                                controllerValue.htmlRotationLimiteStep
+                                    ? controllerValue.htmlRotationLimiteStep
+                                    : 0.2
+                            } 
+                            value=${
+                                controllerValue.htmlRotationtopLimiteDefaultValue
+                                    ? controllerValue.htmlRotationtopLimiteDefaultValue
+                                    : 3.1
+                            } class="sliderRange"
                                 id="myRangeTopLimite">
 
                         </div>
                         <div class="autoRotation">
                             <p>Rotation Bottom Limit</p>
-                            <input type="range" min=${htmlRotationBottonLimiteMin} max=${htmlRotationBottonLimiteMax} step=${htmlRotationLimiteStep} value=${htmlRotationBottonLimiteDefaultValue} class="sliderRange reversedRange"
+                            <input type="range" 
+                            min=${
+                                controllerValue.htmlRotationBottonLimiteMin
+                                    ? controllerValue.htmlRotationBottonLimiteMin
+                                    : 0
+                            } 
+                            max=${
+                                controllerValue.htmlRotationBottonLimiteMax
+                                    ? controllerValue.htmlRotationBottonLimiteMax
+                                    : 1.6
+                            } 
+                            step=${
+                                controllerValue.htmlRotationLimiteStep
+                                    ? controllerValue.htmlRotationLimiteStep
+                                    : 0.2
+                            }
+                            value=${
+                                controllerValue.htmlRotationBottonLimiteDefaultValue
+                                    ? controllerValue.htmlRotationBottonLimiteDefaultValue
+                                    : 0
+                            } 
+                            class="sliderRange reversedRange"
                                 id="myRangeBottomLimite">
 
                         </div>
@@ -72,13 +220,47 @@ document.getElementById("bs__root").innerHTML = `
 
                         <div class="autoRotation">
                             <p>Zoom In limit</p>
-                            <input type="range" min=${htmlZoomInMin} max=${htmlZoomInMax} step=${zoomStape} value=${htmlZoomInDefaultValue} class="sliderRange reversedRange"
+                            <input type="range" 
+                            min=${
+                                controllerValue.htmlZoomInMin
+                                    ? controllerValue.htmlZoomInMin
+                                    : -10
+                            } 
+                            max=${
+                                controllerValue.htmlZoomInMax
+                                    ? controllerValue.htmlZoomInMax
+                                    : 10
+                            } 
+                            step=${
+                                controllerValue.zoomStape
+                                    ? controllerValue.zoomStape
+                                    : 2
+                            } 
+                            value=${
+                                controllerValue.htmlZoomInDefaultValue
+                                    ? controllerValue.htmlZoomInDefaultValue
+                                    : 10
+                            } 
+                            class="sliderRange reversedRange"
                                 id="ZoomLimiteIn">
 
                         </div>
                         <div class="autoRotation">
                             <p>Zoom Out limit</p>
-                            <input type="range" min=${htmlZoomOutMin} max=${htmlZoomOutMax} step=${zoomStape} value=${htmlZoomOutDefaultValue} class="sliderRange "
+                            <input type="range" 
+                            min=${controllerValue.htmlZoomOutMin ? controllerValue.htmlZoomOutMin : 50} 
+                            max=${controllerValue.htmlZoomOutMax ? controllerValue.htmlZoomOutMax : 90} 
+                            step=${
+                                controllerValue.zoomStape
+                                    ? controllerValue.zoomStape
+                                    : 2
+                            } 
+                            value=${
+                                controllerValue.htmlZoomOutDefaultValue
+                                    ? controllerValue.htmlZoomOutDefaultValue
+                                    : 50
+                            } 
+                            class="sliderRange "
                                 id="ZoomLimiteOut">
 
                         </div>
@@ -96,9 +278,10 @@ document.getElementById("bs__root").innerHTML = `
                     </div>
                     <div class="sectionWrapper">
                         <div id="plainBackground">
-                            <p>Choose Plain Background Color</p>
-                            <br>
+                            <p class='pbg'>Choose Plain Background Color</p>
+                            
                             <div class="bgInputWrapper">
+                            <div class = 'pbg'>
                                 <div class="radioInputDiv">
                                     <input class="hide" type="radio" id="skyblue" name="bg" value="skyblue">
                                     <label class="radioLabel Skyblue" for="skyblue"></label>
@@ -128,26 +311,35 @@ document.getElementById("bs__root").innerHTML = `
                                     <input class="hide" type="radio" id="yellow" name="bg" value="yellow">
                                     <label class="radioLabel yellow" for="yellow"></label>
                                 </div>
-
+                            </div>
+                            <div class='pbg_msg'>
+                                No background available check texture
+                            </div>
                             </div>
                         </div>
                         <div id="TextureBackground" class="hide">
-                            <p>Choose Texture Background</p>
-                            <br>
+                            <p class='tbg'>Choose Texture Background</p>
+                            
                             <div class="bgInputWrapper">
-                                <div class="radioInputDiv">
-                                    <input class="hide" type="radio" id="texture1" name="bg" value="texture1">
-                                    <label class="radioLabel texture1" for="texture1"></label>
+                                <div class='tbg'>
+                                    <div class="radioInputDiv">
+                                        <input class="hide" type="radio" id="texture1" name="bg" value="texture1">
+                                        <label class="radioLabel texture1" for="texture1"></label>
+                                    </div>
+
+                                    <div class="radioInputDiv">
+                                        <input class="hide" type="radio" id="texture2" name="bg" value="texture2">
+                                        <label class="radioLabel texture2" for="texture2"></label>
+                                    </div>
+
+                                    <div class="radioInputDiv">
+                                        <input class="hide" type="radio" id="texture3" name="bg" value="texture3">
+                                        <label class="radioLabel texture3" for="texture3"></label>
+                                    </div>
                                 </div>
 
-                                <div class="radioInputDiv">
-                                    <input class="hide" type="radio" id="texture2" name="bg" value="texture2">
-                                    <label class="radioLabel texture2" for="texture2"></label>
-                                </div>
-
-                                <div class="radioInputDiv">
-                                    <input class="hide" type="radio" id="texture3" name="bg" value="texture3">
-                                    <label class="radioLabel texture3" for="texture3"></label>
+                                <div class='tbg_msg'>
+                                    No background available check plane
                                 </div>
 
                             </div>
@@ -255,6 +447,7 @@ canvas {
 }
 
 #functions {
+    display: ${controllerValue.controllerNonVisibility === false ? "block" : "none"};
     padding: 0 20px;
     width: 67%;
 }
@@ -438,54 +631,190 @@ input:checked + .slider:before {
 .bgInputWrapper {
     display: flex;
 }
+.pbg{
+    display: ${
+        controllerValue.bgColor
+            ? controllerValue.bgColor.length !== 0
+                ? "flex"
+                : "none"
+            : "none"
+    };
+}
+.pbg_msg{
+    padding: 25px;
+    display: ${
+        controllerValue.bgColor
+            ? controllerValue.bgColor.length !== 0
+                ? "none"
+                : "flex"
+            : "flex"
+    };
+}
 
 .radioInputDiv {
     margin: 5px;
 }
 
 .radioLabel {
-    padding: 15px 23px;
+    padding: 23px 23px;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .Skyblue {
-    background: ${bgColor[0]};
+    display: ${
+        typeof controllerValue === undefined
+            ? "skyblue"
+            : controllerValue.bgColor
+            ? controllerValue.bgColor[0]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: ${
+        controllerValue.bgColor ? controllerValue.bgColor[0] : "skyblue"
+    };
 }
 
 .red {
-    background: ${bgColor[1]};
+    display: ${
+        controllerValue.bgColor
+            ? controllerValue.bgColor[1]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: ${
+        controllerValue.bgColor ? controllerValue.bgColor[1] : "skyblue"
+    };
 }
 
 .gray {
-    background: ${bgColor[2]};
+    display: ${
+        controllerValue.bgColor
+            ? controllerValue.bgColor[2]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: ${
+        controllerValue.bgColor ? controllerValue.bgColor[2] : "skyblue"
+    };
 }
 
 .blue {
-    background: ${bgColor[3]};
+    display: ${
+        controllerValue.bgColor
+            ? controllerValue.bgColor[3]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: ${
+        controllerValue.bgColor ? controllerValue.bgColor[3] : "skyblue"
+    };
 }
 
 .green {
-    background: ${bgColor[4]};
+    display: ${
+        controllerValue.bgColor
+            ? controllerValue.bgColor[4]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: ${
+        controllerValue.bgColor ? controllerValue.bgColor[4] : "skyblue"
+    };
 }
 
 .yellow {
-    background: ${bgColor[5]};
+    display: ${
+        controllerValue.bgColor
+            ? controllerValue.bgColor[5]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: ${
+        controllerValue.bgColor ? controllerValue.bgColor[5] : "skyblue"
+    };
 }
 
 /* texture background start */
+
+.tbg{
+    display: ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute.length > 0
+                ? "flex"
+                : "none"
+            : "none"
+    };
+}
+.tbg_msg{
+    display: ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute.length > 0
+                ? "none"
+                : "flex"
+            : "flex"
+    };
+    padding: 25px;
+}
+
 .texture1 {
-    background: url( ${bgTexrute[0].texture_rt});
+    display: ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute[0]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: url( ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute[0]
+                ? controllerValue.bgTexrute[0].texture_rt
+                : "none"
+            : "none"
+    });
     background-repeat: no-repeat;
     background-size: 50px 50px;
+    
 }
 .texture2 {
-  background: url( ${bgTexrute[1].texture_rt});
+    display: ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute[1]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: url( ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute[1]
+                ? controllerValue.bgTexrute[1].texture_rt
+                : "none"
+            : "none"
+    });
     background-repeat: no-repeat;
     background-size: 50px 50px;
 }
 .texture3 {
-  background: url( ${bgTexrute[2].texture_lf});
+    display: ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute[2]
+                ? "inline-block"
+                : "none"
+            : "none"
+    };
+    background: url( ${
+        controllerValue.bgTexrute
+            ? controllerValue.bgTexrute[2]
+                ? controllerValue.bgTexrute[2].texture_rt
+                : "none"
+            : "none"
+    });
     background-repeat: no-repeat;
     background-size: 50px 50px;
 }
@@ -573,6 +902,7 @@ input {
         display: block;
     }
     #functions {
+        
         padding: 20px 0;
         width: auto;
     }
@@ -586,17 +916,18 @@ styleSheet.type = "text/css";
 styleSheet.innerText = styles;
 document.head.appendChild(styleSheet);
 
-
-
-
 //threejs script files **************************
 
 //importing necessary things
 import * as THREE from "three";
 import { OrbitControls } from "OrbitControls";
 
-import { GLTFLoader, OBJLoader, FBXLoader } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/Loader.js";
-import { DRACOLoader } from 'https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/jsm/loaders/DRACOLoader.js'
+import {
+    GLTFLoader,
+    OBJLoader,
+    FBXLoader,
+} from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/Loader.js";
+import { DRACOLoader } from "https://cdn.jsdelivr.net/gh/mrdoob/three.js@dev/examples/jsm/loaders/DRACOLoader.js";
 //console.log(ARButton);
 let camera,
     scene,
@@ -605,12 +936,16 @@ let camera,
     mixer,
     controls;
 
+let rotation = controllerValue.rotation || 10,
+    maxAngleForOrbit = controllerValue.maxAngleForOrbit || 3.4,
+    minAngleForOrbit = controllerValue.minAngleForOrbit || 0,
+    zoomMax = controllerValue.zoomMax || 50,
+    zoomMin = controllerValue.zoomMin || 10;
 
 const clock = new THREE.Clock();
 
 init();
 render();
-
 
 function init() {
     //getting canvas
@@ -618,7 +953,13 @@ function init() {
 
     //create scene
     scene = new THREE.Scene();
-    scene.background = new THREE.Color(bgColor[0]);
+    scene.background = new THREE.Color(
+        controllerValue.bgColor
+            ? controllerValue.bgColor[0]
+            : controllerValue.defaultbg
+            ? controllerValue.defaultbg
+            : "skyblue"
+    );
 
     //set resderer
     renderer = new THREE.WebGLRenderer({
@@ -684,18 +1025,123 @@ function init() {
     const GLTFloader = new GLTFLoader();
     const OBJloader = new OBJLoader();
 
-    FBXloader.load("asset/fire.fbx", function (fbx) {
-        obj = fbx;
-        var bbox = new THREE.Box3().setFromObject(obj);
-        var size = bbox.getSize(new THREE.Vector3());
+    if(controllerValue.assetLink) {
+        let fileName = controllerValue.assetLink.split(".");
+        let fileExt = fileName[fileName.length - 1];
 
-        var maxAxis = Math.max(size.x, size.y, size.z);
-        // console.log(maxAxis);
-        // obj.position.set(0, -5, 0);
-        obj.scale.multiplyScalar(6 / maxAxis);
+        if (fileExt === "fbx") {
+            scene.remove(obj);
+            FBXloader.load(controllerValue.assetLink, function (fbx) {
+                obj = fbx;
+                var bbox = new THREE.Box3().setFromObject(obj);
+                var size = bbox.getSize(new THREE.Vector3());
 
-        scene.add(obj);
-    });
+                var maxAxis = Math.max(size.x, size.y, size.z);
+
+                if (!isNaN(maxAxis)) {
+                    obj.scale.multiplyScalar(10 / maxAxis);
+                } else {
+                    obj.scale.set(0.02, 0.02, 0.02);
+                }
+
+                const offset = new THREE.Vector3();
+                bbox.getCenter(offset).negate();
+                obj.children.forEach((element) => {
+                    if (element.children.length === obj.children.length)
+                        element.position.set(offset.x, offset.y, offset.z);
+                });
+
+                if (obj.animations.length) {
+                    mixer = new THREE.AnimationMixer(obj);
+                    const action = mixer.clipAction(obj.animations[0]);
+                    action.play();
+                    obj.castShadow = true;
+                }
+                scene.add(obj);
+            });
+        } else if (fileExt === "glb" || fileExt === "gltf") {
+            scene.remove(obj);
+
+            const dracoLoader = new DRACOLoader();
+            dracoLoader.setDecoderConfig({ type: "js" });
+            dracoLoader.setDecoderPath(
+                "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
+            );
+            GLTFloader.setDRACOLoader(dracoLoader);
+
+            GLTFloader.load(controllerValue.assetLink, function (gltf) {
+                obj = gltf.scene;
+                var bbox = new THREE.Box3().setFromObject(obj);
+                var size = bbox.getSize(new THREE.Vector3());
+
+                var maxAxis = Math.max(size.x, size.y, size.z);
+
+                if (!isNaN(maxAxis)) {
+                    obj.scale.multiplyScalar(10 / maxAxis);
+                } else {
+                    obj.scale.set(0.02, 0.02, 0.02);
+                }
+
+                const offset = new THREE.Vector3();
+                bbox.getCenter(offset).negate();
+                obj.children.forEach((element) => {
+                    if (element.children.length === obj.children.length)
+                        element.position.set(offset.x, offset.y, offset.z);
+                });
+
+                if (gltf.animations.length) {
+                    mixer = new THREE.AnimationMixer(gltf.scene);
+                    mixer.clipAction(gltf.animations[0]).play();
+                }
+                // console.log(obj);
+                scene.add(obj);
+            });
+        } else if (fileExt === "obj") {
+            scene.remove(obj);
+            OBJloader.load(controllerValue.assetLink, function (objNew) {
+                obj = objNew;
+                // console.log(obj);
+                var bbox = new THREE.Box3().setFromObject(obj);
+                var size = bbox.getSize(new THREE.Vector3());
+
+                var maxAxis = Math.max(size.x, size.y, size.z);
+
+                if (!isNaN(maxAxis)) {
+                    obj.scale.multiplyScalar(10 / maxAxis);
+                } else {
+                    obj.scale.set(0.02, 0.02, 0.02);
+                }
+
+                const offset = new THREE.Vector3();
+                bbox.getCenter(offset).negate();
+                obj.children.forEach((element) => {
+                    if (element.children.length === obj.children.length)
+                        element.position.set(offset.x, offset.y, offset.z);
+                });
+
+                if (obj.animations.length) {
+                    mixer = new THREE.AnimationMixer(obj);
+                    const action = mixer.clipAction(obj.animations[0]);
+                    action.play();
+                    obj.castShadow = true;
+                }
+                scene.add(obj);
+            });
+        }
+    } else{
+        FBXloader.load("asset/fire.fbx", function (fbx) {
+            obj = fbx;
+            var bbox = new THREE.Box3().setFromObject(obj);
+            var size = bbox.getSize(new THREE.Vector3());
+    
+            var maxAxis = Math.max(size.x, size.y, size.z);
+            // console.log(maxAxis);
+            // obj.position.set(0, -5, 0);
+            obj.scale.multiplyScalar(6 / maxAxis);
+    
+            scene.add(obj);
+        });
+    }
 
     
 
@@ -735,33 +1181,33 @@ function init() {
 
                 const offset = new THREE.Vector3();
                 bbox.getCenter(offset).negate();
-                for(let element of obj.children){
-                    if (element.children.length === obj.children.length){
+                for (let element of obj.children) {
+                    if (element.children.length === obj.children.length) {
                         element.position.set(offset.x, offset.y, offset.z);
                         break;
-                    }
-                    else obj.position.y -= y;
+                    } else obj.position.y -= y;
                 }
                 // console.log(obj);
 
                 if (obj.animations.length) {
                     mixer = new THREE.AnimationMixer(obj);
-                    for(let i = 0 ; i < obj.animations.length ; i++){
+                    for (let i = 0; i < obj.animations.length; i++) {
                         mixer.clipAction(obj.animations[0]).play();
                     }
-                    
+
                     obj.castShadow = true;
                 }
 
                 scene.add(obj);
             });
         } else if (fileExt === "glb" || fileExt === "gltf") {
-
             const dracoLoader = new DRACOLoader();
-            dracoLoader.setDecoderConfig({ type: 'js' });
-			dracoLoader.setDecoderPath('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/'); 
-            GLTFloader.setDRACOLoader( dracoLoader );
-            
+            dracoLoader.setDecoderConfig({ type: "js" });
+            dracoLoader.setDecoderPath(
+                "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
+            );
+            GLTFloader.setDRACOLoader(dracoLoader);
+
             scene.remove(obj);
             GLTFloader.load(x, function (gltf) {
                 obj = gltf.scene;
@@ -786,7 +1232,7 @@ function init() {
                 // console.log(gltf.animations.length);
                 if (gltf.animations.length) {
                     mixer = new THREE.AnimationMixer(gltf.scene);
-                    mixer.clipAction( gltf.animations[ 0 ] ).play();
+                    mixer.clipAction(gltf.animations[0]).play();
                 }
 
                 scene.add(obj);
@@ -878,10 +1324,12 @@ function init() {
             scene.remove(obj);
 
             const dracoLoader = new DRACOLoader();
-            dracoLoader.setDecoderConfig({ type: 'js' });
-			dracoLoader.setDecoderPath('https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/'); 
-            GLTFloader.setDRACOLoader( dracoLoader );
-            
+            dracoLoader.setDecoderConfig({ type: "js" });
+            dracoLoader.setDecoderPath(
+                "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
+            );
+            GLTFloader.setDRACOLoader(dracoLoader);
+
             GLTFloader.load(x, function (gltf) {
                 obj = gltf.scene;
                 var bbox = new THREE.Box3().setFromObject(obj);
@@ -904,7 +1352,7 @@ function init() {
 
                 if (gltf.animations.length) {
                     mixer = new THREE.AnimationMixer(gltf.scene);
-                    mixer.clipAction( gltf.animations[ 0 ] ).play();
+                    mixer.clipAction(gltf.animations[0]).play();
                 }
                 // console.log(obj);
                 scene.add(obj);
@@ -978,7 +1426,8 @@ function onWindowResize() {
 }
 
 function render() {
-    if (controls.autoRotateSpeed !== add) controls.autoRotateSpeed = add;
+    if (controls.autoRotateSpeed !== rotation)
+        controls.autoRotateSpeed = rotation;
 
     if (controls.minDistance !== zoomMin) controls.minDistance = zoomMin;
 
@@ -990,13 +1439,11 @@ function render() {
     if (controls.maxPolarAngle !== maxAngleForOrbit)
         controls.maxPolarAngle = maxAngleForOrbit;
 
-    
-    if ( mixer ) mixer.update( clock.getDelta() );
+    if (mixer) mixer.update(clock.getDelta());
 
     controls.update();
     renderer.render(scene, camera);
 }
-
 
 //////////////////////////adding script file //////////////////
 //////////////////////...............////////////////////////////
@@ -1008,17 +1455,17 @@ var checkBox = document.getElementById("autoRotationBtn");
 checkBox.addEventListener("click", () => {
     if (checkBox.checked === true) {
         //add = 0.005;
-        add = document.getElementById("myRange").value;
+        rotation = document.getElementById("myRange").value;
         // console.log(document.getElementById("myRange").value/300 );
     } else {
-        add = 0;
+        rotation = 0;
     }
 });
 
 var RotationSpeed = document.getElementById("myRange");
 RotationSpeed.oninput = function () {
     checkBox.checked = true;
-    add = this.value;
+    rotation = this.value;
 };
 
 var RotationTopLimite = document.getElementById("myRangeTopLimite");
@@ -1084,31 +1531,43 @@ document.getElementsByName("bg").forEach((radio) => {
     radio.addEventListener("click", () => {
         if (radio.value === "skyblue") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[0]);
+            scene.background = new THREE.Color(controllerValue.bgColor[0]);
         } else if (radio.value === "red") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[1]);
+            scene.background = new THREE.Color(controllerValue.bgColor[1]);
         } else if (radio.value === "gray") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[2]);
+            scene.background = new THREE.Color(controllerValue.bgColor[2]);
         } else if (radio.value === "blue") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[3]);
+            scene.background = new THREE.Color(controllerValue.bgColor[3]);
         } else if (radio.value === "green") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[4]);
+            scene.background = new THREE.Color(controllerValue.bgColor[4]);
         } else if (radio.value === "yellow") {
             if (skybox !== null) scene.remove(skybox);
-            scene.background = new THREE.Color(bgColor[5]);
+            scene.background = new THREE.Color(controllerValue.bgColor[5]);
         } else if (radio.value === "texture1") {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(bgTexrute[0].texture_ft);
-            let texture_bk = new THREE.TextureLoader().load(bgTexrute[0].texture_bk);
-            let texture_up = new THREE.TextureLoader().load(bgTexrute[0].texture_up);
-            let texture_dn = new THREE.TextureLoader().load(bgTexrute[0].texture_dn);
-            let texture_rt = new THREE.TextureLoader().load(bgTexrute[0].texture_rt);
-            let texture_lf = new THREE.TextureLoader().load(bgTexrute[0].texture_lf);
+            let texture_ft = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[0].texture_ft
+            );
+            let texture_bk = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[0].texture_bk
+            );
+            let texture_up = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[0].texture_up
+            );
+            let texture_dn = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[0].texture_dn
+            );
+            let texture_rt = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[0].texture_rt
+            );
+            let texture_lf = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[0].texture_lf
+            );
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -1138,12 +1597,24 @@ document.getElementsByName("bg").forEach((radio) => {
         } else if (radio.value === "texture2") {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(bgTexrute[1].texture_ft);
-            let texture_bk = new THREE.TextureLoader().load(bgTexrute[1].texture_bk);
-            let texture_up = new THREE.TextureLoader().load(bgTexrute[1].texture_up);
-            let texture_dn = new THREE.TextureLoader().load(bgTexrute[1].texture_dn);
-            let texture_rt = new THREE.TextureLoader().load(bgTexrute[1].texture_rt);
-            let texture_lf = new THREE.TextureLoader().load(bgTexrute[1].texture_lf);
+            let texture_ft = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[1].texture_ft
+            );
+            let texture_bk = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[1].texture_bk
+            );
+            let texture_up = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[1].texture_up
+            );
+            let texture_dn = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[1].texture_dn
+            );
+            let texture_rt = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[1].texture_rt
+            );
+            let texture_lf = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[1].texture_lf
+            );
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -1173,12 +1644,24 @@ document.getElementsByName("bg").forEach((radio) => {
         } else if (radio.value === "texture3") {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
-            let texture_ft = new THREE.TextureLoader().load(bgTexrute[2].texture_ft);
-            let texture_bk = new THREE.TextureLoader().load(bgTexrute[2].texture_bk);
-            let texture_up = new THREE.TextureLoader().load(bgTexrute[2].texture_up);
-            let texture_dn = new THREE.TextureLoader().load(bgTexrute[2].texture_dn);
-            let texture_rt = new THREE.TextureLoader().load(bgTexrute[2].texture_rt);
-            let texture_lf = new THREE.TextureLoader().load(bgTexrute[2].texture_lf);
+            let texture_ft = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[2].texture_ft
+            );
+            let texture_bk = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[2].texture_bk
+            );
+            let texture_up = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[2].texture_up
+            );
+            let texture_dn = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[2].texture_dn
+            );
+            let texture_rt = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[2].texture_rt
+            );
+            let texture_lf = new THREE.TextureLoader().load(
+                controllerValue.bgTexrute[2].texture_lf
+            );
 
             materialArray.push(
                 new THREE.MeshBasicMaterial({ map: texture_ft })
@@ -1331,7 +1814,7 @@ let snapShot = document.getElementById("snapshot");
 let check = true;
 fullScreen.addEventListener("click", () => {
     if (check) {
-        document.querySelector("#functions").classList.add("hide");
+        document.querySelector("#functions").style.display = "none";
         document.querySelector(".heading").classList.add("hide");
 
         document.querySelector(".container").style.width = "100%";
@@ -1344,7 +1827,10 @@ fullScreen.addEventListener("click", () => {
         // render();
         check = false;
     } else {
-        document.querySelector("#functions").classList.remove("hide");
+        if (controllerValue.controllerNonVisibility === false) {
+            document.querySelector("#functions").style.display = "block";
+        }
+
         document.querySelector(".heading").classList.remove("hide");
 
         document.querySelector(".container").style.width = "80%";
@@ -1376,6 +1862,3 @@ snapShot.addEventListener("click", () => {
 
     link.click();
 });
-
-
-
