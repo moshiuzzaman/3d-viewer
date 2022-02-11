@@ -1148,21 +1148,33 @@ function init() {
             "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
         );
         GLTFloader.setDRACOLoader(dracoLoader);
-        GLTFloader.load(
-            "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
-            function (gltf) {
-                obj = gltf.scene;
-                var bbox = new THREE.Box3().setFromObject(obj);
-                var size = bbox.getSize(new THREE.Vector3());
+        GLTFloader.load('https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf', function (gltf) {
+            obj = gltf.scene;
+            var bbox = new THREE.Box3().setFromObject(obj);
+            var size = bbox.getSize(new THREE.Vector3());
 
-                var maxAxis = Math.max(size.x, size.y, size.z);
-                // console.log(maxAxis);
-                // obj.position.set(0, -5, 0);
-                obj.scale.multiplyScalar(6 / maxAxis);
+            var maxAxis = Math.max(size.x, size.y, size.z);
 
-                scene.add(obj);
+            if (!isNaN(maxAxis)) {
+                obj.scale.multiplyScalar(10 / maxAxis);
+            } else {
+                obj.scale.set(0.02, 0.02, 0.02);
             }
-        );
+
+            const offset = new THREE.Vector3();
+            bbox.getCenter(offset).negate();
+            obj.children.forEach((element) => {
+                if (element.children.length === obj.children.length)
+                    element.position.set(offset.x, offset.y, offset.z);
+            });
+
+            if (gltf.animations.length) {
+                mixer = new THREE.AnimationMixer(gltf.scene);
+                mixer.clipAction(gltf.animations[0]).play();
+            }
+            // console.log(obj);
+            scene.add(obj);
+        });
     }
 
     //events for file uploader start
