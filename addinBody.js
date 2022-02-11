@@ -4,8 +4,9 @@ if (typeof mainControllerValue == "object") {
     controllerValue = mainControllerValue;
 } else {
     controllerValue = {
-        assetLink: 'https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf',
-        controllerNonVisibility: false,
+        assetLink:
+            "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
+        controllerVisibility: true,
         rotation: 10,
         maxAngleForOrbit: 3.4,
         minAngleForOrbit: 0,
@@ -85,6 +86,10 @@ if (typeof mainControllerValue == "object") {
         htmlZoomInDefaultValue: 10,
         htmlZoomOutDefaultValue: 50,
     };
+}
+
+if (typeof controllerValue.controllerVisibility !== "boolean") {
+    controllerValue.controllerVisibility = true;
 }
 
 document.getElementById("bs__root").innerHTML = `
@@ -248,8 +253,16 @@ document.getElementById("bs__root").innerHTML = `
                         <div class="autoRotation">
                             <p>Zoom Out limit</p>
                             <input type="range" 
-                            min=${controllerValue.htmlZoomOutMin ? controllerValue.htmlZoomOutMin : 50} 
-                            max=${controllerValue.htmlZoomOutMax ? controllerValue.htmlZoomOutMax : 90} 
+                            min=${
+                                controllerValue.htmlZoomOutMin
+                                    ? controllerValue.htmlZoomOutMin
+                                    : 50
+                            } 
+                            max=${
+                                controllerValue.htmlZoomOutMax
+                                    ? controllerValue.htmlZoomOutMax
+                                    : 90
+                            } 
                             step=${
                                 controllerValue.zoomStape
                                     ? controllerValue.zoomStape
@@ -447,7 +460,7 @@ canvas {
 }
 
 #functions {
-    display: ${controllerValue.controllerNonVisibility === false ? "block" : "none"};
+    display: ${controllerValue.controllerVisibility ? "block" : "none"};
     padding: 0 20px;
     width: 67%;
 }
@@ -920,7 +933,7 @@ document.head.appendChild(styleSheet);
 
 //importing necessary things
 import * as THREE from "three";
-import { OrbitControls } from "OrbitControls";
+import { OrbitControls } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/OrbitControls.js";
 
 import {
     GLTFLoader,
@@ -1025,7 +1038,7 @@ function init() {
     const GLTFloader = new GLTFLoader();
     const OBJloader = new OBJLoader();
 
-    if(controllerValue.assetLink) {
+    if (controllerValue.assetLink) {
         let fileName = controllerValue.assetLink.split(".");
         let fileExt = fileName[fileName.length - 1];
 
@@ -1128,22 +1141,29 @@ function init() {
                 scene.add(obj);
             });
         }
-    } else{
-        FBXloader.load("asset/fire.fbx", function (fbx) {
-            obj = fbx;
-            var bbox = new THREE.Box3().setFromObject(obj);
-            var size = bbox.getSize(new THREE.Vector3());
-    
-            var maxAxis = Math.max(size.x, size.y, size.z);
-            // console.log(maxAxis);
-            // obj.position.set(0, -5, 0);
-            obj.scale.multiplyScalar(6 / maxAxis);
-    
-            scene.add(obj);
-        });
-    }
+    } else {
+        const dracoLoader = new DRACOLoader();
+        dracoLoader.setDecoderConfig({ type: "js" });
+        dracoLoader.setDecoderPath(
+            "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
+        );
+        GLTFloader.setDRACOLoader(dracoLoader);
+        GLTFloader.load(
+            "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
+            function (gltf) {
+                obj = gltf.scene;
+                var bbox = new THREE.Box3().setFromObject(obj);
+                var size = bbox.getSize(new THREE.Vector3());
 
-    
+                var maxAxis = Math.max(size.x, size.y, size.z);
+                // console.log(maxAxis);
+                // obj.position.set(0, -5, 0);
+                obj.scale.multiplyScalar(6 / maxAxis);
+
+                scene.add(obj);
+            }
+        );
+    }
 
     //events for file uploader start
     const inputElement = document.getElementById("fileInput");
@@ -1827,7 +1847,7 @@ fullScreen.addEventListener("click", () => {
         // render();
         check = false;
     } else {
-        if (controllerValue.controllerNonVisibility === false) {
+        if (controllerValue.controllerVisibility) {
             document.querySelector("#functions").style.display = "block";
         }
 
