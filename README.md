@@ -28,5 +28,5 @@
    - Animations of the model.
 
 
-#External Libraries
+# External Libraries
 3D Viewer uses these wonderful libraries: [three.js](https://github.com/mrdoob/three.js), [fflate](https://github.com/101arrowz/fflate), [draco](https://github.com/google/draco).
