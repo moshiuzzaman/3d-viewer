@@ -8,12 +8,12 @@
 .fbx, .obj, .gltf/.glb.
 
 # Features
- *   Import model
+ * Import model
    - Select files from a file browser dialog.
    - Drag and drop files from your computer.
    - View files by web URL.
  
- *   Explore model
+ * Explore model
    - Orbit, pan.
    - Autorotation enable/disable.
    - Rotation Speed.
