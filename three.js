@@ -4,11 +4,13 @@ import { GLTFLoader } from "./libs/GLTFLoader.js";
 import { FBXLoader } from "./libs/FBXLoader.js";
 import { OBJLoader } from "./libs/OBJLoader.js";
 
+
 let controls, camera, scene, renderer;
 let textureCube;
 let object = "";
 let mixer ;
 let clock = new THREE.Clock();
+let spotLight;
 
 init();
 
@@ -16,10 +18,10 @@ function init() {
   //target canvas
   const Canvas = document.getElementById("modelCanvas");
   camera = new THREE.PerspectiveCamera(
-    70,
+    60,
     window.innerWidth / window.innerHeight,
-    0.1,
-    100
+    1,
+    5000
   );
   //set camera position
   camera.position.set(0, 0, 100);
@@ -28,25 +30,23 @@ function init() {
   //set scene background
   scene.background = new THREE.Color("rgb(13, 202, 240)");
   //create light
-  const ambient = new THREE.AmbientLight(0xffffff);
+  const hemisLight = new THREE.HemisphereLight(0xffffff, 0x000000, 4);
+  spotLight = new THREE.SpotLight(0xffa95c,4);
+  spotLight.castShadow = true;
+  spotLight.shadow.bias = -0.0001;
+  spotLight.shadow.mapSize.width = 1024*4;
+  spotLight.shadow.mapSize.height = 1024*4;
+  //directional light 
+  //const dlight = new THREE.DirectionalLight()
   //adding light to the scene
-  scene.add(ambient);
+  scene.add(spotLight)
+  scene.add(hemisLight);
+  //scene.add(new THREE.AxesHelper(500))
   //cube texture loader
-  const loader = new THREE.CubeTextureLoader();
-  loader.setPath("textures/scene_1/"); //set resource relative path
-  //load pictures for texture background
-  textureCube = loader.load([
-    "posx.jpg",
-    "negx.jpg",
-    "posy.jpg",
-    "negy.jpg",
-    "posz.jpg",
-    "negz.jpg",
-  ]);
-  textureCube.encoding = THREE.sRGBEncoding;
-  scene.background = textureCube; //set scene background
+   //setTextureBackground("id_1");
+   scene.background = new THREE.Color("rgb(100, 255, 200)")
   //load model
-  loadFile("model/file.gltf", "gltf");
+  loadFile("model/uploads_files_2792345_Koenigsegg.fbx", "fbx");
   //create rendereer
   renderer = new THREE.WebGLRenderer({
     antialias: true,
@@ -54,6 +54,9 @@ function init() {
     canvas: Canvas,
     preserveDrawingBuffer: true,
   });
+  renderer.toneMapping = THREE.ReinhardToneMapping;
+  renderer.toneMappingExposure = 0.5;
+  renderer.shadowMap.enable = true;
   //set renderer pixel ratio
   renderer.setPixelRatio(window.devicePixelRatio);
   //set renderer size
@@ -75,12 +78,15 @@ function init() {
 }
 //window resize event function
 function onWindowResize() {
+  const can = renderer.domElement;
+  const width = can.clientWidth;
+  const height = can.clientHeight;
   //camera aspect
-  camera.aspect = window.innerWidth / window.innerHeight;
+  camera.aspect = width/ height;
   camera.updateProjectionMatrix(); //update camera projection matrix
   controls.update();
   //set renderer size
-  renderer.setSize(window.innerWidth, window.innerHeight);
+  renderer.setSize(width, height, false);
 }
 //animate the scene
 function animate() {
@@ -117,6 +123,11 @@ function animate() {
   camera.lookAt(0, 0, 0);
   controls.update();
   if(mixer) mixer.update(clock.getDelta());
+  spotLight.position.set(
+    camera.position.x + 10,
+    camera.position.y + 10,
+    camera.position.z + 10
+  )
   renderer.render(scene, camera);
 }
 
@@ -169,26 +180,48 @@ function setColorBackground(colorValue) {
 function loadFile(file, fileExtension) {
   scene.remove(object);
   if (fileExtension === "gltf" || fileExtension === "glb") {
-    //GLTF LOADER
-    // Instantiate a loader
     const loader = new GLTFLoader();
-
-    // Load a glTF resource
     loader.load(
-      // resource URL
       file,
       // called when the resource is loaded
       function (gltf) {
         object = gltf.scene;
-        //object.scale.set(1,1,1);
+        var bbox = new THREE.Box3().setFromObject(object);
+        var cent = bbox.getCenter(new THREE.Vector3());
+        var size = bbox.getSize(new THREE.Vector3());
+        //console.log(isNaN(size.x));
+        if(isNaN(size.x) || isNaN(size.y) || isNaN(size.z)){
+          object.scale.setScalar(0.1);
+        }else {
+        //Rescale the object to normalized space
+        var maxAxis = Math.max(size.x, size.y, size.z);
+        object.scale.multiplyScalar(60 / maxAxis);
+        console.log(size)
+        bbox.setFromObject(object);
+        bbox.getCenter(cent);
+        bbox.getSize(size);
+        //Reposition to 0,halfY,0
+        object.position.copy(cent).multiplyScalar(-1);
+        object.position.y-= (size.y * 0.5);
+
+        }
+        object.traverse (c => {
+          if(object.isMesh) {
+            object.castShadow = true;
+            object.receiveShadow = true;
+            if(object.material.map) {
+              object.material.map.anisotrophy = 20;
+            }
+          }
+        });
+
+        if(gltf.animations.length != 0){
+          mixer = new THREE.AnimationMixer(object);
+          const idle = mixer.clipAction(gltf.animations[0]);
+          idle.play();
+        } 
         object.position.set(0, 0, 0);
         scene.add(object);
-
-        gltf.animations; // Array<THREE.AnimationClip>
-        gltf.scene; // THREE.Group
-        gltf.scenes; // Array<THREE.Group>
-        gltf.cameras; // Array<THREE.Camera>
-        gltf.asset; // Object
       },
       // called while loading is progressing
       function (xhr) {
@@ -200,33 +233,46 @@ function loadFile(file, fileExtension) {
       }
     );
   } else if (fileExtension === "fbx") {
+
     const fbxLoader = new FBXLoader();
     fbxLoader.load(
       file,
       (fbx) => {
-        // object.traverse(function (child) {
-        //     if ((child as THREE.Mesh).isMesh) {
-        //         // (child as THREE.Mesh).material = material
-        //         if ((child as THREE.Mesh).material) {
-        //             ((child as THREE.Mesh).material as THREE.MeshBasicMaterial).transparent = false
-        //         }
-        //     }
-        // })
-        // object.scale.set(.01, .01, .01)
         object = fbx;
-        object.scale.setScalar(0.1);
+        var bbox = new THREE.Box3().setFromObject(object);
+        var cent = bbox.getCenter(new THREE.Vector3());
+        var size = bbox.getSize(new THREE.Vector3());
+        //console.log(isNaN(size.x));
+        if(isNaN(size.x) || isNaN(size.y) || isNaN(size.z)){
+          object.scale.setScalar(0.1);
+        }else {
+        //Rescale the object to normalized space
+        var maxAxis = Math.max(size.x, size.y, size.z);
+        //console.log(maxAxis[0] );
+        object.scale.multiplyScalar(60 / maxAxis);
+        console.log(size)
+        bbox.setFromObject(object);
+        bbox.getCenter(cent);
+        bbox.getSize(size);
+        //Reposition to 0,halfY,0
+        object.position.copy(cent).multiplyScalar(-1);
+        object.position.y-= (size.y * 0.5);
+
+        }
+
+
+        // const normalSize = bbox.getSize(new THREE.Vector3()); //normal value
+        // console.log(normalSize);
+        //object.scale.setScalar(0.1);
         object.traverse (c => {
           c.castShadow = true;
         });
-        //console.log(object)
         if(object.animations[0] != null){
-          //console.log(object.animations[0]);
           mixer = new THREE.AnimationMixer(object);
           const idle = mixer.clipAction(object.animations[0]);
           idle.play();
-
-        }
-        
+        } 
+        object.position.set(0, 0, 0)
         scene.add(object);
 
       },
@@ -242,15 +288,42 @@ function loadFile(file, fileExtension) {
     objLoader.load(
       file,
       (obj) => {
-        // (object.children[0] as THREE.Mesh).material = material
-        // object.traverse(function (child) {
-        //     if ((child as THREE.Mesh).isMesh) {
-        //         (child as THREE.Mesh).material = material
-        //     }
-        // })
         object = obj;
-        obj.scale.set(5, 5, 5);
+        var bbox = new THREE.Box3().setFromObject(object);
+       // console.log(bbox)
+        var cent = bbox.getCenter(new THREE.Vector3());
+        console.log("center is"+cent)
+        console.log(cent)
+        var size = bbox.getSize(new THREE.Vector3());
+        console.log(size)
+        if(isNaN(size.x) || isNaN(size.y) || isNaN(size.z)){
+          object.scale.setScalar(0.1);
+        }else {
+        //Rescale the object to normalized space
+        var maxAxis = Math.max(size.x, size.y, size.z);
+        console.log("maxaxis"+maxAxis)
+        //console.log(maxAxis[0] );
+        object.scale.multiplyScalar(60 / maxAxis);
+        console.log(size)
+        bbox.setFromObject(object);
+        bbox.getCenter(cent);
+        bbox.getSize(size);
+        //Reposition to 0,halfY,0
+        object.position.copy(cent).multiplyScalar(-1);
+        object.position.y-= (size.y * 0.5);
+
+        }
+        object.traverse (c => {
+          c.castShadow = true;
+        });
+        if(object.animations[0] != null){
+          mixer = new THREE.AnimationMixer(object);
+          const idle = mixer.clipAction(object.animations[0]);
+          idle.play();
+        } 
+        object.position.set(0, 0,0)
         scene.add(object);
+
       },
       (xhr) => {
         console.log((xhr.loaded / xhr.total) * 100 + "% loaded");
@@ -259,16 +332,13 @@ function loadFile(file, fileExtension) {
         console.log(error);
       }
     );
-  }
+}
 }
 //set render size
 function setSize(rendererWidth, rendererHeight) {
   renderer.setSize(rendererWidth, rendererHeight);
 }
-//get object
-function getObject() {
-  return object;
-}
+
 
 
 //START ACTION SCRIPT HERE
@@ -289,16 +359,18 @@ document.getElementById("urlFileUpload").addEventListener("click", function () {
 // ACCORDION ACTION 
 let accordionClassDiv = document.getElementsByClassName("accordion");
 let panelClassDiv = document.getElementsByClassName('panel');
-
 for (let i = 0; i < accordionClassDiv.length; i++) {
   accordionClassDiv[i].onclick = function() {
+      this. childNodes[1].className = "fa fa-angle-down";
       var setClasses = !this.classList.contains('active');
       setClass(accordionClassDiv, 'active', 'remove');
       setClass(panelClassDiv, 'show', 'remove');
 
       if (setClasses) {
+          this.childNodes[1].className = "fa fa-angle-down";
           this.classList.toggle("active");
           this.nextElementSibling.classList.toggle("show");
+
       }
   }
 }
@@ -306,6 +378,9 @@ for (let i = 0; i < accordionClassDiv.length; i++) {
 function setClass(els, className, fnName) {
   for (let i = 0; i < els.length; i++) {
       els[i].classList[fnName](className);
+      if(els[i].childNodes[1].className === "fa fa-angle-down"){
+          els[i].childNodes[1].className = "fa fa-angle-right"
+      }
   }
 }
 
