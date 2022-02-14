@@ -3,7 +3,7 @@
 3d viewer (https://moshiuzzaman.github.io/3d-viewer/) is an extension/website to visualize and explore 3D models right in your browser.
 
 # Example
-![This is an image](https://raw.githubusercontent.com/Siam456/FT_Filees/main/redmi%20image/Screenshot%202022-02-14%20121319.png)
+![This is an image](https://raw.githubusercontent.com/Siam456/FT_Filees/main/redmi%20image/re.png)
 
 [Check the live version!](https://moshiuzzaman.github.io/3d-viewer/)
 
