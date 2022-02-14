@@ -4,6 +4,7 @@ if (typeof mainControllerValue == "object") {
     controllerValue = mainControllerValue;
 } else {
     controllerValue = {
+        mainHaeding: '3D viewer',
         assetLink:
             "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
         controllerVisibility: true,
@@ -95,7 +96,8 @@ if (typeof controllerValue.controllerVisibility !== "boolean") {
 document.getElementById("bs__root").innerHTML = `
 <div class="container">
         <div class="heading">
-            <h1>3D Viewer</h1>
+            <h1>${controllerValue.mainHaeding ? 
+                controllerValue.mainHaeding : ' '}</h1>
 
         </div>
         <div class="wrapper" id="wrapperId">
@@ -492,6 +494,9 @@ canvas {
 .font_style{
     font-family: IBM Plex Sans Thai Looped;
     font-weight: bold;
+}
+.pbg, .tbg{
+    font-family: IBM Plex Sans Thai Looped;
 }
 
 /* collapsable */
