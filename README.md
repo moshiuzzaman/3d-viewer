@@ -4,6 +4,8 @@
 
 # Example
 
+![This is an image](https://raw.githubusercontent.com/Siam456/FT_Filees/main/redmi%20image/Screenshot%202022-02-14%20121319.png)
+
 # Supported file formats
    **import:** .fbx, .obj, .gltf/.glb.
 
