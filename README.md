@@ -5,7 +5,7 @@
 # Example
 
 # Supported file formats
-.fbx, .obj, .gltf/.glb.
+   **import: **.fbx, .obj, .gltf/.glb.
 
 # Features
  * Import model
