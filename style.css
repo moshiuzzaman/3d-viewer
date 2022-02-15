@@ -142,6 +142,7 @@
     stroke: #eaeaea;
     text-align: center;
   }
+
   .accordion {
     background-color: rgb(246, 243, 243);
     color: #444;
@@ -155,7 +156,6 @@
     transition: 0.4s;
     overflow: hidden;
   }
-  
   .active,
   .accordion:hover {
     background-color: #ccc;
