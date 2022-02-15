@@ -4,7 +4,7 @@ if (typeof mainControllerValue == "object") {
     controllerValue = mainControllerValue;
 } else {
     controllerValue = {
-        mainHaeding: '3D viewer',
+        mainHeading: '3D viewer',
         assetLink:
             "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
         controllerVisibility: true,
@@ -22,7 +22,7 @@ if (typeof mainControllerValue == "object") {
             "#198754",
             "#FFC107",
         ],
-        bgTexrute: [
+        bgTexture: [
             {
                 texture_ft:
                     "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/tropic_ft.jpg",
@@ -71,13 +71,13 @@ if (typeof mainControllerValue == "object") {
         htmlRotationSpeedStep: 5,
         htmlRotationSpeedDefaultValue: 10,
 
-        htmlRotationtopLimiteMin: 1.6,
-        htmlRotationtopLimiteMax: 3.2,
-        htmlRotationBottonLimiteMin: 0,
-        htmlRotationBottonLimiteMax: 1.6,
-        htmlRotationLimiteStep: 0.2,
-        htmlRotationtopLimiteDefaultValue: 3.1,
-        htmlRotationBottonLimiteDefaultValue: 0,
+        htmlRotationtopLimitMin: 1.6,
+        htmlRotationtopLimitMax: 3.2,
+        htmlRotationBottonLimitMin: 0,
+        htmlRotationBottonLimitMax: 1.6,
+        htmlRotationLimitStep: 0.2,
+        htmlRotationtopLimitDefaultValue: 3.1,
+        htmlRotationBottonLimitDefaultValue: 0,
 
         htmlZoomInMin: -10,
         htmlZoomInMax: 10,
@@ -89,15 +89,16 @@ if (typeof mainControllerValue == "object") {
     };
 }
 
+
 if (typeof controllerValue.controllerVisibility !== "boolean") {
     controllerValue.controllerVisibility = true;
 }
 
-document.getElementById("bs__root").innerHTML = `
+document.getElementById("bs__3D_viewer_root").innerHTML = `
 <div class="container">
         <div class="heading">
-            <h1>${controllerValue.mainHaeding ? 
-                controllerValue.mainHaeding : ' '}</h1>
+            <h1>${controllerValue.mainHeading ? 
+                controllerValue.mainHeading : ' '}</h1>
 
         </div>
         <div class="wrapper" id="wrapperId">
@@ -158,23 +159,23 @@ document.getElementById("bs__root").innerHTML = `
                             <p>Rotation Top Limit</p>
                             <input type="range" 
                             min=${
-                                controllerValue.htmlRotationtopLimiteMin
-                                    ? controllerValue.htmlRotationtopLimiteMin
+                                controllerValue.htmlRotationtopLimitMin
+                                    ? controllerValue.htmlRotationtopLimitMin
                                     : 1.6
                             } 
                             max=${
-                                controllerValue.htmlRotationtopLimiteMax
-                                    ? controllerValue.htmlRotationtopLimiteMax
+                                controllerValue.htmlRotationtopLimitMax
+                                    ? controllerValue.htmlRotationtopLimitMax
                                     : 3.2
                             } 
                             step=${
-                                controllerValue.htmlRotationLimiteStep
-                                    ? controllerValue.htmlRotationLimiteStep
+                                controllerValue.htmlRotationLimitStep
+                                    ? controllerValue.htmlRotationLimitStep
                                     : 0.2
                             } 
                             value=${
-                                controllerValue.htmlRotationtopLimiteDefaultValue
-                                    ? controllerValue.htmlRotationtopLimiteDefaultValue
+                                controllerValue.htmlRotationtopLimitDefaultValue
+                                    ? controllerValue.htmlRotationtopLimitDefaultValue
                                     : 3.1
                             } class="sliderRange"
                                 id="myRangeTopLimite">
@@ -184,23 +185,23 @@ document.getElementById("bs__root").innerHTML = `
                             <p>Rotation Bottom Limit</p>
                             <input type="range" 
                             min=${
-                                controllerValue.htmlRotationBottonLimiteMin
-                                    ? controllerValue.htmlRotationBottonLimiteMin
+                                controllerValue.htmlRotationBottonLimitMin
+                                    ? controllerValue.htmlRotationBottonLimitMin
                                     : 0
                             } 
                             max=${
-                                controllerValue.htmlRotationBottonLimiteMax
-                                    ? controllerValue.htmlRotationBottonLimiteMax
+                                controllerValue.htmlRotationBottonLimitMax
+                                    ? controllerValue.htmlRotationBottonLimitMax
                                     : 1.6
                             } 
                             step=${
-                                controllerValue.htmlRotationLimiteStep
-                                    ? controllerValue.htmlRotationLimiteStep
+                                controllerValue.htmlRotationLimitStep
+                                    ? controllerValue.htmlRotationLimitStep
                                     : 0.2
                             }
                             value=${
-                                controllerValue.htmlRotationBottonLimiteDefaultValue
-                                    ? controllerValue.htmlRotationBottonLimiteDefaultValue
+                                controllerValue.htmlRotationBottonLimitDefaultValue
+                                    ? controllerValue.htmlRotationBottonLimitDefaultValue
                                     : 0
                             } 
                             class="sliderRange reversedRange"
@@ -763,8 +764,8 @@ input:checked + .slider:before {
 
 .tbg{
     display: ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute.length > 0
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture.length > 0
                 ? "flex"
                 : "none"
             : "none"
@@ -772,8 +773,8 @@ input:checked + .slider:before {
 }
 .tbg_msg{
     display: ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute.length > 0
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture.length > 0
                 ? "none"
                 : "flex"
             : "flex"
@@ -783,16 +784,16 @@ input:checked + .slider:before {
 
 .texture1 {
     display: ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute[0]
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture[0]
                 ? "inline-block"
                 : "none"
             : "none"
     };
     background: url( ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute[0]
-                ? controllerValue.bgTexrute[0].texture_rt
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture[0]
+                ? controllerValue.bgTexture[0].texture_rt
                 : "none"
             : "none"
     });
@@ -802,16 +803,16 @@ input:checked + .slider:before {
 }
 .texture2 {
     display: ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute[1]
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture[1]
                 ? "inline-block"
                 : "none"
             : "none"
     };
     background: url( ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute[1]
-                ? controllerValue.bgTexrute[1].texture_rt
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture[1]
+                ? controllerValue.bgTexture[1].texture_rt
                 : "none"
             : "none"
     });
@@ -820,16 +821,16 @@ input:checked + .slider:before {
 }
 .texture3 {
     display: ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute[2]
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture[2]
                 ? "inline-block"
                 : "none"
             : "none"
     };
     background: url( ${
-        controllerValue.bgTexrute
-            ? controllerValue.bgTexrute[2]
-                ? controllerValue.bgTexrute[2].texture_rt
+        controllerValue.bgTexture
+            ? controllerValue.bgTexture[2]
+                ? controllerValue.bgTexture[2].texture_rt
                 : "none"
             : "none"
     });
@@ -954,11 +955,20 @@ let camera,
     mixer,
     controls;
 
-let rotation = controllerValue.rotation || 10,
+let rotation = controllerValue.rotation || 0,
     maxAngleForOrbit = controllerValue.maxAngleForOrbit || 3.4,
     minAngleForOrbit = controllerValue.minAngleForOrbit || 0,
-    zoomMax = controllerValue.zoomMax || 50,
-    zoomMin = controllerValue.zoomMin || 10;
+    zoomMax = controllerValue.zoomMax || 0,
+    zoomMin = controllerValue.zoomMin || 0;
+if(!controllerValue.rotation){
+    alert('Auto Rotation value required to auto rotate the scene.');
+}
+if(!controllerValue.zoomMax){
+    alert('zoomMax value required to zoom in.');
+}
+if(!controllerValue.zoomMax){
+    alert('zoomMin value required to zoom out.');
+}
 
 const clock = new THREE.Clock();
 
@@ -1147,39 +1157,8 @@ function init() {
             });
         }
     } else {
-        const dracoLoader = new DRACOLoader();
-        dracoLoader.setDecoderConfig({ type: "js" });
-        dracoLoader.setDecoderPath(
-            "https://raw.githubusercontent.com/mrdoob/three.js/dev/examples/js/libs/draco/"
-        );
-        GLTFloader.setDRACOLoader(dracoLoader);
-        GLTFloader.load('https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf', function (gltf) {
-            obj = gltf.scene;
-            var bbox = new THREE.Box3().setFromObject(obj);
-            var size = bbox.getSize(new THREE.Vector3());
 
-            var maxAxis = Math.max(size.x, size.y, size.z);
-
-            if (!isNaN(maxAxis)) {
-                obj.scale.multiplyScalar(10 / maxAxis);
-            } else {
-                obj.scale.set(0.02, 0.02, 0.02);
-            }
-
-            const offset = new THREE.Vector3();
-            bbox.getCenter(offset).negate();
-            obj.children.forEach((element) => {
-                if (element.children.length === obj.children.length)
-                    element.position.set(offset.x, offset.y, offset.z);
-            });
-
-            if (gltf.animations.length) {
-                mixer = new THREE.AnimationMixer(gltf.scene);
-                mixer.clipAction(gltf.animations[0]).play();
-            }
-            // console.log(obj);
-            scene.add(obj);
-        });
+        alert('No 3d model link Found');
     }
 
     //events for file uploader start
@@ -1588,22 +1567,22 @@ document.getElementsByName("bg").forEach((radio) => {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
             let texture_ft = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[0].texture_ft
+                controllerValue.bgTexture[0].texture_ft
             );
             let texture_bk = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[0].texture_bk
+                controllerValue.bgTexture[0].texture_bk
             );
             let texture_up = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[0].texture_up
+                controllerValue.bgTexture[0].texture_up
             );
             let texture_dn = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[0].texture_dn
+                controllerValue.bgTexture[0].texture_dn
             );
             let texture_rt = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[0].texture_rt
+                controllerValue.bgTexture[0].texture_rt
             );
             let texture_lf = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[0].texture_lf
+                controllerValue.bgTexture[0].texture_lf
             );
 
             materialArray.push(
@@ -1635,22 +1614,22 @@ document.getElementsByName("bg").forEach((radio) => {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
             let texture_ft = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[1].texture_ft
+                controllerValue.bgTexture[1].texture_ft
             );
             let texture_bk = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[1].texture_bk
+                controllerValue.bgTexture[1].texture_bk
             );
             let texture_up = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[1].texture_up
+                controllerValue.bgTexture[1].texture_up
             );
             let texture_dn = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[1].texture_dn
+                controllerValue.bgTexture[1].texture_dn
             );
             let texture_rt = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[1].texture_rt
+                controllerValue.bgTexture[1].texture_rt
             );
             let texture_lf = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[1].texture_lf
+                controllerValue.bgTexture[1].texture_lf
             );
 
             materialArray.push(
@@ -1682,22 +1661,22 @@ document.getElementsByName("bg").forEach((radio) => {
             if (skybox !== null) scene.remove(skybox);
             let materialArray = [];
             let texture_ft = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[2].texture_ft
+                controllerValue.bgTexture[2].texture_ft
             );
             let texture_bk = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[2].texture_bk
+                controllerValue.bgTexture[2].texture_bk
             );
             let texture_up = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[2].texture_up
+                controllerValue.bgTexture[2].texture_up
             );
             let texture_dn = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[2].texture_dn
+                controllerValue.bgTexture[2].texture_dn
             );
             let texture_rt = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[2].texture_rt
+                controllerValue.bgTexture[2].texture_rt
             );
             let texture_lf = new THREE.TextureLoader().load(
-                controllerValue.bgTexrute[2].texture_lf
+                controllerValue.bgTexture[2].texture_lf
             );
 
             materialArray.push(
