@@ -8,12 +8,13 @@ if (typeof mainControllerValue == "object") {
         assetLink:
             "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
         controllerVisibility: true,
-        rotation: 10,
+        rotation: true,
         maxAngleForOrbit: 3.4,
         minAngleForOrbit: 0,
+        zoom: true,
         zoomMax: 50,
         zoomMin: 10,
-        defaultbg: "green",
+        defaultbg: "skyblue",
         bgColor: [
             "skyblue",
             "#D14250",
@@ -66,26 +67,27 @@ if (typeof mainControllerValue == "object") {
                     "https://raw.githubusercontent.com/Siam456/FT_Filees/main/backgroundTexture/zeus_lf.jpg",
             },
         ],
-        htmlRotationSpeedMin: -50,
-        htmlRotationSpeedMax: 50,
-        htmlRotationSpeedStep: 5,
-        htmlRotationSpeedDefaultValue: 10,
+        rotationSpeedMin: -50,
+        rotationSpeedMax: 50,
+        rotationSpeedStep: 5,
+        rotationSpeedDefaultValue: 10,
 
-        htmlRotationtopLimitMin: 1.6,
-        htmlRotationtopLimitMax: 3.2,
-        htmlRotationBottonLimitMin: 0,
-        htmlRotationBottonLimitMax: 1.6,
-        htmlRotationLimitStep: 0.2,
-        htmlRotationtopLimitDefaultValue: 3.1,
-        htmlRotationBottonLimitDefaultValue: 0,
+        rotationtopLimitMin: 1.6,
+        rotationtopLimitMax: 3.2,
+        rotationBottonLimitMin: 0,
+        rotationBottonLimitMax: 1.6,
+        rotationLimitStep: 0.2,
+        rotationtopLimitDefaultValue: 3.1,
+        rotationBottonLimitDefaultValue: 0,
 
-        htmlZoomInMin: -10,
-        htmlZoomInMax: 10,
-        htmlZoomOutMin: 50,
-        htmlZoomOutMax: 90,
+        
+        zoomInMin: -10,
+        zoomInMax: 10,
+        zoomOutMin: 50,
+        zoomOutMin: 90,
         zoomStape: 2,
-        htmlZoomInDefaultValue: 10,
-        htmlZoomOutDefaultValue: 50,
+        zoomStape: 10,
+        zoomOutDefaultValue: 50,
     };
 }
 
@@ -93,8 +95,11 @@ if (typeof mainControllerValue == "object") {
 if (typeof controllerValue.controllerVisibility !== "boolean") {
     controllerValue.controllerVisibility = true;
 }
+if (typeof controllerValue.zoom !== "boolean") {
+    controllerValue.zoom = false;
+}
 
-document.getElementById("bs__3D_viewer_root").innerHTML = `
+document.getElementById("bs_3D_viewer_root").innerHTML = `
 <div class="container">
         <div class="heading">
             <h1>${controllerValue.mainHeading ? 
@@ -134,22 +139,22 @@ document.getElementById("bs__3D_viewer_root").innerHTML = `
                         <div class="autoRotation">
                             <p>Autorotation speed</p>
                             <input type="range" min=${
-                                controllerValue.htmlRotationSpeedMin
-                                    ? controllerValue.htmlRotationSpeedMin
+                                controllerValue.rotationSpeedMin
+                                    ? controllerValue.rotationSpeedMin
                                     : -50
                             } max=${
-    controllerValue.htmlRotationSpeedMax
-        ? controllerValue.htmlRotationSpeedMax
+    controllerValue.rotationSpeedMax
+        ? controllerValue.rotationSpeedMax
         : 50
 } 
                             step=${
-                                controllerValue.htmlRotationSpeedStep
-                                    ? controllerValue.htmlRotationSpeedStep
+                                controllerValue.rotationSpeedStep
+                                    ? controllerValue.rotationSpeedStep
                                     : 5
                             } 
                             value=${
-                                controllerValue.htmlRotationSpeedStep
-                                    ? controllerValue.htmlRotationSpeedStep
+                                controllerValue.rotationSpeedStep
+                                    ? controllerValue.rotationSpeedStep
                                     : 10
                             } class="sliderRange" id="myRange">
 
@@ -159,23 +164,23 @@ document.getElementById("bs__3D_viewer_root").innerHTML = `
                             <p>Rotation Top Limit</p>
                             <input type="range" 
                             min=${
-                                controllerValue.htmlRotationtopLimitMin
-                                    ? controllerValue.htmlRotationtopLimitMin
+                                controllerValue.rotationtopLimitMin
+                                    ? controllerValue.rotationtopLimitMin
                                     : 1.6
                             } 
                             max=${
-                                controllerValue.htmlRotationtopLimitMax
-                                    ? controllerValue.htmlRotationtopLimitMax
+                                controllerValue.rotationtopLimitMax
+                                    ? controllerValue.rotationtopLimitMax
                                     : 3.2
                             } 
                             step=${
-                                controllerValue.htmlRotationLimitStep
-                                    ? controllerValue.htmlRotationLimitStep
+                                controllerValue.rotationLimitStep
+                                    ? controllerValue.rotationLimitStep
                                     : 0.2
                             } 
                             value=${
-                                controllerValue.htmlRotationtopLimitDefaultValue
-                                    ? controllerValue.htmlRotationtopLimitDefaultValue
+                                controllerValue.rotationtopLimitDefaultValue
+                                    ? controllerValue.rotationtopLimitDefaultValue
                                     : 3.1
                             } class="sliderRange"
                                 id="myRangeTopLimite">
@@ -185,23 +190,23 @@ document.getElementById("bs__3D_viewer_root").innerHTML = `
                             <p>Rotation Bottom Limit</p>
                             <input type="range" 
                             min=${
-                                controllerValue.htmlRotationBottonLimitMin
-                                    ? controllerValue.htmlRotationBottonLimitMin
+                                controllerValue.rotationBottonLimitMin
+                                    ? controllerValue.rotationBottonLimitMin
                                     : 0
                             } 
                             max=${
-                                controllerValue.htmlRotationBottonLimitMax
-                                    ? controllerValue.htmlRotationBottonLimitMax
+                                controllerValue.rotationBottonLimitMax
+                                    ? controllerValue.rotationBottonLimitMax
                                     : 1.6
                             } 
                             step=${
-                                controllerValue.htmlRotationLimitStep
-                                    ? controllerValue.htmlRotationLimitStep
+                                controllerValue.rotationLimitStep
+                                    ? controllerValue.rotationLimitStep
                                     : 0.2
                             }
                             value=${
-                                controllerValue.htmlRotationBottonLimitDefaultValue
-                                    ? controllerValue.htmlRotationBottonLimitDefaultValue
+                                controllerValue.rotationBottonLimitDefaultValue
+                                    ? controllerValue.rotationBottonLimitDefaultValue
                                     : 0
                             } 
                             class="sliderRange reversedRange"
@@ -230,13 +235,13 @@ document.getElementById("bs__3D_viewer_root").innerHTML = `
                             <p>Zoom In limit</p>
                             <input type="range" 
                             min=${
-                                controllerValue.htmlZoomInMin
-                                    ? controllerValue.htmlZoomInMin
+                                controllerValue.zoomInMin
+                                    ? controllerValue.zoomInMin
                                     : -10
                             } 
                             max=${
-                                controllerValue.htmlZoomInMax
-                                    ? controllerValue.htmlZoomInMax
+                                controllerValue.zoomInMax
+                                    ? controllerValue.zoomInMax
                                     : 10
                             } 
                             step=${
@@ -245,8 +250,8 @@ document.getElementById("bs__3D_viewer_root").innerHTML = `
                                     : 2
                             } 
                             value=${
-                                controllerValue.htmlZoomInDefaultValue
-                                    ? controllerValue.htmlZoomInDefaultValue
+                                controllerValue.zoomInDefaultValue
+                                    ? controllerValue.zoomInDefaultValue
                                     : 10
                             } 
                             class="sliderRange reversedRange"
@@ -257,13 +262,13 @@ document.getElementById("bs__3D_viewer_root").innerHTML = `
                             <p>Zoom Out limit</p>
                             <input type="range" 
                             min=${
-                                controllerValue.htmlZoomOutMin
-                                    ? controllerValue.htmlZoomOutMin
+                                controllerValue.zoomOutMin
+                                    ? controllerValue.zoomOutMin
                                     : 50
                             } 
                             max=${
-                                controllerValue.htmlZoomOutMax
-                                    ? controllerValue.htmlZoomOutMax
+                                controllerValue.zoomOutMin
+                                    ? controllerValue.zoomOutMin
                                     : 90
                             } 
                             step=${
@@ -272,8 +277,8 @@ document.getElementById("bs__3D_viewer_root").innerHTML = `
                                     : 2
                             } 
                             value=${
-                                controllerValue.htmlZoomOutDefaultValue
-                                    ? controllerValue.htmlZoomOutDefaultValue
+                                controllerValue.zoomOutDefaultValue
+                                    ? controllerValue.zoomOutDefaultValue
                                     : 50
                             } 
                             class="sliderRange "
@@ -955,20 +960,13 @@ let camera,
     mixer,
     controls;
 
-let rotation = controllerValue.rotation || 0,
+let rotation = controllerValue.rotationSpeedDefaultValue || 0,
     maxAngleForOrbit = controllerValue.maxAngleForOrbit || 3.4,
     minAngleForOrbit = controllerValue.minAngleForOrbit || 0,
-    zoomMax = controllerValue.zoomMax || 0,
-    zoomMin = controllerValue.zoomMin || 0;
-if(!controllerValue.rotation){
-    alert('Auto Rotation value required to auto rotate the scene.');
-}
-if(!controllerValue.zoomMax){
-    alert('zoomMax value required to zoom in.');
-}
-if(!controllerValue.zoomMax){
-    alert('zoomMin value required to zoom out.');
-}
+    zoomMax = controllerValue.zoomMax || 25,
+    zoomMin = controllerValue.zoomMin || 25;
+
+
 
 const clock = new THREE.Clock();
 
@@ -982,12 +980,20 @@ function init() {
     //create scene
     scene = new THREE.Scene();
     scene.background = new THREE.Color(
-        controllerValue.bgColor
-            ? controllerValue.bgColor[0]
-            : controllerValue.defaultbg
+        controllerValue.defaultbg
             ? controllerValue.defaultbg
-            : "skyblue"
+            : null
     );
+
+    if(!controllerValue.defaultbg){
+        alert('defaultbg in mainControllerValue is required to show default background color.')
+    }
+    if(!controllerValue.rotation){
+        alert('rotation in mainControllerValue is required for auto rotation.')
+    }
+    if(!controllerValue.zoom){
+        alert('zoom in mainControllerValue is required to zoom model.')
+    }
 
     //set resderer
     renderer = new THREE.WebGLRenderer({
@@ -1415,7 +1421,8 @@ function init() {
     controls = new OrbitControls(camera, renderer.domElement);
     controls.target.set(0, 0, 0);
 
-    controls.autoRotate = true;
+    controls.autoRotate = controllerValue.rotation;
+    controls.enableZoom = controllerValue.zoom;
 
     controls.screenSpacePanning = false;
     controls.update();
@@ -1442,6 +1449,7 @@ function onWindowResize() {
 }
 
 function render() {
+    
     if (controls.autoRotateSpeed !== rotation)
         controls.autoRotateSpeed = rotation;
 
