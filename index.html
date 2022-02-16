@@ -3,25 +3,8 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width,initial-scale=1" />
-    <title>3JS App</title>
-  <!--  <link rel="stylesheet" href="style.css" /> -->
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC"
-      crossorigin="anonymous"
-    />
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-      crossorigin="anonymous"
-    ></script>
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
-    />
+    <title>3D Viewer App</title>
   </head>
-
   <body>
     <div id="root"></div>
     <script
@@ -37,45 +20,61 @@
       }
     </script>
     <script>
-      //color background        
-      let bg ={
-        color_1:"rgb(13, 202, 240)" ,
-        color_2:"rgb(220, 53, 69)",
-        color_3:"rgb(108, 117, 125)" ,
-        color_4:"rgb(13, 110, 253)" ,
-        color_5:"rgb(25, 135, 84)",
-        color_6:"rgb(255, 193, 7)"
-      }
-      //texture background pictures
-      let textureBg = {
-        bg_1: {
-          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posx.jpg",
-          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negx.jpg",
-          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posy.jpg",
-          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negy.jpg",
-          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posz.jpg",
-          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negz.jpg"
+      let userController = {
+        // Header
+        header: "3D Viewer",
+
+        // Rotation
+        autoRotationMinSpeed: -50,
+        autoRotationMaxSpeed: 50,
+        rotationTopMinLimit: 0,
+        rotationTopMaxLimit: 1.3707963267948966,
+        rotationBottomMinLimit: 0,
+        rotationBottomMaxLimit: 1.5707963267948966,
+
+        // Zoom
+        zoomInMinLimit: 0,
+        zoomInMaxLimit: 30,
+        zoomOutMinLimit: 0,
+        zoomOutMaxLimit: 20,
+
+        // Background color
+        color_1: "rgb(13, 202, 240)",
+        color_2: "rgb(220, 53, 69)",
+        color_3: "rgb(108, 117, 125)",
+        color_4: "rgb(13, 110, 253)",
+        color_5: "rgb(25, 135, 84)",
+        color_6: "rgb(255, 193, 7)",
+
+        // Texture Background
+        textureBackground: {
+          bg_1: {
+            posx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posx.jpg",
+            negx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negx.jpg",
+            posy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posy.jpg",
+            negy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negy.jpg",
+            posz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posz.jpg",
+            negz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negz.jpg",
+          },
+          bg_2: {
+            posx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posx.jpg",
+            negx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negx.jpg",
+            posy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posy.jpg",
+            negy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negy.jpg",
+            posz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posz.jpg",
+            negz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negz.jpg",
+          },
+          bg_3: {
+            posx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posx.jpg",
+            negx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negx.jpg",
+            posy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posy.jpg",
+            negy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negy.jpg",
+            posz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posz.jpg",
+            negz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negz.jpg",
+          },
         },
-        bg_2: {
-          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posx.jpg",
-          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negx.jpg",
-          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posy.jpg",
-          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negy.jpg",
-          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posz.jpg",
-          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negz.jpg"
-        
-        },
-        bg_3: {
-          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posx.jpg",
-          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negx.jpg",
-          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posy.jpg",
-          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negy.jpg",
-          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posz.jpg",
-          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negz.jpg"
-  
-        }
-      }
+      };
     </script>
-    <script src="./three.js" type="module"></script>
+    <script src="./addinBody.js" type="module"></script>
   </body>
 </html>

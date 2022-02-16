@@ -1,10 +1,84 @@
 
+let mainController;
+if(typeof(userController) == "object") {
+  mainController = userController;
+}else{
+  mainController = {
+        // Header
+        header:"3d viewer",
+
+        // Rotation
+        autoRotationMinSpeed: -50,
+        autoRotationMaxSpeed: 50,
+        rotationTopMinLimit: 0,
+        rotationTopMaxLimit: 1.3707963267948966,
+        rotationBottomMinLimit: 0,
+        rotationBottomMaxLimit:1.5707963267948966,
+
+        // Zoom
+        zoomInMinLimit: 0,
+        zoomInMaxLimit: 30,
+        zoomOutMinLimit: 0,
+        zoomOutMaxLimit: 20,
+
+
+        // Background color
+        color_1:"rgb(13, 202, 240)" ,
+        color_2:"rgb(220, 53, 69)",
+        color_3:"rgb(108, 117, 125)" ,
+        color_4:"rgb(13, 110, 253)" ,
+        color_5:"rgb(25, 135, 84)",
+        color_6:"rgb(255, 193, 7)",
+
+        // Texture Background
+        textureBackground : {
+        bg_1: {
+          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posx.jpg",
+          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negx.jpg",
+          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posy.jpg",
+          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negy.jpg",
+          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posz.jpg",
+          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negz.jpg"
+        },
+        bg_2: {
+          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posx.jpg",
+          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negx.jpg",
+          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posy.jpg",
+          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negy.jpg",
+          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posz.jpg",
+          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negz.jpg"
+        
+        },
+        bg_3: {
+          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posx.jpg",
+          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negx.jpg",
+          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posy.jpg",
+          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negy.jpg",
+          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posz.jpg",
+          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negz.jpg"
+  
+        }
+      }
+  }
+}
+
+ // Background color
+  const bgColor = {
+    color_1:"rgb(13, 202, 240)" ,
+    color_2:"rgb(220, 53, 69)",
+    color_3:"rgb(108, 117, 125)" ,
+    color_4:"rgb(13, 110, 253)" ,
+    color_5:"rgb(25, 135, 84)",
+    color_6:"rgb(255, 193, 7)",
+
+  }
+
 document.getElementById("root").innerHTML = `
 <!--Outermost div start-->
 <div id="outerMostDiv">
   <!--Home component start-->
   <div id="homeComponent" class="homeComponent">
-    <h1 class="mb-3" align="center">3D Viewer</h1>
+    <h1 class="mb-3" align="center">${mainController.header ? mainController.header : " "}</h1>
     <div class="row">
       <!--Canvas start-->
       <div id="canvasComponent" class="col-md-7 canvasComponent">
@@ -81,7 +155,7 @@ document.getElementById("root").innerHTML = `
             <div class="col-md-8">Autorotation</div>
             <div class="d-flex justify-content-end col-md-4">
               <div class="form-check form-switch">
-                <input id="autoRotationControl" class="form-check-input" type="checkbox" >
+                <input id="autoRotationControl" class="form-check-input" type="checkbox" checked>
               </div>
 
             </div>
@@ -93,9 +167,9 @@ document.getElementById("root").innerHTML = `
               id="autoRotationSpeed"
               class="form-range"
               name="AutoRotationSpeed"
-              min="-50"
-              max="50"
-              value="11"
+              min="${mainController.autoRoationMinSpeed? mainController.autoRoationMinSpeed: -50}"
+              max="${mainController.autoRoationMaxSpeed? mainController.autoRoationMaxSpeed: 50}"
+              value="5"
             />
           </div>
           <div class="rotation_limit">
@@ -104,9 +178,10 @@ document.getElementById("root").innerHTML = `
               type="range"
               id="rotation_top_limit"
               class="form-range"
-              min= "0"
-              max="1.3707963267948966"
+              min= "${mainController.rotationTopMinLimit? mainController.rotationTopMinLimit: 0}"
+              max="${mainController.rotationTopMaxLimit? mainController.rotationTopMaxLimit: 1.3707963267948966}"
               step="0.1"
+              
             />
           </div>
           <div class="rotation_limit">
@@ -115,8 +190,8 @@ document.getElementById("root").innerHTML = `
               type="range"
               id="rotation_bottom_limit"
               class="form-range"
-              min="0"
-              max="1.5707963267948966"
+              min="${mainController.rotationBottomMinLimit? mainController.rotationBottomMinLimit: 0}"
+              max="${mainController.rotationBottomMaxLimit? mainController.rotationBottomMaxLimit: 1.5707963267948966}"
               step="0.1"
               
             />
@@ -144,9 +219,9 @@ document.getElementById("root").innerHTML = `
             <input
               type="range"
               class="form-range"
-              min="0"
-              max="30"
-              step="0.1"
+              min="${mainController.zoomInMinLimit? mainController.zoomInMinLimit: 0}"
+              max="${mainController.zoomInMaxLimit? mainController.zoomInMaxLimit: 30}"
+              step="5"
               id="zoom_in_limit"
               value="0"
             />
@@ -156,9 +231,9 @@ document.getElementById("root").innerHTML = `
               <input
               type="range"
               class="form-range"
-              min="0"
-              max="20"
-              step=".5"
+              min="${mainController.zoomOutMinLimit? mainController.zoomOutMinLimit: 0}"
+              max="${mainController.zoomOutMaxLimit? mainController.zoomOutMaxLimit: 20}"
+              step="4"
               id="zoom_out_limit"
               value="0"
             />
@@ -188,42 +263,42 @@ document.getElementById("root").innerHTML = `
               <div
                 id="pb_1"
                 style="
-                  background: rgb(13, 202, 240) none repeat scroll 0% 0%;
+                  background: ${mainController.color_1 ? mainController.color_1: bgColor.color_1} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_2"
                 style="
-                  background: rgb(220, 53, 69) none repeat scroll 0% 0%;
+                  background: ${mainController.color_2 ? mainController.color_2: bgColor.color_2}  none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_3"
                 style="
-                  background: rgb(108, 117, 125) none repeat scroll 0% 0%;
+                  background:${mainController.color_13? mainController.color_3: bgColor.color_3}  none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_4"
                 style="
-                  background: rgb(13, 110, 253) none repeat scroll 0% 0%;
+                  background: ${mainController.color_4 ? mainController.color_4: bgColor.color_4} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_5"
                 style="
-                  background: rgb(25, 135, 84) none repeat scroll 0% 0%;
+                  background: ${mainController.color_5 ? mainController.color_5: bgColor.color_5} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_6"
                 style="
-                  background: rgb(255, 193, 7) none repeat scroll 0% 0%;
+                  background: ${mainController.color_6 ? mainController.color_6: bgColor.color_6} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
@@ -237,14 +312,14 @@ document.getElementById("root").innerHTML = `
                 id="texture_1"
                 style="
                   background: rgba(0, 0, 0, 0)
-                    url('textures/scene_1/posx.jpg') repeat scroll 0% 0%;
+                    url('${mainController.textureBackground.bg_1 ? mainController.textureBackground.bg_1.posx:""}') repeat scroll 0% 0%;
                 "
                 class="bc4"
               ></div>
               <div
                 id="texture_2"
                 style="
-                  background: rgba(0, 0, 0) url('textures/scene_2/posx.jpg')
+                  background: rgba(0, 0, 0) url('${mainController.textureBackground.bg_2 ? mainController.textureBackground.bg_2.posy:""}')
                     repeat scroll 0% 0%;
                 "
                 class="bc4"
@@ -253,7 +328,7 @@ document.getElementById("root").innerHTML = `
                 id="texture_3"
                 style="
                   background: rgba(0, 0, 0, 0)
-                    url('textures/scene_3/posx.jpg') repeat scroll 0% 0%;
+                  url('${mainController.textureBackground.bg_3 ? mainController.textureBackground.bg_3.posy:""}') repeat scroll 0% 0%;
                 "
                 class="bc4"
               ></div>
@@ -326,6 +401,57 @@ document.getElementById("root").innerHTML = `
 <!--Action Script-->
 `
 
+
+
+// Bootstrap CSS Link
+const bootstrapCssLink = document.createElement('link');
+bootstrapCssLink.setAttribute(
+  'href',
+  'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css',
+);
+bootstrapCssLink.setAttribute(
+  'rel',
+  'stylesheet'
+);
+bootstrapCssLink.setAttribute(
+  'integrity',
+  'sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC'
+)
+bootstrapCssLink.setAttribute(
+  'crossorigin',
+  'anonymous'
+)
+document.head.appendChild(bootstrapCssLink);
+
+// Bootstrap JS Link
+const bootstrapScript = document.createElement('script');
+bootstrapScript.setAttribute(
+  'src',
+  'https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js',
+);
+bootstrapScript.setAttribute(
+  'integrity',
+  'sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
+)
+bootstrapScript.setAttribute(
+  'crossorigin',
+  'anonymous'
+)
+document.head.appendChild(bootstrapScript);
+
+// Font-awesome link
+const fontAwesomeLink = document.createElement('link');
+fontAwesomeLink.setAttribute(
+  'rel',
+  'stylesheet'
+);
+fontAwesomeLink.setAttribute(
+  'href',
+  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css'
+);
+document.head.appendChild(fontAwesomeLink);
+
+// Add css file
 let style = document.createElement("style");
 style.innerHTML = `* {
   margin: 0px;
@@ -516,7 +642,24 @@ div.panel.show {
 `
 document.head.appendChild(style);
 
+// Texture background button image
+document.getElementById("texture_1").className = "display-none";
+document.getElementById("texture_2").className = "display-none";
+document.getElementById("texture_3").className = "display-none";
 
+const textureItems = mainController.textureBackground;
+for (const textureItem in textureItems) {
+  if(textureItem == "bg_1"){
+    document.getElementById("texture_1").className = "bc4";
+  } else if(textureItem == "bg_2") {
+    document.getElementById("texture_2").className = "bc4";
+  }else if(textureItem == "bg_3") {
+    document.getElementById("texture_3").className = "bc4";
+  }
+}
+/*************************Page Loading Event End************************** */
+
+/*************************Three.js event start *************************** */
 import * as THREE from "three";
 import { OrbitControls } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/OrbitControls.js";
 import {
@@ -538,28 +681,41 @@ function init() {
 
   // Camera
   camera = new THREE.PerspectiveCamera(
-    75,
+    45,
     window.innerWidth / window.innerHeight,
     1,
     1000
   );
-  camera.position.set(0, 0, 100);
+  camera.position.set(0, 2, 25);
 
   // Scene
   scene = new THREE.Scene();
   scene.background = new THREE.Color("rgb(13, 202, 240)");
 
   // Light
-  const hemisLight = new THREE.HemisphereLight(0xffffff, 0x000000, 5);
-  scene.add(hemisLight);
+  let light = new THREE.HemisphereLight(0xffffbb, 0x080820, 0.8);
 
-  let DirectionalLightbt = new THREE.DirectionalLight(0xffffff, 0.7);
-  DirectionalLightbt.position.set(3, -8, 1.5);
+  scene.add(light);
+
+  let DirectionalLightbt = new THREE.DirectionalLight(0xffffff, 0.5);
+  DirectionalLightbt.position.set(3, -5, 0);
+
   scene.add(DirectionalLightbt);
 
+  let DirectionalLightside = new THREE.DirectionalLight(0xffffff, 0.5);
+  DirectionalLightside.position.set(5, 5, 0);
+
+  scene.add(DirectionalLightside);
+
+  let DirectionalLightside2 = new THREE.DirectionalLight(0xffffff, 0.5);
+  DirectionalLightside2.position.set(-5, 8, 0);
+
+  scene.add(DirectionalLightside2);
 
   // Model
-  loadFile("model/uploads_files_2792345_Koenigsegg.fbx", "fbx");
+  const fileName = "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf".split(".");
+  const fileExtension = fileName[fileName.length - 1];
+  loadFile("https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf", fileExtension);
 
   // Renderer
   renderer = new THREE.WebGLRenderer({
@@ -575,6 +731,7 @@ function init() {
   // OrbitControl
   controls = new OrbitControls(camera, renderer.domElement);
   controls.autoRotate = isAutRotation;
+  controls.enablePan = false;
   controls.target.set(0, 0, 0);
   controls.update();
 
@@ -645,8 +802,8 @@ function animate() {
     controls.maxDistance = controls.minDistance = 70;
   }
 
-  console.log("max dis"+controls.maxDistance);
-  console.log("min dis"+controls.minDistance);
+  // console.log("max dis"+controls.maxDistance);
+  // console.log("min dis"+controls.minDistance);
 
   // Render
   camera.lookAt(0, 0, 0);
@@ -655,35 +812,35 @@ function animate() {
   renderer.render(scene, camera);
 }
 
-// Texture background
+
 function setTextureBackground(texture) {
   const loader = new THREE.CubeTextureLoader();
   if (texture == "id_1") {
     textureCube = loader.load([
-      textureBg.bg_1.posx,
-      textureBg.bg_1.negx,
-      textureBg.bg_1.posy,
-      textureBg.bg_1.negy,
-      textureBg.bg_1.posz,
-      textureBg.bg_1.negz,
+      mainController.textureBackground.bg_1.posx,
+      mainController.textureBackground.bg_1.negx,
+      mainController.textureBackground.bg_1.posy,
+      mainController.textureBackground.bg_1.negy,
+      mainController.textureBackground.bg_1.posz,
+      mainController.textureBackground.bg_1.negz,
     ]);
   } else if (texture == "id_2") {
     textureCube = loader.load([
-      textureBg.bg_2.posx,
-      textureBg.bg_2.negx,
-      textureBg.bg_2.posy,
-      textureBg.bg_2.negy,
-      textureBg.bg_2.posz,
-      textureBg.bg_2.negz,
+      mainController.textureBackground.bg_2.posx,
+      mainController.textureBackground.bg_2.negx,
+      mainController.textureBackground.bg_2.posy,
+      mainController.textureBackground.bg_2.negy,
+      mainController.textureBackground.bg_2.posz,
+      mainController.textureBackground.bg_2.negz,
     ]);
   } else if (texture == "id_3") {
     textureCube = loader.load([
-      textureBg.bg_3.posx,
-      textureBg.bg_3.negx,
-      textureBg.bg_3.posy,
-      textureBg.bg_3.negy,
-      textureBg.bg_3.posz,
-      textureBg.bg_3.negz,
+      mainController.textureBackground.bg_3.posx,
+      mainController.textureBackground.bg_3.negx,
+      mainController.textureBackground.bg_3.posy,
+      mainController.textureBackground.bg_3.negy,
+      mainController.textureBackground.bg_3.posz,
+      mainController.textureBackground.bg_3.negz,
     ]);
   }
 
@@ -705,21 +862,28 @@ function loadFile(file, fileExtension) {
       file,
       function (gltf) {
         object = gltf.scene;
-        var bbox = new THREE.Box3().setFromObject(object);
-        var cent = bbox.getCenter(new THREE.Vector3());
-        var size = bbox.getSize(new THREE.Vector3());
-        if (isNaN(size.x) || isNaN(size.y) || isNaN(size.z)) {
-          object.scale.setScalar(0.05);
+        let bbox = new THREE.Box3().setFromObject(object);
+        let size = bbox.getSize(new THREE.Vector3());
+        let maxAxis = Math.max(size.x, size.y, size.z);
+        if (!isNaN(maxAxis)) {
+          object.scale.multiplyScalar(30/ maxAxis);
         } else {
-          var maxAxis = Math.max(size.x, size.y, size.z);
-          object.scale.multiplyScalar(60 / maxAxis);
-          console.log(size);
-          bbox.setFromObject(object);
-          bbox.getCenter(cent);
-          bbox.getSize(size);
-          object.position.copy(cent).multiplyScalar(-1);
-          object.position.y -= size.y * 0.5;
+          obj.scale.set(0.03, 0.03, 0.03);
+          // var maxAxis = Math.max(size.x, size.y, size.z);
+          // object.scale.multiplyScalar(60 / maxAxis);
+          // console.log(size);
+          // bbox.setFromObject(object);
+          // bbox.getCenter(cent);
+          // bbox.getSize(size);
+          // object.position.copy(cent).multiplyScalar(-1);
+          // object.position.y -= size.y * 0.5;
         }
+        const offSet = new THREE.Vector3();
+        bbox.getCenter(offSet).negate();
+        object.children.forEach((elem) => {
+            if (elem.children.length === object.children.length)
+                elem.position.set(offSet.x, offSet.y, offSet.z);
+        });
         object.traverse((c) => {
           if (object.isMesh) {
             object.castShadow = true;
@@ -751,20 +915,34 @@ function loadFile(file, fileExtension) {
       (fbx) => {
         object = fbx;
         var bbox = new THREE.Box3().setFromObject(object);
-        var cent = bbox.getCenter(new THREE.Vector3());
+        //var cent = bbox.getCenter(new THREE.Vector3());
         var size = bbox.getSize(new THREE.Vector3());
-        if (isNaN(size.x) || isNaN(size.y) || isNaN(size.z)) {
-          object.scale.setScalar(0.05);
-        } else {
-          var maxAxis = Math.max(size.x, size.y, size.z);
-          object.scale.multiplyScalar(60 / maxAxis);
-          console.log(size);
-          bbox.setFromObject(object);
-          bbox.getCenter(cent);
-          bbox.getSize(size);
-          object.position.copy(cent).multiplyScalar(-1);
-          object.position.y -= size.y * 0.5;
+        let maxAxis = Math.max(size.x, size.y, size.z);
+        if(!isNaN(maxAxis)) {
+          object.scale.multiplyScalar(30/maxAxis);
+        }else {
+          object.scale.setScalar(0.03);
+          
         }
+        const offSet = new THREE.Vector3();
+        bbox.getCenter(offSet).negate();
+        object.children.forEach((elem) =>{
+          if(elem.children.length == object.children.length){
+            elem.position.set(offSet.x, offSet.y, offSet.z);
+          }
+        })
+        // if (isNaN(size.x) || isNaN(size.y) || isNaN(size.z)) {
+        //   object.scale.setScalar(0.05);
+        // // } else {
+        //   var maxAxis = Math.max(size.x, size.y, size.z);
+        //   object.scale.multiplyScalar(60 / maxAxis);
+        //   console.log(size);
+        //   bbox.setFromObject(object);
+        //   bbox.getCenter(cent);
+        //   bbox.getSize(size);
+        //   object.position.copy(cent).multiplyScalar(-1);
+        //   object.position.y -= size.y * 0.5;
+        // }
         object.traverse((c) => {
           c.castShadow = true;
         });
@@ -773,7 +951,7 @@ function loadFile(file, fileExtension) {
           const idle = mixer.clipAction(object.animations[0]);
           idle.play();
         }
-        object.position.set(0, 0, 0);
+        //object.position.set(0, 0, 0);
         scene.add(object);
       },
       (xhr) => {
@@ -789,25 +967,22 @@ function loadFile(file, fileExtension) {
       file,
       (obj) => {
         object = obj;
-        var bbox = new THREE.Box3().setFromObject(object);
-        var cent = bbox.getCenter(new THREE.Vector3());
-        console.log("center is" + cent);
-        console.log(cent);
+        var bbox = new THREE.Box3().setFromObject(obj);
         var size = bbox.getSize(new THREE.Vector3());
-        console.log(size);
-        if (isNaN(size.x) || isNaN(size.y) || isNaN(size.z)) {
-          object.scale.setScalar(0.1);
+        var maxAxis = Math.max(size.x, size.y, size.z);
+
+        if (!isNaN(maxAxis)) {
+            obj.scale.multiplyScalar(30 / maxAxis);
         } else {
-          var maxAxis = Math.max(size.x, size.y, size.z);
-          console.log("maxaxis" + maxAxis);
-          object.scale.multiplyScalar(60 / maxAxis);
-          console.log(size);
-          bbox.setFromObject(object);
-          bbox.getCenter(cent);
-          bbox.getSize(size);
-          object.position.copy(cent).multiplyScalar(-1);
-          object.position.y -= size.y * 0.5;
+            obj.scale.set(0.05, 0.05, 0.05);
         }
+
+        const offset = new THREE.Vector3();
+        bbox.getCenter(offset).negate();
+        obj.children.forEach((element) => {
+            if (element.children.length === obj.children.length)
+                element.position.set(offset.x, offset.y, offset.z);
+        });
         object.traverse((c) => {
           c.castShadow = true;
         });
@@ -816,7 +991,7 @@ function loadFile(file, fileExtension) {
           const idle = mixer.clipAction(object.animations[0]);
           idle.play();
         }
-        object.position.set(0, 0, 0);
+        //object.position.set(0, 0, 0);
         scene.add(object);
       },
       (xhr) => {
@@ -836,7 +1011,7 @@ function setSize(rendererWidth, rendererHeight) {
 
 /*******************************Action Script*******************************************/
 
-// Model upload
+// Model upload from url
 document.getElementById("urlFileUpload").addEventListener("click", function () {
   const url = document.getElementById("urlformFile").value;
   const fileName = url.split(".");
@@ -951,32 +1126,32 @@ document.getElementById("texture_3").addEventListener("click", function () {
 
 // Color background button 1
 document.getElementById("pb_1").addEventListener("click", function () {
-  setColorBackground(bg.color_1);
+  setColorBackground(mainController.color_1?mainController.color_1 : bgColor.color_1);
 });
 
 // Color background button 2
 document.getElementById("pb_2").addEventListener("click", function () {
-  setColorBackground(bg.color_2);
+  setColorBackground(mainController.color_2?mainController.color_2 : bgColor.color_2);
 });
 
 // Color background button 3
 document.getElementById("pb_3").addEventListener("click", function () {
-  setColorBackground(bg.color_3);
+  setColorBackground(mainController.color_3?mainController.color_3 : bgColor.color_3);
 });
 
 // Color background button 4
 document.getElementById("pb_4").addEventListener("click", function () {
-  setColorBackground(bg.color_4);
+  setColorBackground(mainController.color_4?mainController.color_4 : bgColor.color_4);
 });
 
 // Color background button 5
 document.getElementById("pb_5").addEventListener("click", function () {
-  setColorBackground(bg.color_5);
+  setColorBackground(mainController.color_5?mainController.color_5 : bgColor.color_5);
 });
 
 // Color background button 6
 document.getElementById("pb_6").addEventListener("click", function () {
-  setColorBackground(bg.color_6);
+  setColorBackground(mainController.color_6?mainController.color_6 : bgColor.color_6);
 });
 
 // Model upload
@@ -1003,7 +1178,7 @@ document.getElementById("uploadFile").addEventListener("click", function () {
       var fileName = x.files[0].name;
       var splitFileName = fileName.split(".");
       var fileExtension = splitFileName[splitFileName.length - 1];
-      console.log(fileExtension);
+      //console.log(fileExtension);
       var objectURL = URL.createObjectURL(x.files[0]);
       if (fileExtension === "gltf" || fileExtension === "glb") {
         loadFile(objectURL, fileExtension);
