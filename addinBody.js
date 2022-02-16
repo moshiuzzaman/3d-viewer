@@ -74,11 +74,11 @@ if (typeof mainControllerValue == "object") {
 
         rotationtopLimitMin: 1.6,
         rotationtopLimitMax: 3.2,
-        rotationBottonLimitMin: 0,
-        rotationBottonLimitMax: 1.6,
+        rotationBottomLimitMin: 0,
+        rotationBottomLimitMax: 1.6,
         rotationLimitStep: 0.2,
         rotationtopLimitDefaultValue: 3.1,
-        rotationBottonLimitDefaultValue: 0,
+        rotationBottomLimitDefault: 0,
 
         
         zoomInMin: -10,
@@ -190,13 +190,13 @@ document.getElementById("bs_3D_viewer_root").innerHTML = `
                             <p>Rotation Bottom Limit</p>
                             <input type="range" 
                             min=${
-                                controllerValue.rotationBottonLimitMin
-                                    ? controllerValue.rotationBottonLimitMin
+                                controllerValue.rotationBottomLimitMin
+                                    ? controllerValue.rotationBottomLimitMin
                                     : 0
                             } 
                             max=${
-                                controllerValue.rotationBottonLimitMax
-                                    ? controllerValue.rotationBottonLimitMax
+                                controllerValue.rotationBottomLimitMax
+                                    ? controllerValue.rotationBottomLimitMax
                                     : 1.6
                             } 
                             step=${
@@ -205,8 +205,8 @@ document.getElementById("bs_3D_viewer_root").innerHTML = `
                                     : 0.2
                             }
                             value=${
-                                controllerValue.rotationBottonLimitDefaultValue
-                                    ? controllerValue.rotationBottonLimitDefaultValue
+                                controllerValue.rotationBottomLimitDefault
+                                    ? controllerValue.rotationBottomLimitDefault
                                     : 0
                             } 
                             class="sliderRange reversedRange"
