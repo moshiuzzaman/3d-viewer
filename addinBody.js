@@ -943,7 +943,7 @@ document.head.appendChild(styleSheet);
 //threejs script files **************************
 
 //importing necessary things
-import * as THREE from "three";
+import * as THREE from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/three.module.js";
 import { OrbitControls } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/OrbitControls.js";
 
 import {
