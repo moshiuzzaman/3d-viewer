@@ -1,77 +1,79 @@
-
 let mainController;
-if(typeof(userController) == "object") {
+if (typeof (userController) == "object") {
   mainController = userController;
-}else{
+} else {
   mainController = {
-        // Header
-        header:"3d viewer",
+    // Header
+    header: "3d viewer",
+    // Defaul model link
+    defaultModelLink: "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
+    // Rotation
+    autoRotationMinSpeed: -50,
+    autoRotationMaxSpeed: 50,
+    rotationTopMinLimit: 0,
+    rotationTopMaxLimit: 1.3707963267948966,
+    rotationBottomMinLimit: 0,
+    rotationBottomMaxLimit: 1.5707963267948966,
 
-        // Rotation
-        autoRotationMinSpeed: -50,
-        autoRotationMaxSpeed: 50,
-        rotationTopMinLimit: 0,
-        rotationTopMaxLimit: 1.3707963267948966,
-        rotationBottomMinLimit: 0,
-        rotationBottomMaxLimit:1.5707963267948966,
+    // Zoom
+    zoomInMinLimit: 0,
+    zoomInMaxLimit: 30,
+    zoomOutMinLimit: 0,
+    zoomOutMaxLimit: 20,
 
-        // Zoom
-        zoomInMinLimit: 0,
-        zoomInMaxLimit: 30,
-        zoomOutMinLimit: 0,
-        zoomOutMaxLimit: 20,
+    // Background color
+    color_1: "rgb(13, 202, 240)",
+    color_2: "rgb(220, 53, 69)",
+    color_3: "rgb(108, 117, 125)",
+    color_4: "rgb(13, 110, 253)",
+    color_5: "rgb(25, 135, 84)",
+    color_6: "rgb(255, 193, 7)",
 
+    // Default background color
+    defaultBackgroundColor : ["rgb(130, 202, 140)"],
 
-        // Background color
-        color_1:"rgb(13, 202, 240)" ,
-        color_2:"rgb(220, 53, 69)",
-        color_3:"rgb(108, 117, 125)" ,
-        color_4:"rgb(13, 110, 253)" ,
-        color_5:"rgb(25, 135, 84)",
-        color_6:"rgb(255, 193, 7)",
+    // Texture Background
+    textureBackground: {
+      bg_1: {
+        posx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posx.jpg",
+        negx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negx.jpg",
+        posy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posy.jpg",
+        negy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negy.jpg",
+        posz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posz.jpg",
+        negz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negz.jpg"
+      },
+      bg_2: {
+        posx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posx.jpg",
+        negx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negx.jpg",
+        posy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posy.jpg",
+        negy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negy.jpg",
+        posz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posz.jpg",
+        negz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negz.jpg"
 
-        // Texture Background
-        textureBackground : {
-        bg_1: {
-          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posx.jpg",
-          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negx.jpg",
-          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posy.jpg",
-          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negy.jpg",
-          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/posz.jpg",
-          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_1/negz.jpg"
-        },
-        bg_2: {
-          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posx.jpg",
-          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negx.jpg",
-          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posy.jpg",
-          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negy.jpg",
-          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/posz.jpg",
-          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_2/negz.jpg"
-        
-        },
-        bg_3: {
-          posx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posx.jpg",
-          negx : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negx.jpg",
-          posy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posy.jpg",
-          negy : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negy.jpg",
-          posz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posz.jpg",
-          negz : "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negz.jpg"
-  
-        }
+      },
+      bg_3: {
+        posx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posx.jpg",
+        negx: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negx.jpg",
+        posy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posy.jpg",
+        negy: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negy.jpg",
+        posz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/posz.jpg",
+        negz: "https://raw.githubusercontent.com/abirhussain/threejsProject/main/textures/scene_3/negz.jpg"
+
       }
+    }
   }
 }
 
- // Background color
-  const bgColor = {
-    color_1:"rgb(13, 202, 240)" ,
-    color_2:"rgb(220, 53, 69)",
-    color_3:"rgb(108, 117, 125)" ,
-    color_4:"rgb(13, 110, 253)" ,
-    color_5:"rgb(25, 135, 84)",
-    color_6:"rgb(255, 193, 7)",
+// Background color
+const backgroundColor = {
+  color_1: "rgb(13, 202, 240)",
+  color_2: "rgb(220, 53, 69)",
+  color_3: "rgb(108, 117, 125)",
+  color_4: "rgb(13, 110, 253)",
+  color_5: "rgb(25, 135, 84)",
+  color_6: "rgb(255, 193, 7)",
 
-  }
+}
 
 document.getElementById("root").innerHTML = `
 <!--Outermost div start-->
@@ -263,42 +265,42 @@ document.getElementById("root").innerHTML = `
               <div
                 id="pb_1"
                 style="
-                  background: ${mainController.color_1 ? mainController.color_1: bgColor.color_1} none repeat scroll 0% 0%;
+                  background: ${mainController.backgroundColor.color_1 ? mainController.backgroundColor.color_1: backgroundColor.color_1} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_2"
                 style="
-                  background: ${mainController.color_2 ? mainController.color_2: bgColor.color_2}  none repeat scroll 0% 0%;
+                  background: ${mainController.backgroundColor.color_2 ? mainController.backgroundColor.color_2: backgroundColor.color_2}  none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_3"
                 style="
-                  background:${mainController.color_13? mainController.color_3: bgColor.color_3}  none repeat scroll 0% 0%;
+                  background:${mainController.backgroundColor.color_3? mainController.backgroundColor.color_3: backgroundColor.color_3}  none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_4"
                 style="
-                  background: ${mainController.color_4 ? mainController.color_4: bgColor.color_4} none repeat scroll 0% 0%;
+                  background: ${mainController.backgroundColor.color_4 ? mainController.backgroundColor.color_4: backgroundColor.color_4} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_5"
                 style="
-                  background: ${mainController.color_5 ? mainController.color_5: bgColor.color_5} none repeat scroll 0% 0%;
+                  background: ${mainController.backgroundColor.color_5 ? mainController.backgroundColor.color_5: backgroundColor.color_5} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
               <div
                 id="pb_6"
                 style="
-                  background: ${mainController.color_6 ? mainController.color_6: bgColor.color_6} none repeat scroll 0% 0%;
+                  background: ${mainController.backgroundColor.color_6 ? mainController.backgroundColor.color_6: backgroundColor.color_6} none repeat scroll 0% 0%;
                 "
                 class="bc1"
               ></div>
@@ -649,19 +651,47 @@ document.getElementById("texture_3").className = "display-none";
 
 const textureItems = mainController.textureBackground;
 for (const textureItem in textureItems) {
-  if(textureItem == "bg_1"){
+  if (textureItem == "bg_1") {
     document.getElementById("texture_1").className = "bc4";
-  } else if(textureItem == "bg_2") {
+  } else if (textureItem == "bg_2") {
     document.getElementById("texture_2").className = "bc4";
-  }else if(textureItem == "bg_3") {
+  } else if (textureItem == "bg_3") {
     document.getElementById("texture_3").className = "bc4";
   }
 }
+
+// Backgrouond color changing button color
+for (let i = 1; i <= 6; i++) {
+  document.getElementById("pb_" + i).className = 'display-none';
+}
+
+let backgroundColorList = Object.keys(mainController.backgroundColor);
+
+
+for (let i = 0; i < backgroundColorList.length; i++) {
+  if (backgroundColorList[i] == "color_1") {
+    document.getElementById("pb_1").className = 'bc1';
+  } else if (backgroundColorList[i] == "color_2") {
+    document.getElementById("pb_2").className = 'bc1';
+  } else if (backgroundColorList[i] == "color_3") {
+    document.getElementById("pb_3").className = 'bc1';
+  } else if (backgroundColorList[i] == "color_4") {
+    document.getElementById("pb_4").className = 'bc1';
+  } else if (backgroundColorList[i] == "color_5") {
+    document.getElementById("pb_5").className = 'bc1';
+  } else if (backgroundColorList[i] == "color_6") {
+    document.getElementById("pb_6").className = 'bc1';
+  }
+
+}
+
 /*************************Page Loading Event End************************** */
 
 /*************************Three.js event start *************************** */
 import * as THREE from "three";
-import { OrbitControls } from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/OrbitControls.js";
+import {
+  OrbitControls
+} from "https://cdn.jsdelivr.net/gh/Siam456/FT_Filees@main/files/OrbitControls.js";
 import {
   GLTFLoader,
   OBJLoader,
@@ -690,7 +720,7 @@ function init() {
 
   // Scene
   scene = new THREE.Scene();
-  scene.background = new THREE.Color("rgb(13, 202, 240)");
+  scene.background = new THREE.Color(mainController.defaultBackgroundColor?mainController.defaultBackgroundColor[0]:"rgb(130, 202, 140)");
 
   // Light
   let light = new THREE.HemisphereLight(0xffffbb, 0x080820, 0.8);
@@ -713,9 +743,9 @@ function init() {
   scene.add(DirectionalLightside2);
 
   // Model
-  const fileName = "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf".split(".");
+  const fileName = mainController.defaultModelLink.split(".");
   const fileExtension = fileName[fileName.length - 1];
-  loadFile("https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf", fileExtension);
+  loadFile(mainController.defaultModelLink, fileExtension);
 
   // Renderer
   renderer = new THREE.WebGLRenderer({
@@ -759,17 +789,17 @@ function animate() {
   ).checked;
   if (isAutoRotatinActive) {
     controls.autoRotate = true;
-    const scale = document.getElementById("autoRotationSpeed").value / 100;
+    const scale = document.getElementById("autoRotationSpeed").value / 1000;
     if (scale < 0) {
       if (object) {
         object.rotation.y += scale;
-        controls.autoRotateSpeed = scale * 10;
+        controls.autoRotateSpeed = scale*30;
         controls.update();
       }
     } else if (scale > 0) {
       if (object) {
         object.rotation.y += scale;
-        controls.autoRotateSpeed = scale * 10;
+        controls.autoRotateSpeed = scale*30;
         controls.update();
       }
     }
@@ -789,21 +819,19 @@ function animate() {
     const inLimit = document.getElementById("zoom_in_limit").value;
     const outLimit = document.getElementById("zoom_out_limit").value;
 
-    if(inLimit == 0 && outLimit == 0) {
+    if (inLimit == 0 && outLimit == 0) {
       controls.maxDistance = 80;
-      controls.minDistance = 35;
-      controls.update();
-    }else {
+      controls.minDistance = 40;
+      
+    } else {
       controls.minDistance = 35 - inLimit;
-      controls.maxDistance = 100 +Number(outLimit);
+      controls.maxDistance = 100 + Number(outLimit);
     }
-    
+
   } else {
     controls.maxDistance = controls.minDistance = 70;
   }
 
-  // console.log("max dis"+controls.maxDistance);
-  // console.log("min dis"+controls.minDistance);
 
   // Render
   camera.lookAt(0, 0, 0);
@@ -866,7 +894,7 @@ function loadFile(file, fileExtension) {
         let size = bbox.getSize(new THREE.Vector3());
         let maxAxis = Math.max(size.x, size.y, size.z);
         if (!isNaN(maxAxis)) {
-          object.scale.multiplyScalar(30/ maxAxis);
+          object.scale.multiplyScalar(30 / maxAxis);
         } else {
           obj.scale.set(0.03, 0.03, 0.03);
           // var maxAxis = Math.max(size.x, size.y, size.z);
@@ -881,8 +909,8 @@ function loadFile(file, fileExtension) {
         const offSet = new THREE.Vector3();
         bbox.getCenter(offSet).negate();
         object.children.forEach((elem) => {
-            if (elem.children.length === object.children.length)
-                elem.position.set(offSet.x, offSet.y, offSet.z);
+          if (elem.children.length === object.children.length)
+            elem.position.set(offSet.x, offSet.y, offSet.z);
         });
         object.traverse((c) => {
           if (object.isMesh) {
@@ -918,16 +946,16 @@ function loadFile(file, fileExtension) {
         //var cent = bbox.getCenter(new THREE.Vector3());
         var size = bbox.getSize(new THREE.Vector3());
         let maxAxis = Math.max(size.x, size.y, size.z);
-        if(!isNaN(maxAxis)) {
-          object.scale.multiplyScalar(30/maxAxis);
-        }else {
+        if (!isNaN(maxAxis)) {
+          object.scale.multiplyScalar(30 / maxAxis);
+        } else {
           object.scale.setScalar(0.03);
-          
+
         }
         const offSet = new THREE.Vector3();
         bbox.getCenter(offSet).negate();
-        object.children.forEach((elem) =>{
-          if(elem.children.length == object.children.length){
+        object.children.forEach((elem) => {
+          if (elem.children.length == object.children.length) {
             elem.position.set(offSet.x, offSet.y, offSet.z);
           }
         })
@@ -972,16 +1000,16 @@ function loadFile(file, fileExtension) {
         var maxAxis = Math.max(size.x, size.y, size.z);
 
         if (!isNaN(maxAxis)) {
-            obj.scale.multiplyScalar(30 / maxAxis);
+          obj.scale.multiplyScalar(30 / maxAxis);
         } else {
-            obj.scale.set(0.05, 0.05, 0.05);
+          obj.scale.set(0.05, 0.05, 0.05);
         }
 
         const offset = new THREE.Vector3();
         bbox.getCenter(offset).negate();
         obj.children.forEach((element) => {
-            if (element.children.length === obj.children.length)
-                element.position.set(offset.x, offset.y, offset.z);
+          if (element.children.length === obj.children.length)
+            element.position.set(offset.x, offset.y, offset.z);
         });
         object.traverse((c) => {
           c.castShadow = true;
@@ -1125,33 +1153,34 @@ document.getElementById("texture_3").addEventListener("click", function () {
 });
 
 // Color background button 1
+
 document.getElementById("pb_1").addEventListener("click", function () {
-  setColorBackground(mainController.color_1?mainController.color_1 : bgColor.color_1);
+  setColorBackground(mainController.backgroundColor_1 ? mainController.backgroundColor_1 : backgroundColor.color_1);
 });
 
 // Color background button 2
 document.getElementById("pb_2").addEventListener("click", function () {
-  setColorBackground(mainController.color_2?mainController.color_2 : bgColor.color_2);
+  setColorBackground(mainController.backgroundColor_2 ? mainController.backgroundColor_2 : backgroundColor.color_2);
 });
 
 // Color background button 3
 document.getElementById("pb_3").addEventListener("click", function () {
-  setColorBackground(mainController.color_3?mainController.color_3 : bgColor.color_3);
+  setColorBackground(mainController.backgroundColor_3 ? mainController.backgroundColor_3 : backgroundColor.color_3);
 });
 
 // Color background button 4
 document.getElementById("pb_4").addEventListener("click", function () {
-  setColorBackground(mainController.color_4?mainController.color_4 : bgColor.color_4);
+  setColorBackground(mainController.backgroundColor_4 ? mainController.backgroundColor_4 : backgroundColor.color_4);
 });
 
 // Color background button 5
 document.getElementById("pb_5").addEventListener("click", function () {
-  setColorBackground(mainController.color_5?mainController.color_5 : bgColor.color_5);
+  setColorBackground(mainController.backgroundColor_5 ? mainController.backgroundColor_5 : backgroundColor.color_5);
 });
 
 // Color background button 6
 document.getElementById("pb_6").addEventListener("click", function () {
-  setColorBackground(mainController.color_6?mainController.color_6 : bgColor.color_6);
+  setColorBackground(mainController.backgroundColor_6 ? mainController.backgroundColor_6 : backgroundColor.color_6);
 });
 
 // Model upload
@@ -1190,4 +1219,3 @@ document.getElementById("uploadFile").addEventListener("click", function () {
     }
   }
 });
-

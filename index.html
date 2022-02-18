@@ -6,7 +6,11 @@
     <title>3D Viewer App</title>
   </head>
   <body>
+    <img data-direction="right" data-src="chevron.svg" class="iconic" alt="chevron" />
+
+
     <div id="root"></div>
+
     <script
       async
       src="https://unpkg.com/es-module-shims@1.3.6/dist/es-module-shims.js"
@@ -19,10 +23,13 @@
         }
       }
     </script>
+
     <script>
       let userController = {
         // Header
         header: "3D Viewer",
+        // Default model link
+        defaultModelLink: "https://threejsfundamentals.org/threejs/resources/models/cartoon_lowpoly_small_city_free_pack/scene.gltf",
 
         // Rotation
         autoRotationMinSpeed: -50,
@@ -39,12 +46,17 @@
         zoomOutMaxLimit: 20,
 
         // Background color
-        color_1: "rgb(13, 202, 240)",
-        color_2: "rgb(220, 53, 69)",
-        color_3: "rgb(108, 117, 125)",
-        color_4: "rgb(13, 110, 253)",
-        color_5: "rgb(25, 135, 84)",
-        color_6: "rgb(255, 193, 7)",
+        backgroundColor: {
+          color_1: "rgb(13, 202, 240)",
+          color_2: "rgb(220, 53, 69)",
+          color_3: "rgb(108, 117, 125)",
+          color_4: "rgb(13, 110, 253)",
+          color_5: "rgb(25, 135, 84)",
+          color_6: "rgb(255, 193, 7)",
+        },
+
+        // Default background color
+        defaultBackgroundColor : ["rgb(130, 202, 140)"],
 
         // Texture Background
         textureBackground: {
